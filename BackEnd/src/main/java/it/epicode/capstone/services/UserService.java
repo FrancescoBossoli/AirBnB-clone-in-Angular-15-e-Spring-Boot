@@ -19,8 +19,12 @@ public class UserService {
 	private UserRepository uR;
 	
 	public void save(User u) {
-		uR.save(u);
-		log.info("The User has been saved in the Database.");
+		Optional<User> o = getUserByUsername(u.getUsername());
+		if (o.isEmpty()) {
+			uR.save(u);
+			log.info("The User has been saved in the Database.");			
+		}
+		else log.info("This User is already present in the Database.");
 	}
 	
 	public Optional<User> getUserById(Long id) {
