@@ -1,0 +1,97 @@
+.dropdown-item {
+   &:active {
+      background-color: transparent;
+   }
+   &:hover {
+      background-color:indianred;
+   }
+   &:first-child:hover {
+      border-radius: 10px 10px 0 0;
+   }
+}
+
+.card-header {
+   margin-top: -80px;
+}
+
+.fadeIn {
+   animation: fadeInBottom 0.5s;
+}
+
+@keyframes fadeInBottom {
+   0% { opacity:0; transform:translateY(100%) }
+   to { opacity:1}
+}
+
+.rotate {
+   animation: flipRotation 1s;
+}
+
+@keyframes flipRotation {
+   from { transform: rotateY(0deg) }
+   to { transform: rotateY(720deg) }
+}
+
+.login-form {
+   width: 70%;
+   &:focus {
+      border-color:#b386fe;
+   }
+}
+
+
+
+//colori login checkbox
+.form-check-input{
+   position: relative;
+   border-color: #c6c6c6;
+   &:focus {
+      box-shadow: none;
+      border-color: #c6c6c6;
+   }
+   &:checked {
+      border-color: #42424a;
+      background-color: #42424a;
+      &:after {
+         transform: translateX(21px);
+         border-color: #42424a;
+      }
+   }
+}
+
+#rememberMe:after {
+   content: "";
+   position: absolute;
+   background-color: #fff;
+   top: -3px;
+   left: -5px;
+   width: 1.25rem;
+   height: 1.25rem;
+   border-radius: 50%;
+   border: 1px solid #42424a;
+   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+   transition: transform 0.25s ease-in-out, background-color 0.25s ease-in-out;
+}
+
+.signup-form {
+   border-width: 0 0 1px 0;
+   border-radius: 0;
+   &:focus {
+      border-color: transparent;
+      &~.focus-border {
+         width: 100%;
+         transition: 0.4s;
+         left: 0;
+      }
+   }
+}
+
+.focus-border {
+   position: absolute;
+   left: 50%;
+   width: 0;
+   height: 1px;
+   background-color: var(--bs-primary);
+   transition: 0.4s;
+}
+

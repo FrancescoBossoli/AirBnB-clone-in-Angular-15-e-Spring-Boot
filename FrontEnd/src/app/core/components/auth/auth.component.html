@@ -1,0 +1,129 @@
+<button ngbDropdownItem class="dropdown-item" (click)="openModal(signup, 'f')">Registrati</button>
+<button ngbDropdownItem class="dropdown-item" (click)="openModal(login, 'f')">Accedi</button>
+
+<ng-template #login let-modal>
+   <div class="container my-auto">
+      <div class="row p-5">
+         <div class="card-header position-relative">
+            <div class="bg-primary shadow-primary rounded-3 py-3">
+               <p class="text-white font-weight-bolder text-center m-0 h3">Accedi</p>
+            </div>
+         </div>
+         <div class="card-body">
+            <form role="form" class="text-start d-flex justify-content-center px-lg-2" [formGroup]="loginForm" (ngSubmit)="tryLogin()">
+               <div class="w-75 mt-1">
+                  <div class="d-flex align-items-end justify-content-between mt-3" [class.my-3] = "this.failedLoginAttempt == false">
+                     <label class="form-label me-2">Username</label>
+                     <input type="text" class="form-control shadow-none rounded-3 login-form" formControlName= "username" [class.is-invalid] ="user.invalid && user.touched" required>
+                  </div>
+                  <div *ngIf="this.failedLoginAttempt == true" class="mx-auto d-flex align-items-center flex-column">
+                     <small class="text-danger text-center" *ngIf="user.value == ''">Il campo username è obbligatorio</small>
+                     <small class="text-danger text-center" *ngIf="user.errors == null">L'username potrebbe non essere corretto</small>
+                  </div>
+                  <div class="d-flex align-items-end justify-content-between" [class.my-3] = "this.failedLoginAttempt == false">
+                     <label class="form-label me-2">Password</label>
+                     <input type="password" class="form-control shadow-none rounded-3 login-form" formControlName= "password" [class.is-invalid] = "psw.invalid && psw.touched" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" required>
+                  </div>
+                  <div *ngIf="this.failedLoginAttempt == false" class="mx-auto d-flex align-items-center flex-column">
+                     <small class="text-danger text-center" *ngIf="psw.invalid && psw.touched">La password deve essere lunga almeno 8 caratteri, e contenere almeno una lettera minuscola, una lettera maiuscola, un numero e un carattere speciale</small>
+                  </div>
+                  <div *ngIf="this.failedLoginAttempt == true" class="mx-auto d-flex align-items-center flex-column">
+                     <small class="text-danger text-center" *ngIf="psw.value == ''">Il campo password è obbligatorio</small>
+                     <small class="text-danger text-center" *ngIf="psw.errors == null">La password potrebbe non essere corretta</small>
+                     <small class="text-danger text-center" *ngIf="psw.status == 'INVALID'">La password non è formalmente corretta</small>
+                  </div>
+                  <div class="form-check form-switch my-0 pt-1 text-center d-flex justify-content-center">
+                     <input class="form-check-input" type="checkbox" id="rememberMe" checked>
+                     <label class="form-check-label mb-0 ms-3" for="rememberMe">Ricordati di me</label>
+                  </div>
+                  <div class="text-center">
+                     <button type="submit" class="btn text-white w-75 my-4 mb-2" [class.bg-primary] = "loginForm.valid">Accedi</button>
+                  </div>
+                  <p class="mt-4 mb-0 text-sm text-center">Non hai ancora un account?
+                     <a type="button" prevent-default class="text-primary text-gradient font-weight-bold" (click)="modal.dismiss('login'); openModal(signup,'r')">Registrati</a>
+                  </p>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</ng-template>
+
+<ng-template #signup let-modal>
+   <div class="container my-auto">
+      <div class="row p-5">
+         <div class="card-header position-relative">
+            <div class="bg-info shadow-primary rounded-3 py-3">
+               <p class="text-white font-weight-bolder text-center m-0 h3">Crea un Account</p>
+            </div>
+         </div>
+         <div class="card-body">
+            <form role="form" class="text-start" autocomplete="off" [formGroup]="signupForm" (ngSubmit)="trySignup()">
+               <div class="d-flex align-items-baseline justify-content-between mx-4 mt-3" [class.my-3] = "this.failedSignupAttempt == false">
+                  <label class="form-label me-2 text-start">Nome</label>
+                  <div class="position-relative w-75">
+                     <input type="text" class="form-control shadow-none signup-form pb-0" aria-label="Nome" autocomplete="off" formControlName= "name" [class.is-invalid] ="name.invalid && name.touched" [class.is-valid] = "name.valid" pattern="^[A-Z]'?[- a-zA-Z]{2,19}$" required>
+                     <span class="focus-border"></span>
+                  </div>
+               </div>
+               <div *ngIf="this.failedSignupAttempt == true" class="mx-4 d-flex align-items-center flex-column">
+                  <small class="text-danger text-center" *ngIf="name.value == ''">Questo è un campo obbligatorio</small>
+               </div>
+               <div class="d-flex align-items-baseline justify-content-between mx-4" [class.my-3] = "this.failedSignupAttempt == false">
+                  <label class="form-label me-2 text-start">Cognome</label>
+                  <div class="position-relative w-75">
+                     <input type="text" class="form-control shadow-none signup-form pb-0" aria-label="Cognome" autocomplete="off" formControlName= "surname" [class.is-invalid] ="surname.invalid && surname.touched" [class.is-valid] = "surname.valid" pattern="^[A-Z]'?[- a-zA-Z]{1,19}$" required>
+                     <span class="focus-border"></span>
+                  </div>
+               </div>
+               <div *ngIf="this.failedSignupAttempt == true" class="mx-4 d-flex align-items-center flex-column">
+                  <small class="text-danger text-center" *ngIf="surname.value == ''">Questo è un campo obbligatorio</small>
+               </div>
+               <div class="d-flex align-items-baseline justify-content-between mx-4" [class.my-3] = "this.failedSignupAttempt == false">
+                  <label class="form-label me-2 text-start">Username</label>
+                  <div class="position-relative w-75">
+                     <input type="text" class="form-control shadow-none signup-form pb-0" aria-label="Username" autocomplete="off" formControlName= "username" [class.is-invalid] ="username.invalid && username.touched" [class.is-valid] = "username.valid" pattern="^[A-Za-z][A-Za-z0-9_]{5,19}$" required>
+                     <span class="focus-border"></span>
+                  </div>
+               </div>
+               <div *ngIf="this.failedSignupAttempt == true" class="mx-4 d-flex align-items-center flex-column">
+                  <small class="text-danger text-center" *ngIf="username.value == '' || username.invalid">L'username deve contenere 6 o più caratteri alfanumerici</small>
+               </div>
+               <div class="d-flex align-items-baseline justify-content-between mx-4" [class.my-3] = "this.failedSignupAttempt == false">
+                  <label class="form-label me-2 text-start">Email</label>
+                  <div class="position-relative w-75">
+                     <input type="email" class="form-control shadow-none signup-form pb-0" aria-label="Email" autocomplete="off" formControlName= "email" [class.is-invalid] = "email.invalid && email.touched" [class.is-valid] = "email.valid" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+                     <span class="focus-border"></span>
+                  </div>
+               </div>
+               <div *ngIf="this.failedSignupAttempt == true" class="mx-4 d-flex align-items-center flex-column">
+                  <small class="text-danger text-center" *ngIf="email.value == '' || email.invalid">L'email inserita non sembra essere corretta</small>
+               </div>
+               <div class="d-flex align-items-baseline justify-content-between mx-4" [class.my-3] = "this.failedSignupAttempt == false">
+                  <label class="form-label me-2 text-start">Password</label>
+                  <div class="position-relative w-75">
+                     <input type="password" class="form-control shadow-none signup-form pb-0" aria-label="Password" autocomplete="off" formControlName= "password" [class.is-invalid] = "password.invalid && password.touched" [class.is-valid] = "password.valid" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" required>
+                     <span class="focus-border"></span>
+                  </div>
+               </div>
+               <div *ngIf="this.failedSignupAttempt == true" class="mx-4 d-flex align-items-center flex-column">
+                  <small class="text-danger text-center" *ngIf="password.value == '' || password.invalid">La password deve essere lunga almeno 8 caratteri, e contenere almeno una lettera minuscola, una lettera maiuscola, un numero e un carattere speciale</small>
+               </div>
+               <div class="form-check ps-0 text-center d-flex justify-content-center mx-5">
+                  <input class="form-check-input bg-dark border-dark" type="checkbox" id="flexCheckDefault" checked>
+                  <label class="form-check-label ms-2" for="flexCheckDefault">Acconsento ai
+                     <a href="#" class="text-dark fw-bolder">termini</a> e alle
+                     <a href="#" class="text-dark fw-bolder">condizioni</a> del vostro sito web.
+                  </label>
+               </div>
+               <div class="text-center">
+                  <button type="submit" class="btn text-white w-75 my-4 mb-2" [class.bg-info] = "signupForm.valid" [class.bg-secondary] = "signupForm.invalid">Registrati </button>
+               </div>
+               <p class="mt-4 mb-0 text-sm text-center">Hai già un account?
+                  <a type="button" class="text-info text-gradient font-weight-bold" (click)="modal.dismiss('signup'); openModal(login,'r')">Accedi</a>
+               </p>
+            </form>
+         </div>
+      </div>
+   </div>
+</ng-template>

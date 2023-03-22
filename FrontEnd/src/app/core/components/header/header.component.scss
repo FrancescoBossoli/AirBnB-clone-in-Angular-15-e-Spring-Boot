@@ -1,0 +1,23 @@
+@import "../../../app.component.scss";
+
+.fa-duotone.fa-circle-user::after {
+   color: gray;
+}
+
+.dropdown-toggle::after {
+   display:none;
+}
+
+.nav-buttons button:hover {
+   box-shadow: 0 1px 3px grey;
+}
+
+.dropdown-menu {
+   --bs-dropdown-padding-y: 0;
+}
+
+.dropdown-item:hover:last-of-type {
+   border-radius: 0 0 10px 10px;
+}
+
+
