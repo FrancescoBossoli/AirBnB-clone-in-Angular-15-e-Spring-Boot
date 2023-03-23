@@ -2,7 +2,7 @@
    <div class="row align-items-center mt-3">
       <div class="col">
          <div class="d-flex align-items-end">
-            <a href="default.asp"><img src="../../../assets/img/logo.png" class="w-75 text-start" alt="Travel"></a>
+            <a [routerLink]= "['']"><img src="../../../assets/img/logo.png" class="w-75 text-start" alt="Travel"></a>
          </div>
       </div>
       <div class="col-6">
@@ -22,14 +22,14 @@
             <div ngbDropdown display="dynamic" class="nav-item dropdown" placement="bottom-end">
                <button type="button" class="btn btn-outline-danger rounded-5 dropdown-toggle d-flex align-items-center bg-transparent text-danger py-1" id="userMenu" ngbDropdownToggle>
                   <i class="fas fa-bars me-2 fs-6"></i>
-                  <i class="fa-duotone fa-circle-user" *ngIf="this.user == null"></i>
-                  <img *ngIf="this.user != null" class="thumbnail rounded-5" [src]="this.avatar" alt="profile pic">
+                  <i class="fa-duotone fa-circle-user" *ngIf="this.user.id == null"></i>
+                  <img *ngIf="this.user.id != null" class="thumbnail rounded-5" [src]="this.avatar" alt="profile pic">
                </button>
                <div ngbDropdownMenu class="dropdown-menu border-0 mt-1" aria-labelledby="userMenu">
-                  <app-auth *ngIf="user == null"></app-auth>
-                  <button ngbDropdownItem class="dropdown-item" *ngIf="this.user != null">Profilo Personale</button>
-                  <button ngbDropdownItem class="dropdown-item" *ngIf="this.user != null">Impostazioni</button>
-                  <button ngbDropdownItem class="dropdown-item" *ngIf="this.user != null" (click)="logout()">Logout</button>
+                  <app-auth *ngIf="user.id == null"></app-auth>
+                  <button ngbDropdownItem class="dropdown-item" *ngIf="this.user.id != null" (click)="openProfile()">Profilo Personale</button>
+                  <button ngbDropdownItem class="dropdown-item" *ngIf="this.user.id != null" (click)="openSettings()">Impostazioni</button>
+                  <button ngbDropdownItem class="dropdown-item" *ngIf="this.user.id != null" (click)="logout()">Logout</button>
                </div>
             </div>
          </div>

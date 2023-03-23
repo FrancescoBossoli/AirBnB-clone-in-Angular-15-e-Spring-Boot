@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { BehaviorSubject, catchError, map, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, tap, throwError, Observable, of } from 'rxjs';
 import { SignupData } from '../interfaces/signup-data.interface';
 import { environment } from 'src/environments/environment.development';
 
@@ -14,7 +14,7 @@ import { environment } from 'src/environments/environment.development';
 export class AuthService {
 
    jwtHelper = new JwtHelperService();
-   private authSubject = new BehaviorSubject<User | null>(null);
+   private authSubject = new BehaviorSubject<Partial<User>>({});
    user$ = this.authSubject.asObservable();
    isLoggedIn$ = this.user$.pipe(map(user => !!user));
    timeLeft:any;
@@ -50,7 +50,7 @@ export class AuthService {
    }
 
    logout() {
-      this.authSubject.next(null);
+      this.authSubject.next(({}));
       localStorage.removeItem("user")
       this.router.navigate(['/'])
       if (this.timeLeft) clearTimeout(this.timeLeft)
@@ -61,8 +61,19 @@ export class AuthService {
       if (!userData) return;
       const jwt: JwtResponse = JSON.parse(userData);
       if (this.jwtHelper.isTokenExpired(jwt.token)) return;
-      this.authSubject.next({ id: jwt.id, username: jwt.username, email: jwt.email, roles: jwt.roles, name: jwt.name, pictureUrl:jwt.pictureUrl });
+      this.authSubject.next({ id: jwt.id, username: jwt.username, email: jwt.email, roles: jwt.roles, name: jwt.name, pictureUrl:jwt.pictureUrl, token:jwt.token });
       this.autoLogout(jwt);
+   }
+
+   loggedUserData(jwt:JwtResponse):Observable<User> {
+      return this.http.post<JwtResponse>(`${environment.api}/restore`, {id: jwt.id, username: jwt.username, token:jwt.token}).pipe(
+         map((res) => {
+            let {type, ...user} = res;
+            this.authSubject.next(user);
+            return user;
+         }),
+         catchError(this.errors)
+      );
    }
 
    private errors(err: any) {

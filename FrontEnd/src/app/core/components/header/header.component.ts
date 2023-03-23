@@ -1,4 +1,4 @@
-import { UserService } from './../../services/user.service';
+import { Router } from '@angular/router';
 import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../interfaces/user.interface';
@@ -11,21 +11,16 @@ import { environment } from 'src/environments/environment.development';
 })
 export class HeaderComponent implements OnInit {
 
-   user:User|null = null;
+   emptyUser:User = Object.assign({});
+   user:User = Object.assign({});
    darkMode:boolean = false;
 
-   get avatar() { return this.user?.pictureUrl + environment.thumbnail;
+   get avatar() { return this.user?.pictureUrl + environment.thumbnail; }
 
-   }
-
-   constructor(private authServ: AuthService, private userServ: UserService) {
-
-   }
+   constructor(private authServ: AuthService, private router: Router) { }
 
    ngOnInit(): void {
-      this.authServ.user$.subscribe({
-         next: (user) => this.user = user
-      })
+      this.authServ.user$.subscribe({ next: (user) => { this.user = {...this.emptyUser, ...user} }})
    }
 
    logout():void {
@@ -37,6 +32,14 @@ export class HeaderComponent implements OnInit {
       document.body.classList.toggle("lightMode");
       this.darkMode = !this.darkMode;
       console.log(document.body)
+   }
+
+   openProfile() {
+      this.router.navigate(['profile'])
+   }
+
+   openSettings() {
+      this.router.navigate(['error'])
    }
 
 

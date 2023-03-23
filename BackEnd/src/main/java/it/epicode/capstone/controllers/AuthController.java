@@ -98,7 +98,7 @@ public class AuthController {
 		if (uOpt.isEmpty()) return ResponseEntity.badRequest().body(new MessageResponse("Error: User not Found"));
 		
 		LoggedUserDetails u = LoggedUserDetails.build(uOpt.get());
-		if (u.getUsername() != restoreRequest.getUsername() || u.getId() != restoreRequest.getId())
+		if (u.getUsername().equals(restoreRequest.getUsername()) == false || u.getId().equals(restoreRequest.getId()) == false)
 			return ResponseEntity.badRequest().body(new MessageResponse("Error: The sent details don't match with the User's ones!"));
 		
 		List<String> roles = u.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.toList());		

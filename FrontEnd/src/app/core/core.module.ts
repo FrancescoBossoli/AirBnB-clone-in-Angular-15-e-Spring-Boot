@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './components/header/header.component';
@@ -17,7 +18,8 @@ import { ReactiveFormsModule } from '@angular/forms';
    imports: [
       CommonModule,
       NgbDropdownModule,
-      ReactiveFormsModule
+      ReactiveFormsModule,
+      RouterModule
    ],
    exports: [
       HeaderComponent,
