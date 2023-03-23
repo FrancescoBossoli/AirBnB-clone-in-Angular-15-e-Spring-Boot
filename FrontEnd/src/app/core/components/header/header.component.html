@@ -6,31 +6,30 @@
          </div>
       </div>
       <div class="col-6">
-         <form class="position-relative d-flex align-items-center border border-1 border-danger px-3 rounded-5"
-                 data-bs-toggle="search" data-bs-display="static">
+         <form class="position-relative d-flex align-items-center border border-1 border-danger px-3 rounded-5" data-bs-toggle="search" data-bs-display="static">
             <span class="fas fa-search search-box-icon"></span>
-            <input class="form-control search-input fuzzy-search border-0 shadow-none" style="font-family: FontAwesome;"
-                    type="search" placeholder='Search...' aria-label="Search">
+            <input class="form-control search-input fuzzy-search border-0 shadow-none" style="font-family: FontAwesome;" type="search" placeholder='Search...' aria-label="Search">
          </form>
       </div>
       <div class="col text-end">
          <div class="btn-group nav-buttons" role="group" aria-label="Button group with nested dropdown">
-            <button type="button" class="btn btn-outline-danger rounded-5 d-flex align-items-center bg-transparent text-danger px-2" *ngIf="this.user != null">
+            <button type="button" class="btn btn-outline-danger rounded-5 d-flex align-items-center bg-transparent text-danger px-2 mx-2" *ngIf="darkMode == true" (click) = "switchTheme()">
                <i class="fas fa-sun-bright fs-5"></i>
             </button>
-            <button type="button" class="btn btn-outline-danger rounded-5 d-flex align-items-center bg-transparent text-danger mx-2">
+            <button type="button" class="btn btn-outline-danger rounded-5 d-flex align-items-center bg-transparent text-danger mx-2" *ngIf="darkMode == false" (click) = "switchTheme()">
                <i class="fas fa-moon"></i>
             </button>
             <div ngbDropdown display="dynamic" class="nav-item dropdown" placement="bottom-end">
-               <button type="button" class="btn btn-outline-danger rounded-5 dropdown-toggle d-flex align-items-center bg-transparent text-danger" id="userMenu" ngbDropdownToggle>
+               <button type="button" class="btn btn-outline-danger rounded-5 dropdown-toggle d-flex align-items-center bg-transparent text-danger py-1" id="userMenu" ngbDropdownToggle>
                   <i class="fas fa-bars me-2 fs-6"></i>
-                  <i class="fa-duotone fa-circle-user fs-4"></i>
+                  <i class="fa-duotone fa-circle-user" *ngIf="this.user == null"></i>
+                  <img *ngIf="this.user != null" class="thumbnail rounded-5" [src]="this.avatar" alt="profile pic">
                </button>
-               <div ngbDropdownMenu class="dropdown-menu border-0 shadow-sm mt-1" aria-labelledby="userMenu">
-                  <!-- <ngbd-modal-signup *ngIf="user == null"></ngbd-modal-signup> -->
+               <div ngbDropdownMenu class="dropdown-menu border-0 mt-1" aria-labelledby="userMenu">
                   <app-auth *ngIf="user == null"></app-auth>
-                  <button ngbDropdownItem class="dropdown-item">Another Action</button>
-                  <button ngbDropdownItem class="dropdown-item">Something else is here</button>
+                  <button ngbDropdownItem class="dropdown-item" *ngIf="this.user != null">Profilo Personale</button>
+                  <button ngbDropdownItem class="dropdown-item" *ngIf="this.user != null">Impostazioni</button>
+                  <button ngbDropdownItem class="dropdown-item" *ngIf="this.user != null" (click)="logout()">Logout</button>
                </div>
             </div>
          </div>

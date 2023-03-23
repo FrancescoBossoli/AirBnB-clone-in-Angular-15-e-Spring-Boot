@@ -38,8 +38,9 @@ export class AuthService {
    }
 
    generateToken(userData:JwtResponse) {
-      this.authSubject.next({ id: userData.id, username: userData.username, email: userData.email, roles: userData.roles });
-      localStorage.setItem("user", JSON.stringify(userData));
+      let {token, type, ...user} = userData;
+      this.authSubject.next(user);
+      localStorage.setItem("user", JSON.stringify({"token":token, "id":user.id, "username":user.username, "email":user.email, "roles":user.roles, "name":user.name, "pictureUrl":user.pictureUrl}));
       this.autoLogout(userData)
    }
 
@@ -60,20 +61,25 @@ export class AuthService {
       if (!userData) return;
       const jwt: JwtResponse = JSON.parse(userData);
       if (this.jwtHelper.isTokenExpired(jwt.token)) return;
-      this.authSubject.next({ id: jwt.id, username: jwt.username, email: jwt.email, roles: jwt.roles });
+      this.authSubject.next({ id: jwt.id, username: jwt.username, email: jwt.email, roles: jwt.roles, name: jwt.name, pictureUrl:jwt.pictureUrl });
       this.autoLogout(jwt);
    }
 
    private errors(err: any) {
-      switch (err.error) {
-         case "Email and password are required":
-            return throwError(() => new Error("L'e-mail e la Password sono necessarie"));
-         case "Email already exists":
+      console.log(err)
+      switch (err.error.message) {
+         case "Error: Username is already taken!":
+            return throwError(() => new Error("L'username è già stato scelto"));
+         case "Error: Email is already in use!":
             return throwError(() => new Error("L'e-mail risulta già associata ad un Account esistente"));
-         case "Email is invalid":
+         case "Error: Email is invalid!":
             return throwError(() => new Error("L'e-mail inserita non sembra essere formalmente corretta"));
-         case "Cannot find user":
-            return throwError(() => new Error("Non è stato possibile trovare un Account associato alle credenziali inserite"));
+         case "Error: There is no Account associated to this Username!":
+            return throwError(() => new Error("L'username non sembra essere associato a un Account esistente"));
+         case "Error: User not Found":
+            return throwError(() => new Error("L'utente non risulta presente nel database"));
+         case "Error: The sent details don't match with the User's ones!":
+            return throwError(() => new Error("I dettagli forniti non corrispondono a quelli presenti nel database"));
          default:
             return throwError(() => new Error("Errore della chiamata"));
       };

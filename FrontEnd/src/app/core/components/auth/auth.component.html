@@ -11,25 +11,25 @@
          </div>
          <div class="card-body">
             <form role="form" class="text-start d-flex justify-content-center px-lg-2" [formGroup]="loginForm" (ngSubmit)="tryLogin()">
-               <div class="w-75 mt-1">
+               <div class="mt-1">
                   <div class="d-flex align-items-end justify-content-between mt-3" [class.my-3] = "this.failedLoginAttempt == false">
                      <label class="form-label me-2">Username</label>
                      <input type="text" class="form-control shadow-none rounded-3 login-form" formControlName= "username" [class.is-invalid] ="user.invalid && user.touched" required>
                   </div>
                   <div *ngIf="this.failedLoginAttempt == true" class="mx-auto d-flex align-items-center flex-column">
                      <small class="text-danger text-center" *ngIf="user.value == ''">Il campo username è obbligatorio</small>
-                     <small class="text-danger text-center" *ngIf="user.errors == null">L'username potrebbe non essere corretto</small>
+                     <small class="text-danger text-center" *ngIf="user.errors == null && wrongUsername == true">Non ci sono Accounts associati a questo Username</small>
                   </div>
                   <div class="d-flex align-items-end justify-content-between" [class.my-3] = "this.failedLoginAttempt == false">
                      <label class="form-label me-2">Password</label>
-                     <input type="password" class="form-control shadow-none rounded-3 login-form" formControlName= "password" [class.is-invalid] = "psw.invalid && psw.touched" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" required>
+                     <input type="password" class="form-control shadow-none rounded-3 login-form" formControlName= "password" [class.is-invalid] = "psw.invalid && psw.touched" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$" required>
                   </div>
                   <div *ngIf="this.failedLoginAttempt == false" class="mx-auto d-flex align-items-center flex-column">
                      <small class="text-danger text-center" *ngIf="psw.invalid && psw.touched">La password deve essere lunga almeno 8 caratteri, e contenere almeno una lettera minuscola, una lettera maiuscola, un numero e un carattere speciale</small>
                   </div>
                   <div *ngIf="this.failedLoginAttempt == true" class="mx-auto d-flex align-items-center flex-column">
                      <small class="text-danger text-center" *ngIf="psw.value == ''">Il campo password è obbligatorio</small>
-                     <small class="text-danger text-center" *ngIf="psw.errors == null">La password potrebbe non essere corretta</small>
+                     <small class="text-danger text-center" *ngIf="psw.errors == null && wrongUsername == false">La password non risulta essere corretta</small>
                      <small class="text-danger text-center" *ngIf="psw.status == 'INVALID'">La password non è formalmente corretta</small>
                   </div>
                   <div class="form-check form-switch my-0 pt-1 text-center d-flex justify-content-center">
@@ -37,7 +37,7 @@
                      <label class="form-check-label mb-0 ms-3" for="rememberMe">Ricordati di me</label>
                   </div>
                   <div class="text-center">
-                     <button type="submit" class="btn text-white w-75 my-4 mb-2" [class.bg-primary] = "loginForm.valid">Accedi</button>
+                     <button type="submit" class="btn text-white w-75 my-4 mb-2" [class.bg-primary] = "loginForm.valid" [class.bg-secondary] = "loginForm.invalid">Accedi</button>
                   </div>
                   <p class="mt-4 mb-0 text-sm text-center">Non hai ancora un account?
                      <a type="button" prevent-default class="text-primary text-gradient font-weight-bold" (click)="modal.dismiss('login'); openModal(signup,'r')">Registrati</a>
@@ -87,7 +87,8 @@
                   </div>
                </div>
                <div *ngIf="this.failedSignupAttempt == true" class="mx-4 d-flex align-items-center flex-column">
-                  <small class="text-danger text-center" *ngIf="username.value == '' || username.invalid">L'username deve contenere 6 o più caratteri alfanumerici</small>
+                  <small class="text-danger text-center" *ngIf="username.value == '' || username.invalid">L'Username deve contenere 6 o più caratteri alfanumerici</small>
+                  <small class="text-danger text-center" *ngIf="username.errors == null && userTaken == true">Questo Username appartiene già ad un utente registrato</small>
                </div>
                <div class="d-flex align-items-baseline justify-content-between mx-4" [class.my-3] = "this.failedSignupAttempt == false">
                   <label class="form-label me-2 text-start">Email</label>
@@ -97,12 +98,13 @@
                   </div>
                </div>
                <div *ngIf="this.failedSignupAttempt == true" class="mx-4 d-flex align-items-center flex-column">
-                  <small class="text-danger text-center" *ngIf="email.value == '' || email.invalid">L'email inserita non sembra essere corretta</small>
+                  <small class="text-danger text-center" *ngIf="email.value == '' || email.invalid">L'email inserita non è formalmente corretta</small>
+                  <small class="text-danger text-center" *ngIf="email.errors == null && emailPresent == true">Quest'email è già associata ad un Account esistente</small>
                </div>
                <div class="d-flex align-items-baseline justify-content-between mx-4" [class.my-3] = "this.failedSignupAttempt == false">
                   <label class="form-label me-2 text-start">Password</label>
                   <div class="position-relative w-75">
-                     <input type="password" class="form-control shadow-none signup-form pb-0" aria-label="Password" autocomplete="off" formControlName= "password" [class.is-invalid] = "password.invalid && password.touched" [class.is-valid] = "password.valid" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" required>
+                     <input type="password" class="form-control shadow-none signup-form pb-0" aria-label="Password" autocomplete="off" formControlName= "password" [class.is-invalid] = "password.invalid && password.touched" [class.is-valid] = "password.valid" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$" required>
                      <span class="focus-border"></span>
                   </div>
                </div>

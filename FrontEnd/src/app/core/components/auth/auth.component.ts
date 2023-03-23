@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewEncapsulation, ViewChildren } from '@angular/core';
+import { Component, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -32,9 +32,11 @@ export class AuthComponent {
    get surname() { return this.signupForm.controls.surname }
    get email() { return this.signupForm.controls.email }
 
-
    failedLoginAttempt: boolean = false;
    failedSignupAttempt: boolean = false;
+   userTaken: boolean = false;
+   emailPresent: boolean = false;
+   wrongUsername: boolean = false;
 
    constructor(private modalServ: NgbModal, private authServ: AuthService) { }
 
@@ -44,6 +46,7 @@ export class AuthComponent {
    }
 
    async tryLogin() {
+      this.wrongUsername = false;
       if (this.loginForm.status != "INVALID") {
          this.authServ.login({username: this.user.value, password:this.psw.value}).subscribe({
             next: (res) => {
@@ -51,7 +54,13 @@ export class AuthComponent {
                this.failedLoginAttempt = false;
                this.modalServ.dismissAll();
             },
-            error: (err) => this.failedLoginAttempt = true
+            error: (err) => {
+               this.failedLoginAttempt = true;
+               switch(err.message) {
+                  case "L'username non sembra essere associato a un Account esistente":
+                     this.wrongUsername = true;
+               }
+            }
          });
       }
       else this.failedLoginAttempt = true;
@@ -59,6 +68,8 @@ export class AuthComponent {
 
    async trySignup() {
       console.log(this.signupForm)
+      this.userTaken = false;
+      this.emailPresent = false;
       if (this.signupForm.status != "INVALID") {
          this.authServ.signup({
             username: this.username.value,
@@ -72,9 +83,16 @@ export class AuthComponent {
                this.failedSignupAttempt = false;
                this.modalServ.dismissAll();
             },
-            error: (err) => {
+            error: (err:Error) => {
                this.failedSignupAttempt = true
-               console.log(err)
+               switch(err.message) {
+                  case "L'username è già stato scelto":
+                     this.userTaken = true;
+                     break;
+                  case "L'e-mail risulta già associata ad un Account esistente":
+                     this.emailPresent = true;
+                     break;
+               }
             }
          });
       }

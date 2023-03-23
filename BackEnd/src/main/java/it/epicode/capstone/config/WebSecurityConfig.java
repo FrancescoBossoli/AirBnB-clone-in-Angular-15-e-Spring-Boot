@@ -16,7 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import it.epicode.capstone.auth.AuthEntryPointJwt;
 import it.epicode.capstone.auth.AuthTokenFilter;
-import it.epicode.capstone.services.AccessDetailsService;
+import it.epicode.capstone.services.LoggedUserDetailsService;
 
 
 @Configuration
@@ -24,7 +24,7 @@ import it.epicode.capstone.services.AccessDetailsService;
 public class WebSecurityConfig {
 
 	@Autowired
-	AccessDetailsService adS;
+	LoggedUserDetailsService adS;
 
 	@Autowired
 	private AuthEntryPointJwt unauthorizedHandler;

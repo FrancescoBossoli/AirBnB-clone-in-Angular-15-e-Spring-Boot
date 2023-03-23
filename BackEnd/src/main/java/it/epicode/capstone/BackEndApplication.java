@@ -69,9 +69,9 @@ public class BackEndApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-	//	if (roleServ.getAllRoles().size() == 0 ) {
+		if (roleServ.getAllRoles().size() == 0 ) {
 			populateDb();
-	//	}		
+		}		
 	}
 	
 	public void populateDb() {

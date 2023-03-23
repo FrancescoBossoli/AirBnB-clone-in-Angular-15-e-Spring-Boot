@@ -1,7 +1,14 @@
 @import "../../../app.component.scss";
 
-.fa-duotone.fa-circle-user::after {
-   color: gray;
+.fa-duotone.fa-circle-user {
+   font-size: 26px;
+      &::after {
+      color: gray;
+   }
+}
+
+.thumbnail {
+   width:26px;
 }
 
 .dropdown-toggle::after {
@@ -17,7 +24,7 @@
 }
 
 .dropdown-item:hover:last-of-type {
-   border-radius: 0 0 10px 10px;
+   border-radius: 0 0 6px 6px;
 }
 
 

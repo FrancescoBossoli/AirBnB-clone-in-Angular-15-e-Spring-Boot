@@ -5,6 +5,60 @@
    // --bs-primary: #e91e63;
    --bs-info-rgb: 122, 136, 236;
    --bs-primary-rgb: 233, 30, 99;
+
+}
+
+.lightMode {
+   --bs-body-color: #212529;
+   --bs-body-bg: #fff;
+
+}
+
+.darkMode {
+   --bs-body-color: #dee2e6;
+   --bs-body-bg: #212529;
+
+   #userMenu~.dropdown-menu .dropdown-item:hover {
+      box-shadow: 0 1px 3px #b11f1f;
+   }
+}
+
+.modal {
+   --bs-modal-bg: var(--bs-body-bg);
+}
+
+.form-control, .form-control:focus {
+   background-color: var(--bs-body-bg);
+   color: var(--bs-body-color);
+}
+
+.dropdown-menu, .dropdown-item {
+   --bs-dropdown-color: var(--bs-body-color);
+   --bs-dropdown-bg: var(--bs-body-bg);
+   color: var(--bs-body-color);
+}
+
+.dropdown-menu {
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+// .dropdown-item:hover {
+//    box-shadow: 0 1px 3px grey;
+// }
+.dropdown-item {
+   &:active {
+      background-color: transparent;
+   }
+   &:hover {
+      background-color:indianred;
+
+   }
+   &:first-child:hover {
+      border-radius: 6px 6px 0 0;
+   }
+   &:last-child:hover {
+      border-radius: 0 0 6px 6px;
+   }
 }
 
 a {

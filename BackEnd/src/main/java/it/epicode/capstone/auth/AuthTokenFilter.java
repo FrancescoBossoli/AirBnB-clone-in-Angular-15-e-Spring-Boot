@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-import it.epicode.capstone.services.AccessDetailsService;
+import it.epicode.capstone.services.LoggedUserDetailsService;
 import it.epicode.capstone.utils.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,7 +22,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 	@Autowired
 	private JwtUtils jU;
 	@Autowired
-	private AccessDetailsService udS;
+	private LoggedUserDetailsService udS;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

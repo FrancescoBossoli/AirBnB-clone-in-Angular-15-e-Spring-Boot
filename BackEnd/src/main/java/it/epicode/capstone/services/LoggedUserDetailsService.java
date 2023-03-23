@@ -6,12 +6,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import it.epicode.capstone.models.AccessDetails;
+import it.epicode.capstone.models.LoggedUserDetails;
 import it.epicode.capstone.models.User;
 import it.epicode.capstone.repositories.UserRepository;
 
 @Service
-public class AccessDetailsService implements UserDetailsService {
+public class LoggedUserDetailsService implements UserDetailsService {
 	
 	@Autowired
 	UserRepository uR;
@@ -21,6 +21,6 @@ public class AccessDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String x) throws UsernameNotFoundException {
 		User u = uR.findUserByUsername(x)
 				.orElseThrow(() -> new UsernameNotFoundException("No User with Username '" + x + "' was Found."));
-		return AccessDetails.build(u);
+		return LoggedUserDetails.build(u);
 	}
 }
