@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
+import { NgbPaginationModule, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -11,7 +12,9 @@ import { ProfileComponent } from './profile.component';
    ],
    imports: [
       CommonModule,
-      ProfileRoutingModule
+      ProfileRoutingModule,
+      NgbRatingModule,
+      NgbPaginationModule
    ]
 })
 export class ProfileModule { }

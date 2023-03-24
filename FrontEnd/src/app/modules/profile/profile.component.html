@@ -1,5 +1,89 @@
-<div class="container-fluid px-2 px-md-4">
-   <div class="p-0 position-relative overflow-hidden d-flex align-items-center rounded-5 mt-4 illustration">
-      <span class="mask opacity-50"></span>
-    </div>
+<div class="container-xxl px-2 px-md-4">
+   <div class="p-0 position-relative overflow-hidden d-flex align-items-center rounded-5 mt-2 illustration">
+      <span class="mask position-absolute w-100 h-100"></span>
+   </div>
+   <div class="card card-body mx-3 mx-md-5 profile rounded-4 p-5">
+      <div class="row g-4 mb-2">
+         <div class="col-12 col-lg-4">
+            <div class="row g-4 mb-2">
+               <div class="badger col-12 col-md col-xl-12 rounded-4 me-md-2 me-lg-0 p-4 border border-danger border-1">
+                  <div class="d-flex justify-content-center w-100" aria-busy="false" aria-label="User Profile">
+                     <img class="user-pic rounded-circle align-bottom my-4 my-lg-2" aria-hidden="true" alt="User Profile" [src] = profilePic>
+                  </div>
+                  <p class="text-center fw-bolder h5">{{user.name}} {{user.surname}}</p>
+                  <div class="d-flex justify-content-center">
+                     <div [ngSwitch]="userClass" class="text-start">
+                        <p *ngSwitchCase="'Administrator'"><i class="fa-sharp fa-solid fa-crown"></i> Administrator</p>
+                        <p *ngSwitchCase="'SuperHost'"><i class="fa-solid fa-bolt"></i> SuperHost</p>
+                        <p *ngSwitchCase="'Host'"><i class="fa-solid fa-house-user"></i> Host</p>
+                        <p *ngSwitchCase="'User'"><i class="fa-solid fa-user"></i> Standard User</p>
+                        <p class="text-start"><i class="fa-sharp fa-solid fa-star"></i> {{totalReviews}} Recensioni</p>
+                        <p *ngIf="user.verifications.length != 0" class="text-start"><i class="fa-solid fa-address-card"></i> Identità verificata</p>
+                     </div>
+                  </div>
+               </div>
+               <div class="badger col-12 col-md col-xl-12 rounded-4 ms-md-2 ms-lg-0 p-4 border border-danger border-1 d-flex flex-column justify-content-center">
+                  <p class="text-center fw-bolder h6">Residenza:</p>
+                  <p class="text-center">{{user.location}}</p>
+                  <p class="text-center fw-bolder h6 mt-2">Contatti verificati:</p>
+                  <div class="d-flex justify-content-center ">
+                     <div class="d-flex flex-column">
+                        <div *ngFor="let contact of user.verifications" class="text-start">
+                           <p *ngIf="contact.name == 'phone'"><i class="fa-solid fa-circle-phone"></i> Cellulare</p>
+                           <p *ngIf="contact.name == 'email'"><i class="fa-sharp fa-solid fa-circle-envelope"></i> e-mail</p>
+                           <p *ngIf="contact.name == 'work_email'"><i class="fa-sharp fa-solid fa-circle-envelope"></i> e-mail lavorativa</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-12 col-lg-8 p-0 ps-lg-4">
+            <div class="badger rounded-4 w-100 p-4 border border-danger border-1 mb-4">
+               <p class="text-start h5">Cosa far sapere agli altri?</p>
+               <p>{{user.about}}</p>
+            </div>
+            <div class="badger rounded-4 w-100 p-4 border border-danger border-1 mb-4" *ngIf="user.reviews.length > 0">
+               <p class="text-start h5">Le tue recensioni:</p>
+               <div *ngFor="let review of user.reviews| slice: (ownReviewsPage-1) * 3 : ownReviewsPage * 3" class="text-start">
+                  <div class="rounded-4 w-100 px-3 py-2 my-4 border border-danger border-1">
+                     <div class="d-flex">
+                        <p class="pe-2 mb-0">Date: {{review.date}}</p>
+                        <ngb-rating [(rate)]="review.score" [starTemplate]="stars" [readonly]="true" [max]="5"></ngb-rating>
+                        <ng-template #stars let-fill="fill">
+                           <i class="fa-sharp fa-solid fa-star-sharp position-relative d-inline-block fs-6 text-secondary">
+                           <i *ngIf="fill > 0" class="fa-sharp fa-solid fa-star-sharp position-absolute d-inline-block fs-6 text-warning overflow-hidden filled" [style.width.%]="fill"></i>
+                           </i>
+                        </ng-template>
+                     </div>
+                     <p class="mb-0">{{review.comment}}</p>
+                  </div>
+               </div>
+               <div class="d-flex justify-content-center">
+                  <ngb-pagination [collectionSize]="user.reviews.length" [pageSize]=3 [(page)]="ownReviewsPage" aria-label="Default pagination"></ngb-pagination>
+               </div>
+            </div>
+            <div class="badger rounded-4 w-100 p-4 border border-danger border-1">
+               <p class="text-start h5">Le recensioni di chi è stato tuo ospite:</p>
+               <div *ngFor="let review of receivedReviews| slice: (receivedReviewsPage-1) * 5 : receivedReviewsPage * 5" class="text-start">
+                  <div class="rounded-4 w-100 px-3 py-2 my-4 border border-danger border-1">
+                     <div class="d-flex">
+                        <p class="pe-2 mb-0">Date: {{review.date}}</p>
+                        <ngb-rating [(rate)]="review.score" [starTemplate]="stars" [readonly]="true" [max]="5"></ngb-rating>
+                        <ng-template #stars let-fill="fill">
+                           <i class="fa-sharp fa-solid fa-star-sharp position-relative d-inline-block fs-6 text-secondary">
+                           <i *ngIf="fill > 0" class="fa-sharp fa-solid fa-star-sharp position-absolute d-inline-block fs-6 text-warning overflow-hidden filled" [style.width.%]="fill"></i>
+                           </i>
+                        </ng-template>
+                     </div>
+                     <p class="mb-0">{{review.comment}}</p>
+                  </div>
+               </div>
+               <div class="d-flex justify-content-center">
+                  <ngb-pagination [collectionSize]="receivedReviews.length" [pageSize]=5 [(page)]="receivedReviewsPage" aria-label="Default pagination"></ngb-pagination>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
 </div>

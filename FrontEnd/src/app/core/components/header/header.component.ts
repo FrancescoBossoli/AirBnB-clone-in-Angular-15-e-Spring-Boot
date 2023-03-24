@@ -14,6 +14,7 @@ export class HeaderComponent implements OnInit {
    emptyUser:User = Object.assign({});
    user:User = Object.assign({});
    darkMode:boolean = false;
+   route = this.router.url;
 
    get avatar() { return this.user?.pictureUrl + environment.thumbnail; }
 
