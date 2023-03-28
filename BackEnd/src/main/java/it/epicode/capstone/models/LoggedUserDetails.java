@@ -32,7 +32,8 @@ public class LoggedUserDetails implements UserDetails {
 	private Set<Verification> verifications;
 	private Set<Listing> listings;
 	private Set<Review> reviews;
-	private Set<Booking> bookings;	
+	private Set<Booking> bookings;
+	private Set<Listing> favourites;
 	private Collection<? extends GrantedAuthority> authorities;	
 
 	public static LoggedUserDetails build(User u) {
@@ -40,7 +41,7 @@ public class LoggedUserDetails implements UserDetails {
 				role -> new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList() );
 		return new LoggedUserDetails(u.getId(), u.getUsername(), u.getEmail(), u.getPassword(), u.getName(), u.getSurname(),
 				u.getHostSince(), u.getLocation(), u.getNeighbourhood(), u.getAbout(), u.getPictureUrl(), u.getSpokenLanguages(),
-				u.getVerifications(), u.getListings(), u.getReviews(), u.getBookings(), authorities);
+				u.getVerifications(), u.getListings(), u.getReviews(), u.getBookings(), u.getFavourites(), authorities);
 	}
 
 	@Override

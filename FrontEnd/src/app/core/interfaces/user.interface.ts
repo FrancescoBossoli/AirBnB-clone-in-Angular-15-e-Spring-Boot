@@ -19,5 +19,6 @@ export interface User {
    listings: Listing[];
    reviews: Review[];
    bookings: Booking[];
+   favourites: Listing[];
    token: string;
 }

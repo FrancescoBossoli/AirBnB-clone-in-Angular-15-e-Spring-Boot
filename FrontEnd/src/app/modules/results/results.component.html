@@ -1,0 +1,17 @@
+<div>
+   <div class="row px-3 px-sm-5 position-relative">
+      <div class="col-12 order-1 order-lg-0 col-lg-7 col-xl-8" id="results">
+         <p class="text-center text-lg-start">Sono stati trovati <span>{{listings.length}}</span> risultati.</p>
+         <div class="row" *ngIf="listings != []">
+            <app-preview [listing]="listing" [favourites]="user.favourites" *ngFor="let listing of listings" class="col-12 col-sm-6 col-xl-4" ></app-preview>
+         </div>
+      </div>
+      <div class="col-12 order-0 order-lg-1 col-lg-5 col-xl-4 map-container">
+         <div class="ratio ratio-1x1 my-2" [class.sticky-top] = "listings.length > 6">
+            <div id="map" class="rounded-circle"></div>
+         </div>
+
+      </div>
+   </div>
+
+</div>

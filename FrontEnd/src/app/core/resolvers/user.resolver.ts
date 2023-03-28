@@ -5,7 +5,7 @@ import { User } from '../interfaces/user.interface';
 import { JwtResponse } from '../interfaces/jwt-response.interface';
 
 
-export const profileResolver: ResolveFn<User> = () => {
+export const userResolver: ResolveFn<User> = () => {
    const authServ = inject(AuthService);
    let emptyUser = Object.assign({});
    let user:User = Object.assign({});

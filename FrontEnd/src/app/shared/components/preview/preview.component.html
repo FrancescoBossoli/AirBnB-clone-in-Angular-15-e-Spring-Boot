@@ -1,0 +1,12 @@
+<div>
+   <div class="ratio ratio-4x3">
+      <img [src]="listing.pictures[0] + outputFormat" [alt]="listing.name + '\'s preview'" class="rounded-4">
+      <i class="fa-sharp fa-regular fa-circle-star fs-3 text-end p-2" [class.opacity-50] = "isFavourite == false" [class.text-success.bg-transparent] = "isFavourite == true" #favourite (click)="setFavourite()"></i>
+   </div>
+<p class="fw-semibold mb-0 text-truncate">{{listing.name}}</p>
+<div class="d-flex justify-content-between">
+   <p><span class="fw-semibold">€{{listing.price}}</span>/notte</p>
+   <p class="me-1"><i class="fa-sharp fa-solid fa-star-sharp"></i> {{averageVote | number:'1.0-2'}}</p>
+</div>
+
+</div>

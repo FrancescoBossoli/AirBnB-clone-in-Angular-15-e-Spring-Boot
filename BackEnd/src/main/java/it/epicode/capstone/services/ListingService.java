@@ -7,7 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import it.epicode.capstone.models.Listing;
-import it.epicode.capstone.models.User;
 import it.epicode.capstone.repositories.ListingRepository;
 import lombok.extern.slf4j.Slf4j;
 

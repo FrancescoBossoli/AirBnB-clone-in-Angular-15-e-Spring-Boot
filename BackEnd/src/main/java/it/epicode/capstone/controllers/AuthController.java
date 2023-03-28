@@ -104,7 +104,7 @@ public class AuthController {
 		List<String> roles = u.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.toList());		
 		return ResponseEntity.ok(new JwtResponse(restoreRequest.getToken(), u.getId(), u.getUsername(), u.getEmail(), roles, u.getName(), u.getSurname(),
 				u.getHostSince(), u.getLocation(), u.getNeighbourhood(), u.getAbout(), u.getPictureUrl(), u.getSpokenLanguages(),
-				u.getVerifications(), u.getListings(), u.getReviews(), u.getBookings() ));
+				u.getVerifications(), u.getListings(), u.getReviews(), u.getBookings(), u.getFavourites()));
 	}
 	
 	public ResponseEntity<?> returnToken(Authentication a) {
@@ -116,6 +116,6 @@ public class AuthController {
 
 		return ResponseEntity.ok(new JwtResponse(jwt, u.getId(), u.getUsername(), u.getEmail(), roles, u.getName(), u.getSurname(),
 				u.getHostSince(), u.getLocation(), u.getNeighbourhood(), u.getAbout(), u.getPictureUrl(), u.getSpokenLanguages(),
-				u.getVerifications(), u.getListings(), u.getReviews(), u.getBookings() ));
+				u.getVerifications(), u.getListings(), u.getReviews(), u.getBookings(), u.getFavourites()));
 	}
 }

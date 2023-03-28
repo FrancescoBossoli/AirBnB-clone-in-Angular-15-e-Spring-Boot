@@ -6,7 +6,7 @@
       <div class="row g-4 mb-2">
          <div class="col-12 col-lg-4">
             <div class="row g-4 mb-2">
-               <div class="badger col-12 col-md col-xl-12 rounded-4 me-md-2 me-lg-0 p-4 border border-danger border-1">
+               <div class="badger col-12 col-md col-xl-12 rounded-4 me-md-2 me-lg-0 p-4 border border-primary border-1">
                   <div class="d-flex justify-content-center w-100" aria-busy="false" aria-label="User Profile">
                      <img class="user-pic rounded-circle align-bottom my-4 my-lg-2" aria-hidden="true" alt="User Profile" [src] = profilePic>
                   </div>
@@ -22,7 +22,7 @@
                      </div>
                   </div>
                </div>
-               <div class="badger col-12 col-md col-xl-12 rounded-4 ms-md-2 ms-lg-0 p-4 border border-danger border-1 d-flex flex-column justify-content-center">
+               <div class="badger col-12 col-md col-xl-12 rounded-4 ms-md-2 ms-lg-0 p-4 border border-primary border-1 d-flex flex-column justify-content-center">
                   <p class="text-center fw-bolder h6">Residenza:</p>
                   <p class="text-center">{{user.location}}</p>
                   <p class="text-center fw-bolder h6 mt-2">Contatti verificati:</p>
@@ -39,14 +39,14 @@
             </div>
          </div>
          <div class="col-12 col-lg-8 p-0 ps-lg-4">
-            <div class="badger rounded-4 w-100 p-4 border border-danger border-1 mb-4">
+            <div class="badger rounded-4 w-100 p-4 border border-primary border-1 mb-4">
                <p class="text-start h5">Cosa far sapere agli altri?</p>
                <p>{{user.about}}</p>
             </div>
-            <div class="badger rounded-4 w-100 p-4 border border-danger border-1 mb-4" *ngIf="user.reviews.length > 0">
+            <div class="badger rounded-4 w-100 p-4 border border-primary border-1 mb-4" *ngIf="user.reviews.length > 0">
                <p class="text-start h5">Le tue recensioni:</p>
                <div *ngFor="let review of user.reviews| slice: (ownReviewsPage-1) * 3 : ownReviewsPage * 3" class="text-start">
-                  <div class="rounded-4 w-100 px-3 py-2 my-4 border border-danger border-1">
+                  <div class="rounded-4 w-100 px-3 py-2 my-4 border border-primary border-1">
                      <div class="d-flex">
                         <p class="pe-2 mb-0">Date: {{review.date}}</p>
                         <ngb-rating [(rate)]="review.score" [starTemplate]="stars" [readonly]="true" [max]="5"></ngb-rating>
@@ -63,10 +63,10 @@
                   <ngb-pagination [collectionSize]="user.reviews.length" [pageSize]=3 [(page)]="ownReviewsPage" aria-label="Default pagination"></ngb-pagination>
                </div>
             </div>
-            <div class="badger rounded-4 w-100 p-4 border border-danger border-1">
+            <div class="badger rounded-4 w-100 p-4 border border-primary border-1" *ngIf="receivedReviews.length > 0">
                <p class="text-start h5">Le recensioni di chi è stato tuo ospite:</p>
                <div *ngFor="let review of receivedReviews| slice: (receivedReviewsPage-1) * 5 : receivedReviewsPage * 5" class="text-start">
-                  <div class="rounded-4 w-100 px-3 py-2 my-4 border border-danger border-1">
+                  <div class="rounded-4 w-100 px-3 py-2 my-4 border border-primary border-1">
                      <div class="d-flex">
                         <p class="pe-2 mb-0">Date: {{review.date}}</p>
                         <ngb-rating [(rate)]="review.score" [starTemplate]="stars" [readonly]="true" [max]="5"></ngb-rating>

@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit {
    }
 
    openSettings() {
-      this.router.navigate(['error'])
+      this.router.navigate(['results'])
    }
 
 

@@ -27,6 +27,10 @@ public class UserService {
 		else log.info("This User is already present in the Database.");
 	}
 	
+	public void edit(User u) {
+		uR.save(u);
+	}
+	
 	public Optional<User> getUserById(Long id) {
 		return uR.findById(id);
 	}

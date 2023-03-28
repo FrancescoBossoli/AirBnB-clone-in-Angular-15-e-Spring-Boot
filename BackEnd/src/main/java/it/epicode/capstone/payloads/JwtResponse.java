@@ -33,10 +33,11 @@ public class JwtResponse {
 	private Set<Listing> listings;
 	private Set<Review> reviews;
 	private Set<Booking> bookings;
+	private Set<Listing> favourites;
 
 	public JwtResponse(String accessToken, Long id, String username, String email, List<String> roles, String name, String surname, 
 			LocalDate hostSince, String location, String neighbourhood, String about, String pictureUrl, Set<Language> spokenLanguages, 
-			Set<Verification> verifications, Set<Listing> listings, Set<Review> reviews, Set<Booking> bookings) {
+			Set<Verification> verifications, Set<Listing> listings, Set<Review> reviews, Set<Booking> bookings, Set<Listing> favourites) {
 		this.token = accessToken;
 		this.id = id;
 		this.username = username;
@@ -54,5 +55,6 @@ public class JwtResponse {
 		this.listings = listings;
 		this.reviews = reviews;
 		this.bookings = bookings;
+		this.favourites = favourites;
 	}
 }
