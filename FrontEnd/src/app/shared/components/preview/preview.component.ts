@@ -36,9 +36,6 @@ constructor(private listServ: ListingService) {}
 
    setFavourite() {
       this.isFavourite = !this.isFavourite;
-      console.log(this.favourites)
-      console.log(this.listing)
-      console.log(this.favourites.includes(this.listing))
       let check:boolean = false;
       this.favourites.forEach((favourite) => {
          if (favourite.id == this.listing.id) check = true

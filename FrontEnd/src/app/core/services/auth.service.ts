@@ -38,9 +38,9 @@ export class AuthService {
    }
 
    generateToken(userData:JwtResponse) {
-      let {token, type, ...user} = userData;
+      let {type, ...user} = userData;
       this.authSubject.next(user);
-      localStorage.setItem("user", JSON.stringify({"token":token, "id":user.id, "username":user.username, "email":user.email, "roles":user.roles, "name":user.name, "pictureUrl":user.pictureUrl}));
+      localStorage.setItem("user", JSON.stringify({"token":user.token, "id":user.id, "username":user.username, "email":user.email, "roles":user.roles, "name":user.name, "pictureUrl":user.pictureUrl}));
       this.autoLogout(userData)
    }
 

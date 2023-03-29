@@ -43,39 +43,50 @@
                <p class="text-start h5">Cosa far sapere agli altri?</p>
                <p>{{user.about}}</p>
             </div>
-            <div class="badger rounded-4 w-100 p-4 border border-primary border-1 mb-4" *ngIf="user.reviews.length > 0">
+            <div class="badger rounded-4 w-100 p-4 border border-primary border-1 mb-4">
                <p class="text-start h5">Le tue recensioni:</p>
-               <div *ngFor="let review of user.reviews| slice: (ownReviewsPage-1) * 3 : ownReviewsPage * 3" class="text-start">
-                  <div class="rounded-4 w-100 px-3 py-2 my-4 border border-primary border-1">
-                     <div class="d-flex">
-                        <p class="pe-2 mb-0">Date: {{review.date}}</p>
-                        <ngb-rating [(rate)]="review.score" [starTemplate]="stars" [readonly]="true" [max]="5"></ngb-rating>
-                        <ng-template #stars let-fill="fill">
-                           <i class="fa-sharp fa-solid fa-star-sharp position-relative d-inline-block fs-6 text-secondary">
-                           <i *ngIf="fill > 0" class="fa-sharp fa-solid fa-star-sharp position-absolute d-inline-block fs-6 text-warning overflow-hidden filled" [style.width.%]="fill"></i>
-                           </i>
-                        </ng-template>
+               <div *ngIf="user.reviews.length > 0">
+                  <div *ngFor="let review of user.reviews| slice: (ownReviewsPage-1) * 3 : ownReviewsPage * 3" class="text-start">
+                     <div class="rounded-4 w-100 px-3 py-2 my-4 border border-primary border-1">
+                        <div class="d-flex">
+                           <p class="pe-2 mb-0">Date: {{review.date}}</p>
+                           <ngb-rating [(rate)]="review.score" [starTemplate]="stars" [readonly]="true" [max]="5"></ngb-rating>
+                           <ng-template #stars let-fill="fill">
+                              <i class="fa-sharp fa-solid fa-star-sharp position-relative d-inline-block fs-6 text-secondary">
+                              <i *ngIf="fill > 0" class="fa-sharp fa-solid fa-star-sharp position-absolute d-inline-block fs-6 text-warning overflow-hidden filled" [style.width.%]="fill"></i>
+                              </i>
+                           </ng-template>
+                        </div>
+                        <p class="mb-0">{{review.comment}}</p>
                      </div>
-                     <p class="mb-0">{{review.comment}}</p>
                   </div>
                </div>
-               <div class="d-flex justify-content-center">
+               <div *ngIf="user.reviews.length == 0">
+                  <p>Non hai ancora lasciato recensioni</p>
+               </div>
+               <div class="d-flex justify-content-center" *ngIf="user.reviews.length > 3">
                   <ngb-pagination [collectionSize]="user.reviews.length" [pageSize]=3 [(page)]="ownReviewsPage" aria-label="Default pagination"></ngb-pagination>
                </div>
             </div>
             <div class="badger rounded-4 w-100 p-4 border border-primary border-1" *ngIf="receivedReviews.length > 0">
                <p class="text-start h5">Le recensioni di chi è stato tuo ospite:</p>
                <div *ngFor="let review of receivedReviews| slice: (receivedReviewsPage-1) * 5 : receivedReviewsPage * 5" class="text-start">
-                  <div class="rounded-4 w-100 px-3 py-2 my-4 border border-primary border-1">
+                  <div class="w-100 px-3 py-2 my-4">
                      <div class="d-flex">
-                        <p class="pe-2 mb-0">Date: {{review.date}}</p>
-                        <ngb-rating [(rate)]="review.score" [starTemplate]="stars" [readonly]="true" [max]="5"></ngb-rating>
-                        <ng-template #stars let-fill="fill">
-                           <i class="fa-sharp fa-solid fa-star-sharp position-relative d-inline-block fs-6 text-secondary">
-                           <i *ngIf="fill > 0" class="fa-sharp fa-solid fa-star-sharp position-absolute d-inline-block fs-6 text-warning overflow-hidden filled" [style.width.%]="fill"></i>
-                           </i>
-                        </ng-template>
+                        <img class="rounded-circle me-2" [src] = "review.reviewer.pictureUrl + '?aki_policy=profile_small'" alt="reviewer avatar">
+                        <div>
+                           <p class="fw-semibold mb-0">{{review.reviewer.name}}</p>
+                           <p class="pe-2 mb-0">{{review.date}}</p>
+                        </div>
+
+
                      </div>
+                     <ngb-rating [(rate)]="review.score" [starTemplate]="stars" [readonly]="true" [max]="5"></ngb-rating>
+                     <ng-template #stars let-fill="fill">
+                        <i class="fa-sharp fa-solid fa-star-sharp position-relative d-inline-block fs-6 text-secondary">
+                        <i *ngIf="fill > 0" class="fa-sharp fa-solid fa-star-sharp position-absolute d-inline-block fs-6 text-warning overflow-hidden filled" [style.width.%]="fill"></i>
+                        </i>
+                     </ng-template>
                      <p class="mb-0">{{review.comment}}</p>
                   </div>
                </div>

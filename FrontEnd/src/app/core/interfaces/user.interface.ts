@@ -21,4 +21,5 @@ export interface User {
    bookings: Booking[];
    favourites: Listing[];
    token: string;
+   superHost?: boolean;
 }

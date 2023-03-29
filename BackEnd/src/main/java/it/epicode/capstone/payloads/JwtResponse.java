@@ -1,6 +1,7 @@
 package it.epicode.capstone.payloads;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -30,10 +31,10 @@ public class JwtResponse {
 	private String pictureUrl;
 	private Set<Language> spokenLanguages;
 	private Set<Verification> verifications;
-	private Set<Listing> listings;
+	private Set<PublicListing> listings;
 	private Set<Review> reviews;
 	private Set<Booking> bookings;
-	private Set<Listing> favourites;
+	private Set<PublicListing> favourites;
 
 	public JwtResponse(String accessToken, Long id, String username, String email, List<String> roles, String name, String surname, 
 			LocalDate hostSince, String location, String neighbourhood, String about, String pictureUrl, Set<Language> spokenLanguages, 
@@ -51,10 +52,19 @@ public class JwtResponse {
 		this.about = about;	
 		this.pictureUrl = pictureUrl;
 		this.spokenLanguages = spokenLanguages;
-		this.verifications = verifications;
-		this.listings = listings;
+		this.verifications = verifications;		
 		this.reviews = reviews;
-		this.bookings = bookings;
-		this.favourites = favourites;
+		this.bookings = bookings;		
+		this.listings = publicParse(listings);				
+		this.favourites = publicParse(favourites);
+	}
+	
+	public Set<PublicListing> publicParse(Set<Listing> listings) {
+		Set<PublicListing> pubListings = new HashSet<PublicListing>();
+		for (Listing listing : listings) {
+			PublicListing pubListing = PublicListing.build(listing);
+			pubListings.add(pubListing);
+		}
+		return pubListings;
 	}
 }
