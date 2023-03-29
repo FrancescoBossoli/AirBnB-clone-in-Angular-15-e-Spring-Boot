@@ -46,4 +46,15 @@
    }
 }
 
+.marker {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-weight: bold;
+}
+
+.mapboxgl-marker svg {
+   display: none;
+}
+
 

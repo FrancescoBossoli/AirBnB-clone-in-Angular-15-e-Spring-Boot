@@ -56,31 +56,32 @@ export class ResultsComponent implements OnInit{
          })
          this.map.setCenter([long/this.listings.length, lat/this.listings.length]);
       }
-
-      // this.listings.forEach((listing) => {
-         this.map.on('click', (e) => this.map.setCenter(e.lngLat))
-      // });
-
-
-
-
-
-
-
-
-
-      console.log(this.user);
-      console.log(this.listings)
+      this.map.on('click', (e) => this.map.setCenter(e.lngLat))
    }
 
    setMarker(listing:Listing) {
+      let avg = 0;
+      listing.reviews.forEach((e) => avg += e.score);
       const marker = new mapboxgl.Marker({
          draggable:false,
          color:'#7A88EC'
       })
       .setLngLat([listing.longitude, listing.latitude])
-      .setPopup(new mapboxgl.Popup({focusAfterOpen: false, anchor:'center'}).setHTML("<div style='width:160px;'><div class='ratio ratio-4x3'><img src='" + listing.pictures[0] + "' class='rounded-4'></div><p class='text-truncate mb-0'> " + listing.name + "</p></div>"))
+      .setPopup(new mapboxgl.Popup({focusAfterOpen: false, anchor:'center'}).setHTML("<div style='width:160px;'><div class='ratio ratio-4x3'><img src='" + listing.pictures[0] + "' class='rounded-4'></div><p class='text-truncate mb-0'>" + listing.name + "</p><div class='d-flex justify-content-between'><p class='mb-0'><span class='fw-semibold'>€" + listing.price + "</span>/notte</p><p class='me-1 mb-0'><i class='fa-sharp fa-solid fa-star-sharp'></i>" + (avg/listing.reviews.length).toFixed(2) + "</p></div></div>"))
       .addTo(this.map);
+
+      const el = document.createElement('div');
+      el.className = 'marker';
+      el.style.backgroundColor = '#7A88EC';
+      el.style.width = '30px';
+      el.style.height = '30px';
+      el.style.borderRadius = '50%';
+      el.style.color = '#fff';
+      el.style.textAlign = 'center';
+      el.style.fontSize = '14px';
+      el.style.lineHeight = '30px';
+      el.textContent = listing.price.toString();
+      marker.getElement().firstChild?.replaceWith(el);
    }
 
 
