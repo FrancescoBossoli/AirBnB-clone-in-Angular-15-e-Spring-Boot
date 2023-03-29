@@ -1,3 +1,4 @@
+import { ListingService } from './../../../core/services/listing.service';
 import { Listing } from './../../../core/interfaces/listing.interface';
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
@@ -10,6 +11,9 @@ import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '
   imports: [CommonModule]
 })
 export class PreviewComponent implements OnInit {
+
+constructor(private listServ: ListingService) {}
+
    ngOnInit(): void {
       if (this.favourites != null)
       this.favourites.forEach((fav) => {if (fav.id == this.listing.id) this.isFavourite = true});
@@ -31,8 +35,16 @@ export class PreviewComponent implements OnInit {
    }
 
    setFavourite() {
-      console.log(this.listing)
       this.isFavourite = !this.isFavourite;
+      console.log(this.favourites)
+      console.log(this.listing)
+      console.log(this.favourites.includes(this.listing))
+      let check:boolean = false;
+      this.favourites.forEach((favourite) => {
+         if (favourite.id == this.listing.id) check = true
+      });
+      if (check) this.listServ.removeFavourite(this.listing.id).subscribe(() => this.favourites.splice(this.favourites.indexOf(this.listing),1));
+      else this.listServ.setFavourite(this.listing.id).subscribe(() => this.favourites.push(this.listing));
       console.log(this.favourites)
    }
 }

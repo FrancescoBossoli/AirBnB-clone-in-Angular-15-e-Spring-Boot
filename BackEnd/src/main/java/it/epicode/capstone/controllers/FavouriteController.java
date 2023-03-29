@@ -1,5 +1,6 @@
 package it.epicode.capstone.controllers;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -34,10 +35,16 @@ public class FavouriteController {
 		
 	@DeleteMapping("{id}")
 	public ResponseEntity<?> delete(@PathVariable Long id) {
-		Optional<User> user = userSrv.getUserById(id);		
-		if (user.isEmpty()) return ResponseEntity.badRequest().body(new MessageResponse("Error: User not Found"));
-		else userSrv.deleteUserById(user.get().getId());		
-		return ResponseEntity.ok(new MessageResponse("The user has been deleted!"));
+		LoggedUserDetails loggedUser = (LoggedUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Optional<User> uOpt = userSrv.getUserByUsername(loggedUser.getUsername());
+		if (uOpt.isEmpty()) return ResponseEntity.badRequest().body(new MessageResponse("Error: User not Found"));
+		User u = uOpt.get();
+		Set<Listing> oldFavourites = u.getFavourites();
+		Set<Listing> favourites = new HashSet<Listing>();
+		for (Listing fav : oldFavourites) if (fav.getId() != id) favourites.add(fav);		
+		u.setFavourites(favourites);		
+		userSrv.edit(u);
+		return ResponseEntity.ok(new MessageResponse("The favourite listing has been deleted!"));
 	}
 	
 	@PostMapping("{id}")

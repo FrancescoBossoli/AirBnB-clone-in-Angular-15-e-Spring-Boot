@@ -17,6 +17,18 @@ export class ListingService {
       );
    }
 
+   setFavourite(id:number) {
+      return this.http.post(`${environment.api}/favourite/${id}`, null).pipe(
+         catchError(this.errors)
+      );
+   }
+
+   removeFavourite(id:number) {
+      return this.http.delete(`${environment.api}/favourite/${id}`).pipe(
+         catchError(this.errors)
+      );
+   }
+
    private errors(err: any) {
       console.log(err)
       switch (err.error.message) {
@@ -24,6 +36,10 @@ export class ListingService {
             return throwError(() => new Error("Non sono stati trovati alloggi per l'area impostata"));
          case "Error: Listing not Found":
             return throwError(() => new Error("L'alloggio non è stato trovato"));
+         case "Error: User not found":
+            return throwError(() => new Error("L'utente non è stato trovato"));
+         case "Error: Preferred Listing not Found":
+            return throwError(() => new Error("L'inserzione non è stata trovata tra i preferiti"));
          default:
             return throwError(() => new Error("Errore della chiamata"));
       };

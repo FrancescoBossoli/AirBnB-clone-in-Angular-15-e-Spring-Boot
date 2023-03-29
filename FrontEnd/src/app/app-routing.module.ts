@@ -1,5 +1,7 @@
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 
 const routes: Routes = [
    { path: '', loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule) },
@@ -10,7 +12,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
-   imports: [RouterModule.forRoot(routes)],
+   providers: [
+      {
+         provide: HTTP_INTERCEPTORS,
+         useClass: AuthInterceptor,
+         multi: true
+      }
+   ],
+   imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
    exports: [RouterModule]
 })
 export class AppRoutingModule { }
