@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit {
    get totalReviews() { return this.totalReceivedReviews + this.totalWrittenReviews }
 
 
-   constructor(private route: ActivatedRoute ) { }
+   constructor(private route: ActivatedRoute) { }
 
    ngOnInit(): void {
       this.route.data.pipe(switchMap(data => of(data['user']))).subscribe((res) => {this.user = res; console.log(this.user)});

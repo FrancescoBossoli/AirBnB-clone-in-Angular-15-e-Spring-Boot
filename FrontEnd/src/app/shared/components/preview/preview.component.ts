@@ -1,14 +1,15 @@
 import { ListingService } from './../../../core/services/listing.service';
 import { Listing } from './../../../core/interfaces/listing.interface';
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-preview',
   templateUrl: './preview.component.html',
   styleUrls: ['./preview.component.scss'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule, RouterModule]
 })
 export class PreviewComponent implements OnInit {
 
@@ -25,6 +26,8 @@ constructor(private listServ: ListingService) {}
    listing:Listing = Object.assign({});
    @Input()
    favourites:Listing[] = [];
+   @Input()
+   isLogged:boolean = false;
    outputFormat:String = '?im_w=480';
    isFavourite:boolean = false;
 

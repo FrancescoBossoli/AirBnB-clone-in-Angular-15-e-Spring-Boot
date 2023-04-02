@@ -1,15 +1,23 @@
-import { Component, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { ModalService } from '../../../core/services/modal.service';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
    selector: 'app-auth',
+   standalone: true,
    templateUrl: './auth.component.html',
    encapsulation: ViewEncapsulation.None,
-   styleUrls: ['./auth.component.scss']
+   styleUrls: ['./auth.component.scss'],
+   imports: [
+      CommonModule,
+      ReactiveFormsModule
+   ]
 })
-export class AuthComponent {
+
+export class AuthComponent implements OnInit {
 
    loginForm = new FormGroup({
       username: new FormControl('', {nonNullable: true}),
@@ -37,8 +45,22 @@ export class AuthComponent {
    userTaken: boolean = false;
    emailPresent: boolean = false;
    wrongUsername: boolean = false;
+   loginNeeded:boolean = false;
 
-   constructor(private modalServ: NgbModal, private authServ: AuthService) { }
+   @ViewChild('login') login!:TemplateRef<any>;
+
+   constructor(private modalServ: NgbModal, private authServ: AuthService, private modSrv:ModalService) { }
+
+    ngOnInit(): void {
+      this.modSrv.loginNeed$.subscribe((res) => {
+         this.loginNeeded = res;
+         if (this.loginNeeded == true) {
+            this.modalServ.open(this.login, { centered: true, windowClass: 'fadeIn' });
+            this.modSrv.loginRequestNeeded(false);
+         }
+      });
+
+   }
 
    openModal(template: TemplateRef<any>, letter: string) {
       const animation = letter == "f" ? "fadeIn" : "rotate";

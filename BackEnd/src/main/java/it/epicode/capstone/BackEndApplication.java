@@ -18,6 +18,7 @@ import it.epicode.capstone.config.BeanConfig;
 import it.epicode.capstone.models.Amenity;
 import it.epicode.capstone.models.AmenityType;
 import it.epicode.capstone.models.Bathroom;
+import it.epicode.capstone.models.Booking;
 import it.epicode.capstone.models.Language;
 import it.epicode.capstone.models.LanguageSpoken;
 import it.epicode.capstone.models.Listing;
@@ -30,6 +31,7 @@ import it.epicode.capstone.models.User;
 import it.epicode.capstone.models.Verification;
 import it.epicode.capstone.models.VerificationType;
 import it.epicode.capstone.services.AmenityService;
+import it.epicode.capstone.services.BookingService;
 import it.epicode.capstone.services.LanguageService;
 import it.epicode.capstone.services.ListingService;
 import it.epicode.capstone.services.ReviewService;
@@ -60,6 +62,8 @@ public class BackEndApplication implements CommandLineRunner {
 	@Autowired
 	private ReviewService reviewServ;
 	@Autowired
+	private BookingService bookingServ;
+	@Autowired
 	private PasswordEncoder encoder;
 	
 	public static void main(String[] args) {		
@@ -69,9 +73,9 @@ public class BackEndApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-		if (roleServ.getAllRoles().size() == 0 ) {
+		//if (roleServ.getAllRoles().size() == 0 ) {
 			populateDb();
-		}		
+		//}		
 	}
 	
 	public void populateDb() {
@@ -82,6 +86,7 @@ public class BackEndApplication implements CommandLineRunner {
 		saveUsers();
 		saveListings();
 		saveReviews();
+		saveBookings();
 	}
 	
 	public void saveRoles() {
@@ -156,8 +161,8 @@ public class BackEndApplication implements CommandLineRunner {
 			User u = userServ.getUserById(Long.parseLong(s[5])).get();
 			
 			Set<Amenity> amenities = new HashSet<>();
-			if (s[18] != null) {
-				String[] aSet = s[18].split("[,]");
+			if (s[19] != null) {
+				String[] aSet = s[19].split("[,]");
 				for (int x = 0; x < aSet.length; x++) {
 					Optional<Amenity> aOpt = amenityServ.getAmenityByName(AmenityType.getEnumByString(aSet[x]));
 					if (aOpt.isPresent()) amenities.add(aOpt.get());						
@@ -165,9 +170,9 @@ public class BackEndApplication implements CommandLineRunner {
 			}
 						
 			listingServ.save((Listing)ctx.getBean("listing", s[1], s[2], s[3], pics, u, Double.parseDouble(s[6]), 
-					Double.parseDouble(s[7]),Property.getEnumByString(s[8]), Room.getEnumByString(s[9]), Integer.parseInt(s[10])
-					, Bathroom.getEnumByString(s[11]), Integer.parseInt(s[12]), Integer.parseInt(s[13]), Double.parseDouble(s[14])
-					, Integer.parseInt(s[15]), Integer.parseInt(s[16]), Boolean.parseBoolean(s[17]), amenities));	
+					Double.parseDouble(s[7]), s[8],Property.getEnumByString(s[9]), Room.getEnumByString(s[10]), Integer.parseInt(s[11])
+					, Bathroom.getEnumByString(s[12]), Integer.parseInt(s[13]), Integer.parseInt(s[14]), Double.parseDouble(s[15])
+					, Integer.parseInt(s[16]), Integer.parseInt(s[17]), Boolean.parseBoolean(s[18]), amenities));	
 		}		
 	}
 	
@@ -177,6 +182,14 @@ public class BackEndApplication implements CommandLineRunner {
 			User u = userServ.getUserById(Long.parseLong(s[3])).get();
 			
 			reviewServ.save((Review)ctx.getBean("review", l, LocalDate.parse(s[2]), u, s[4], Integer.parseInt(s[5])));			
+		}
+	}
+	
+	public void saveBookings() {
+		for (String[] s : csvParser.lineReader("src/main/resources/csv/bookings.csv")) {
+			Listing l = listingServ.getListingById(Long.parseLong(s[4])).get();
+			User u = userServ.getUserById(Long.parseLong(s[5])).get();
+			bookingServ.save((Booking)ctx.getBean("booking", LocalDate.parse(s[1]), LocalDate.parse(s[2]), Double.parseDouble(s[3]), l, u));
 		}
 	}
 	

@@ -1,3 +1,4 @@
+import { Service } from './service.interface';
 import { User } from './user.interface';
 import { Booking } from './booking.interface';
 import { Review } from './review.inteface';
@@ -10,6 +11,7 @@ export interface Listing {
    owner: User;
    latitude: number;
    longitude: number;
+   location: string;
    propertyType: string;
    roomType: string;
    capacity: number;
@@ -20,7 +22,7 @@ export interface Listing {
    minimumStay: number;
    maximumStay: number;
    instantBookable: boolean;
-   amenities: string[];
+   amenities: Service[];
    reviews: Review[];
    bookings: Booking[];
 }

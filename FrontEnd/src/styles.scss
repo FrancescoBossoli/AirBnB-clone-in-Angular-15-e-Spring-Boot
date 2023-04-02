@@ -63,6 +63,15 @@
    }
 }
 
+.filled {
+   top: 0;
+   left: 0;
+}
+
+.page-item.active {
+   box-shadow: none;
+}
+
 .pagination {
    --bs-pagination-focus-box-shadow: none;
    --bs-pagination-color: var(--bs-primary);
@@ -107,4 +116,35 @@
 
 a {
    text-decoration: none;
+}
+
+.fadeIn {
+   animation: fadeInBottom 0.5s;
+}
+
+@keyframes fadeInBottom {
+   0% { opacity:0; transform:translateY(100%) }
+   to { opacity:1}
+}
+
+.rotate {
+   animation: flipRotation 1s;
+}
+
+@keyframes flipRotation {
+   from { transform: rotateY(0deg) }
+   to { transform: rotateY(720deg) }
+}
+
+.rotate2 {
+   animation: flipRotation2 0.5s;
+}
+
+@keyframes flipRotation2 {
+   from { transform: rotateY(0deg) }
+   to { transform: rotateY(360deg) }
+}
+
+.text-justify {
+   text-align: justify;
 }

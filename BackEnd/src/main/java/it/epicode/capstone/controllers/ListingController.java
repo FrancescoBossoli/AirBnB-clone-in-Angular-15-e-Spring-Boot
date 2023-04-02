@@ -1,5 +1,6 @@
 package it.epicode.capstone.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import it.epicode.capstone.models.Listing;
 import it.epicode.capstone.payloads.MessageResponse;
+import it.epicode.capstone.payloads.PublicListing;
 import it.epicode.capstone.services.ListingService;
 
 @RestController
@@ -25,14 +27,20 @@ public class ListingController {
 	@GetMapping
 	public ResponseEntity<?> getAll() {
 		List<Listing> list = listSrv.getAllListings();		
-		if( list.isEmpty() ) return ResponseEntity.badRequest().body(new MessageResponse("Error: Listing List not found"));		
-		return new ResponseEntity<List<Listing>>(list, HttpStatus.OK);
+		if( list.isEmpty() ) return ResponseEntity.badRequest().body(new MessageResponse("Error: Listing List not found"));
+		List<PublicListing> pList = new ArrayList<PublicListing>();
+		for (Listing listing : list) {
+			PublicListing pListing = PublicListing.build(listing);
+			pList.add(pListing);
+		}		
+		return new ResponseEntity<List<PublicListing>>(pList, HttpStatus.OK);
 	}
 	
 	@GetMapping("{id}")
 	public ResponseEntity<?> getById(@PathVariable Long id) {
-		Optional<Listing> listing = listSrv.getListingById(id);
-		if (listing.isEmpty()) return ResponseEntity.badRequest().body(new MessageResponse("Error: Listing not Found"));		 
-		return ResponseEntity.ok(listing.get());
+		Optional<Listing> lOpt = listSrv.getListingById(id);
+		if (lOpt.isEmpty()) return ResponseEntity.badRequest().body(new MessageResponse("Error: Listing not Found"));
+		PublicListing listing = PublicListing.build(lOpt.get());
+		return ResponseEntity.ok(listing);
 	}
 }

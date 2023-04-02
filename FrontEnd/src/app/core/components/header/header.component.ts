@@ -3,6 +3,7 @@ import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../interfaces/user.interface';
 import { environment } from 'src/environments/environment.development';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-header',
@@ -18,7 +19,7 @@ export class HeaderComponent implements OnInit {
 
    get avatar() { return this.user?.pictureUrl + environment.thumbnail; }
 
-   constructor(private authServ: AuthService, private router: Router) { }
+   constructor(private authServ: AuthService, private router: Router, private modalServ: NgbModal) { }
 
    ngOnInit(): void {
       this.authServ.user$.subscribe({ next: (user) => { this.user = {...this.emptyUser, ...user} }})
@@ -26,6 +27,7 @@ export class HeaderComponent implements OnInit {
 
    logout():void {
       this.authServ.logout();
+      this.modalServ.dismissAll;
    }
 
    switchTheme() {

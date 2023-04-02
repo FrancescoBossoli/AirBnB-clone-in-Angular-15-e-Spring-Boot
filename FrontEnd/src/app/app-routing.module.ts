@@ -9,6 +9,7 @@ const routes: Routes = [
    { path: 'profile', loadChildren: () => import('./modules/profile/profile.module').then(m => m.ProfileModule) },
    { path: 'results', loadChildren: () => import('./modules/results/results.module').then(m => m.ResultsModule) },
    { path: 'favourites', loadChildren: () => import('./modules/results/results.module').then(m => m.ResultsModule) },
+   { path: 'listing/:id', loadChildren: () => import('./modules/listing/listing.module').then(m => m.ListingModule) }
 ];
 
 @NgModule({
@@ -19,7 +20,7 @@ const routes: Routes = [
          multi: true
       }
    ],
-   imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
+   imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' , anchorScrolling: 'enabled'})],
    exports: [RouterModule]
 })
 export class AppRoutingModule { }

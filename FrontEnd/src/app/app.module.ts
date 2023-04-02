@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PaymentComponent } from './shared/components/payment/payment.component';
 
 @NgModule({
   declarations: [
@@ -21,5 +22,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   ],
   providers: [ { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true } ],
   bootstrap: [AppComponent]
+
 })
 export class AppModule { }

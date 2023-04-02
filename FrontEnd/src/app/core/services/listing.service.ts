@@ -17,6 +17,12 @@ export class ListingService {
       );
    }
 
+   getListing(id:number) {
+      return this.http.get<Listing>(`${environment.api}/listing/${id}`).pipe(
+         catchError(this.errors)
+      );
+   }
+
    setFavourite(id:number) {
       return this.http.post(`${environment.api}/favourite/${id}`, null).pipe(
          catchError(this.errors)

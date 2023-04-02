@@ -16,7 +16,7 @@ export class AuthService {
    jwtHelper = new JwtHelperService();
    private authSubject = new BehaviorSubject<Partial<User>>({});
    user$ = this.authSubject.asObservable();
-   isLoggedIn$ = this.user$.pipe(map(user => !!user));
+   isLoggedIn$ = this.user$.pipe(map(user => user.id != undefined));
    timeLeft:any;
 
    constructor(private http: HttpClient, private router: Router) {
@@ -40,7 +40,7 @@ export class AuthService {
    generateToken(userData:JwtResponse) {
       let {type, ...user} = userData;
       this.authSubject.next(user);
-      localStorage.setItem("user", JSON.stringify({"token":user.token, "id":user.id, "username":user.username, "email":user.email, "roles":user.roles, "name":user.name, "pictureUrl":user.pictureUrl}));
+      localStorage.setItem("user", JSON.stringify({"token":user.token, "id":user.id, "username":user.username, "email":user.email, "roles":user.roles, "name":user.name, "pictureUrl":user.pictureUrl, "favourites":user.favourites}));
       this.autoLogout(userData)
    }
 
@@ -61,7 +61,7 @@ export class AuthService {
       if (!userData) return;
       const jwt: JwtResponse = JSON.parse(userData);
       if (this.jwtHelper.isTokenExpired(jwt.token)) return;
-      this.authSubject.next({ id: jwt.id, username: jwt.username, email: jwt.email, roles: jwt.roles, name: jwt.name, pictureUrl:jwt.pictureUrl, token:jwt.token });
+      this.authSubject.next({ id: jwt.id, username: jwt.username, email: jwt.email, roles: jwt.roles, name: jwt.name, pictureUrl:jwt.pictureUrl, token:jwt.token, favourites:jwt.favourites });
       this.autoLogout(jwt);
    }
 

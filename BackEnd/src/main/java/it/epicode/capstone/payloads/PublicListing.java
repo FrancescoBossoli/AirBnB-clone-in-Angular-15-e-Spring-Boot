@@ -24,6 +24,7 @@ public class PublicListing {
 	private List<String> pictures;	
 	private double latitude;
 	private double longitude;
+	private String location;
 	private Property propertyType;
 	private Room roomType;
 	private int capacity;
@@ -47,7 +48,8 @@ public class PublicListing {
 			reviews.add(r);
 		}
 		return new PublicListing(l.getId(), l.getName(), l.getDescription(), l.getNeighborhoodOverview(), l.getPictures(), l.getLatitude(), 
-				l.getLongitude(), l.getPropertyType(), l.getRoomType(), l.getCapacity(), l.getBathrooms(), l.getBedrooms(), l.getBeds(),
-				l.getPrice(), l.getMinimumStay(), l.getMaximumStay(), l.isInstantBookable(), l.getAmenities(), reviews, l.getBookings(), owner);
+								 l.getLongitude(), l.getLocation(), l.getPropertyType(), l.getRoomType(), l.getCapacity(), l.getBathrooms(), 
+								 l.getBedrooms(), l.getBeds(), l.getPrice(), l.getMinimumStay(), l.getMaximumStay(), l.isInstantBookable(), 
+								 l.getAmenities(), reviews, l.getBookings(), owner);
 	}
 }

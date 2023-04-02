@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Scope;
 import it.epicode.capstone.models.Amenity;
 import it.epicode.capstone.models.AmenityType;
 import it.epicode.capstone.models.Bathroom;
+import it.epicode.capstone.models.Booking;
 import it.epicode.capstone.models.Language;
 import it.epicode.capstone.models.LanguageSpoken;
 import it.epicode.capstone.models.Listing;
@@ -64,17 +65,23 @@ public class BeanConfig {
 	
 	@Bean
 	@Scope("prototype")
-	public Listing listing(String n, String d, String ne, List<String> pics, User u, double lat, double lon,
+	public Listing listing(String n, String d, String ne, List<String> pics, User u, double lat, double lon, String loc,
 							Property p, Room r, Integer c, Bathroom b, Integer rooms, Integer beds, Double price, 
 							Integer min, Integer max, boolean rent, Set<Amenity> a) {
 		return Listing.builder().name(n).description(d).neighborhoodOverview(ne).pictures(pics).owner(u).latitude(lat)
-					  .longitude(lon).propertyType(p).roomType(r).capacity(c).bathrooms(b).bedrooms(rooms).beds(beds)
-					  .price(price).minimumStay(min).maximumStay(max).instantBookable(rent).amenities(a).build();	
+					  .longitude(lon).location(loc).propertyType(p).roomType(r).capacity(c).bathrooms(b).bedrooms(rooms)
+					  .beds(beds).price(price).minimumStay(min).maximumStay(max).instantBookable(rent).amenities(a).build();	
 	}
 	
 	@Bean
 	@Scope("prototype")
 	public Review review(Listing l, LocalDate d, User r, String c, int s) {
 		return Review.builder().listing(l).date(d).reviewer(r).comment(c).score(s).build();	
+	}
+	
+	@Bean
+	@Scope("prototype")
+	public Booking booking(LocalDate a, LocalDate d, Double c, Listing l, User u) {
+		return Booking.builder().arrival(a).departure(d).cost(c).location(l).booker(u).build();
 	}
 }

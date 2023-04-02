@@ -1,7 +1,12 @@
 <div>
    <div class="ratio ratio-4x3">
-      <img [src]="listing.pictures[0] + outputFormat" [alt]="listing.name + '\'s preview'" class="rounded-4">
-      <i class="fa-sharp fa-regular fa-circle-star fs-3 text-end p-2" [class.opacity-50] = "isFavourite == false" [class.text-success.bg-transparent] = "isFavourite == true" #favourite (click)="setFavourite()"></i>
+      <a [routerLink] ="['/listing/' + listing.id]" class="ratio ratio-4x3">
+         <img [src]="listing.pictures[0] + outputFormat" [alt]="listing.name + '\'s preview'" class="rounded-4">
+      </a>
+
+      <div class="d-flex justify-content-end p-2 h-auto">
+         <i *ngIf="isLogged == true" class="fa-sharp fa-regular fa-circle-star fs-3 w-auto" [class.opacity-50] = "isFavourite == false" [class.text-success.bg-transparent] = "isFavourite == true" #favourite (click)="setFavourite()"></i>
+      </div>
    </div>
 <p class="fw-semibold mb-0 text-truncate">{{listing.name}}</p>
 <div class="d-flex justify-content-between">

@@ -1,10 +1,7 @@
 package it.epicode.capstone.models;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -53,6 +50,7 @@ public class Listing {
 	private User owner;
 	private double latitude;
 	private double longitude;
+	private String location;
 	@Enumerated(EnumType.STRING)
 	private Property propertyType;
 	@Enumerated(EnumType.STRING)
