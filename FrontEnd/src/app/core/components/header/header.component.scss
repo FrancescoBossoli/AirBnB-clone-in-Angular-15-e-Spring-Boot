@@ -27,4 +27,68 @@
    border-radius: 0 0 6px 6px;
 }
 
+.search {
+   max-width: 435px;
+   &-box {
+      max-height: calc(100vh - 150px);
+      width: calc(45vw);
+      min-width: 405px;
+      left: 50%;
+      top: -27px;
+      transform: translate(-50%, 0);
+      z-index:1250;
+      input:focus-visible {
+         outline: none;
+      }
+      button .small {
+         padding: 10px 10px;
+      }
+      .row {
+         --bs-gutter-x: 0;
+      }
+      &-title {
+         font-size: 12px;
+      }
+   }
+   &-close {
+      top: -37px;
+      left: 50%;
+      transform: translate(-50%, 0);
+      z-index:1251;
+   }
+}
 
+
+.bg-info-light {
+   background-color: #d6daf7;
+}
+
+#panel-1 ~ label[for='panel-1'], #panel-2 ~ label[for='panel-2'], #panel-3 ~ label[for='panel-3'] {
+   color: #000;
+}
+
+#panel-1:checked ~ label[for='panel-1'], #panel-2:checked ~ label[for='panel-2'], #panel-3:checked ~ label[for='panel-3'] {
+   background-color: var(--bs-body-bg);
+   div, div input {
+      color: var(--bs-body-color);
+   }
+}
+
+#panelCalendar {
+   width: 400px;
+   position: absolute;
+   left: 50%;
+   transform: translate(-50%, 0);
+}
+
+@media screen and (min-width:576px) {
+   #panelCalendar {
+      width: 500px;
+   }
+}
+
+#guests {
+   input {
+      width: 30px;
+   }
+}

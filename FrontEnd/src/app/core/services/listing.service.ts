@@ -1,13 +1,18 @@
+import { ListingSearch } from './../interfaces/listing-search.interface';
 import { Listing } from './../interfaces/listing.interface';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
-import { catchError, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
+import { Place } from '../interfaces/place.interface';
 
 @Injectable({
    providedIn: 'root'
 })
 export class ListingService {
+
+   results:BehaviorSubject<Listing[]> = new BehaviorSubject<Listing[]>([]);
+   results$ = this.results.asObservable();
 
    constructor(private http: HttpClient) { }
 
@@ -31,6 +36,19 @@ export class ListingService {
 
    removeFavourite(id:number) {
       return this.http.delete(`${environment.api}/favourite/${id}`).pipe(
+         catchError(this.errors)
+      );
+   }
+
+   partialLocationSearch(term: string) {
+      return this.http.post<Place[]>(`${environment.api}/listing/location`, term).pipe(
+         catchError(this.errors)
+      );
+   }
+
+   listingSearch(form:ListingSearch) {
+      return this.http.post<Listing[]>(`${environment.api}/listing`, form).pipe(
+         tap((res) => this.results.next(res)),
          catchError(this.errors)
       );
    }

@@ -31,8 +31,8 @@
       <div class="d-flex justify-content-between">
          <p class="fw-semibold"><i class="fa-solid fa-location-dot"></i> {{listing.location}}</p>
          <div *ngIf="isLogged">
-            <a *ngIf="isFavourite" class="fw-semibold text-body text-decoration-underline" (click) = "setFavourite()"><i class="fa-sharp fa-solid fa-star-sharp text-primary me-1"></i>Rimuovi dai preferiti</a>
-            <a *ngIf="!isFavourite" class="fw-semibold text-body text-decoration-underline" (click) = "setFavourite()"><i class="fa-sharp fa-solid fa-star-sharp me-1"></i>Aggiungi ai preferiti</a>
+            <button *ngIf="isFavourite" class="fw-semibold text-body text-decoration-underline border-0 bg-body" (click) = "setFavourite()"><i class="fa-sharp fa-solid fa-star-sharp text-primary me-1"></i>Rimuovi dai preferiti</button>
+            <button *ngIf="!isFavourite" class="fw-semibold text-body text-decoration-underline border-0 bg-body" (click) = "setFavourite()"><i class="fa-sharp fa-solid fa-star-sharp me-1"></i>Aggiungi ai preferiti</button>
          </div>
       </div>
       <div *ngIf="screen >= 768" class="d-flex mb-3">
@@ -127,7 +127,7 @@
                <button class="btn text-white bg-info my-2" (click)="enlarge(service,'f')">Mostra tutti e {{services.length}} i servizi</button>
             </div>
             <hr>
-            <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center" id="calendar">
                <ngb-datepicker #dp (dateSelect)="onDateSelection($event)" [displayMonths]="screen >= 576 ? 2 : 1" [dayTemplate]="t" outsideDays="hidden" [minDate]="minDate" [markDisabled]="isDisabled"></ngb-datepicker>
                <ng-template #t let-date let-focused="focused">
                   <span class="custom-day" [class.focused]="focused" [class.firstOfRange]="isFirst(date)" [class.lastOfRange]="isLast(date)" [class.range]="isRange(date)" [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date" (mouseleave)="hoveredDate = null">
@@ -135,7 +135,7 @@
                   </span>
                </ng-template>
             </div>
-            <hr *ngIf="screen < 992">
+            <hr class="d-lg-none">
          </div>
          <div class="col-12 col-lg-4">
             <div class="border border-1 rounded-4 border-primary p-4 sticky-top">
@@ -147,12 +147,12 @@
                   <div class="d-flex border-bottom border-1 border-primary">
                      <div class="d-flex flex-column w-50 border-end border-1 border-primary pt-3">
                         <small class="fw-bolder text-center pb-1">CHECK-IN</small>
-                        <p class="text-center" *ngIf="fromDate">{{fromDate.day}}-{{fromDate.month}}-{{fromDate.year}}</p>
+                        <button class="text-center border-0 text-body bg-body mb-2" *ngIf="fromDate" routerLink="." [fragment]="'calendar'">{{fromDate.day}}-{{fromDate.month}}-{{fromDate.year}}</button>
                      </div>
                      <div class="d-flex flex-column w-50 pt-3">
                         <small class="fw-bolder text-center pb-1">CHECK-OUT</small>
-                        <p class="text-center" *ngIf="toDate">{{toDate.day}}-{{toDate.month}}-{{toDate.year}}</p>
-                        <p class="text-center text-secondary" *ngIf="!toDate">Aggiungi...</p>
+                        <button class="text-center border-0 text-body bg-body" *ngIf="toDate" routerLink="." [fragment]="'calendar'">{{toDate.day}}-{{toDate.month}}-{{toDate.year}}</button>
+                        <button class="text-center text-secondary border-0 bg-body" *ngIf="!toDate" routerLink="." [fragment]="'calendar'">Aggiungi...</button>
                      </div>
                   </div>
                   <div>

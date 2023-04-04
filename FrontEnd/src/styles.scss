@@ -13,13 +13,17 @@
 
 .lightMode {
    --bs-body-color: #352D39;
+   --bs-body-color-rgb: 53, 45, 57;
    --bs-body-bg: #fffcf9;
+   --bs-body-bg-rgb: 255, 255, 255;
    --bs-body-bgi: #ffffff50;
 }
 
 .darkMode {
    --bs-body-color: #dee2e6;
+   --bs-body-color-rgb: 222, 226, 230;
    --bs-body-bg: #000;
+   --bs-body-bg-rgb: 0, 0, 0;
    --bs-body-bgi: #00000050;
    // --bs-body-bg: #171D1C;
    // --bs-body-bgi: #171D1C50;
@@ -118,6 +122,11 @@ a {
    text-decoration: none;
 }
 
+ul, li {
+   list-style: none;
+   padding-left: 0;
+}
+
 .fadeIn {
    animation: fadeInBottom 0.5s;
 }
@@ -147,4 +156,37 @@ a {
 
 .text-justify {
    text-align: justify;
+}
+
+.custom-day {
+   text-align: center;
+   padding: 0.185rem 0.25rem;
+   display: inline-block;
+   height: 2rem;
+   width: 2rem;
+}
+
+.custom-day.focused {
+   background-color: #e6e6e6;
+}
+
+.custom-day.range, .custom-day:hover {
+   background-color: var(--bs-primary);
+   color: white;
+}
+
+.firstOfRange {
+   border-radius: 20px 0 0 20px;
+}
+
+.lastOfRange {
+   border-radius: 0 20px 20px 0;
+}
+
+.custom-day.faded {
+   background-color: rgba(255, 0, 90, 0.5);
+}
+
+.ngb-dp-weekdays, .ngb-dp-month-name, .ngb-dp-header {
+   background-color: var(--bs-body-bg) !important;
 }

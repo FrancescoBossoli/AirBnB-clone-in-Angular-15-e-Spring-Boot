@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { AuthComponent } from '../shared/components/auth/auth.component';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { ReactiveFormsModule } from '@angular/forms';
+import { NgbDatepickerModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -17,8 +17,10 @@ import { ReactiveFormsModule } from '@angular/forms';
    imports: [
       CommonModule,
       NgbDropdownModule,
+      FormsModule,
       ReactiveFormsModule,
       RouterModule,
+      NgbDatepickerModule,
       AuthComponent
    ],
    exports: [

@@ -8,46 +8,6 @@
    width: 30px;
 }
 
-.custom-day {
-   text-align: center;
-   padding: 0.185rem 0.25rem;
-   display: inline-block;
-   height: 2rem;
-   width: 2rem;
-}
-
-.custom-day.focused {
-   background-color: #e6e6e6;
-}
-
-.custom-day.range, .custom-day:hover {
-   background-color: var(--bs-primary);
-   color: white;
-}
-
-// .custom-day.range {
-//    border-radius: 20px 0 0 20px;
-//    &.focused {
-//       border-radius: 0 20px 20px 0;
-//    }
-// }
-
-.firstOfRange {
-   border-radius: 20px 0 0 20px;
-}
-
-.lastOfRange {
-   border-radius: 0 20px 20px 0;
-}
-
-.custom-day.faded {
-   background-color: rgba(255, 0, 90, 0.5);
-}
-
-.ngb-dp-weekdays, .ngb-dp-month-name, .ngb-dp-header {
-   background-color: var(--bs-body-bg) !important;
-}
-
 .disabled {
    background-color: var(--bs-gray-200);
 }

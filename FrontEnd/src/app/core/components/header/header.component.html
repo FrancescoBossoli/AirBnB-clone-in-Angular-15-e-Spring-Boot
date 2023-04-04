@@ -1,19 +1,100 @@
-<div class="container">
-   <div class="row align-items-center mt-3">
-      <div class="col">
-         <div class="d-flex align-items-end">
-            <a [routerLink]= "['']"><img src="../../../assets/img/logo.png" class="w-75 text-start" alt="Travel"></a>
+<div>
+   <div class="row align-items-center mt-3 justify-content-center">
+      <div class="col-3 col-md-2 col-xxl-3 ms-2 p-0">
+         <div class="d-none d-md-flex align-items-end">
+            <a [routerLink]= "['/']"><img src="../../../assets/img/logo.png" class="w-75 text-start" alt="Travel"></a>
+         </div>
+         <!-- mettere icona small -->
+      </div>
+      <div class="col-5 col-sm-5 col-md-6 col-lg-5 col-xxl-4 p-0 p-md-2 mx-lg-5 search">
+         <div class="position-relative d-flex align-items-center border border-1 border-primary p-2 rounded-5" data-bs-toggle="search" data-bs-display="static">
+            <div class="d-flex justify-content-between w-100 align-items-baseline" #searchbar>
+               <div class="d-flex justify-content-center w-100">
+                  <div class="d-md-none"><button type="button" class="border-0 bg-body text-body" (click)="openPanel()">Avvia la ricerca</button></div>
+                  <div class="d-none d-md-inline"><button type="button" class="border-0 border-end border-primary bg-body text-body pe-3 pe-xl-4 pe-xxl-3" (click)="openPanel()">Ovunque</button></div>
+                  <div class="d-none d-md-inline"><button type="button" class="border-0 border-end border-primary bg-body text-body px-3 px-xl-4 px-xxl-3" (click)="openPanel()">Quando vuoi</button></div>
+                  <div class="d-none d-md-inline"><button type="button" class="border-0 bg-body text-body ps-3 ps-xl-4 ps-xxl-3" (click)="openPanel()">Con chi vuoi</button></div>
+               </div>
+               <div><button class="border-0 bg-primary rounded-circle text-bg-primary"><span class="fas fa-search search-box-icon small py-2 px-1"></span></button></div>
+            </div>
+            <button type="button" class="d-none border-0 bg-transparent text-primary search-close position-absolute" (click)="cancelSearch()" #close>x</button>
+            <div class="search-box bg-transparent position-absolute p-3 rounded-4 d-none" #mainPanel>
+               <div class="d-flex align-items-center border border-1 border-primary rounded-5 bg-info-light">
+                  <div class="d-flex justify-content-between w-100 align-items-baseline">
+                     <div class="d-flex justify-content-between w-100 row">
+                        <input type="radio" name="panel" id="panel-1" class="d-none" #radio1 checked>
+                        <input type="radio" name="panel" id="panel-2" class="d-none" #radio2>
+                        <input type="radio" name="panel" id="panel-3" class="d-none" #radio3>
+                        <!-- <div class="d-md-none"><button type="button" class="border-0 bg-body">Avvia la ricerca</button></div> -->
+                        <label class="d-flex flex-column justify-content-center ps-3 col-3 rounded-pill" for="panel-1" (mousedown)="focus(1)">
+                           <div class="search-box-title fw-semibold">Dove</div>
+                           <div><input type="text" class="bg-transparent border-0 shadow-none p-0 small w-75" name="search" placeholder="Cerca" [(ngModel)]="searchInput" (ngModelChange)="search()" autocomplete="off"></div>
+                        </label>
+                        <label class="d-flex flex-column p-2 px-lg-3 col-3 rounded-pill" for="panel-2" (mousedown)="focus(2)">
+                           <div class="search-box-title fw-semibold">Quando</div>
+                           <div class="small" #dates>Scegli date</div>
+                        </label>
+                        <label class="d-flex align-items-center justify-content-between p-2 px-lg-3 col-5 rounded-pill" for="panel-3" (mousedown)="focus(3)">
+                           <div>
+                              <div class="search-box-title fw-semibold">Chi</div>
+                              <div class="small" #guests>Aggiungi ospiti</div>
+                           </div>
+                           <div class="ps-2">
+                              <button class="border-0 bg-primary rounded-circle text-bg-primary d-flex align-items-center p-0" (click)="searchForListings()"><span class="fas fa-search search-box-icon small"></span></button>
+                           </div>
+                        </label>
+                     </div>
+
+                  </div>
+               </div>
+               <div #suggestedSearch class="d-none border border-1 border-primary rounded-5 mt-2 p-3 bg-body">
+                  <p class="fw-semibold mb-0">Suggerimenti</p>
+                  <ul>
+                  </ul>
+               </div>
+               <div #panelCalendar class="d-none border border-1 border-primary rounded-5 mt-2 p-3 bg-body" id="panelCalendar">
+                  <div class="d-flex justify-content-center">
+                     <ngb-datepicker #dp (dateSelect)="onDateSelection($event)" [displayMonths]="screen >= 576 ? 2 : 1" [dayTemplate]="t" outsideDays="hidden" [minDate]="minDate" class="border-0"></ngb-datepicker>
+                     <ng-template #t let-date let-focused="focused">
+                        <span class="custom-day" [class.focused]="focused" [class.firstOfRange]="isFirst(date)" [class.lastOfRange]="isLast(date)" [class.range]="isRange(date)" [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date" (mouseleave)="hoveredDate = null">
+                        {{ date.day }}
+                        </span>
+                     </ng-template>
+                  </div>
+               </div>
+               <div #guestCount class="d-none border border-1 border-primary rounded-5 mt-2 p-3 bg-body" id="guests">
+                  <div class="d-flex flex-column">
+                     <div class="d-flex justify-content-between">
+                        <div>
+                           <p class="fw-semibold mb-0">Adulti</p>
+                           <p class="mb-0">Da 13 anni in su</p>
+                        </div>
+                        <div class="d-flex">
+                           <button type="button" class="border-0 bg-transparent text-body"><i class="fa-regular fa-circle-minus" (click)="adultsDown()"></i></button>
+                           <input type="text" class="border-0 bg-transparent text-center text-body" [(ngModel)]="adults">
+                           <button type="button" class="border-0 bg-transparent text-body"><i class="fa-regular fa-circle-plus" (click)="adultsUp()"></i></button>
+                        </div>
+                     </div>
+                     <hr>
+                     <div class="d-flex justify-content-between">
+                        <div>
+                           <p class="fw-semibold mb-0">Bambini</p>
+                           <p class="mb-0">Dai 2 anni ai 12</p>
+                        </div>
+                        <div class="d-flex">
+                           <button type="button" class="border-0 bg-transparent text-body"><i class="fa-regular fa-circle-minus" (click)="childrenDown()"></i></button>
+                           <input type="text" class="border-0 bg-transparent text-center text-body" [(ngModel)]="children">
+                           <button type="button" class="border-0 bg-transparent text-body"><i class="fa-regular fa-circle-plus" (click)="childrenUp()"></i></button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
          </div>
       </div>
-      <div class="col-6">
-         <form class="position-relative d-flex align-items-center border border-1 border-primary px-3 rounded-5" data-bs-toggle="search" data-bs-display="static">
-            <span class="fas fa-search search-box-icon"></span>
-            <input class="form-control search-input fuzzy-search border-0 shadow-none" style="font-family: FontAwesome;" type="search" placeholder='Search...' aria-label="Search">
-         </form>
-      </div>
-      <div class="col text-end">
+      <div class="col-3 col-md-2 col-xxl-3 text-end me-2 p-0">
          <div class="btn-group nav-buttons" role="group" aria-label="Button group with nested dropdown">
-            <button type="button" class="btn btn-outline-primary rounded-5 d-flex align-items-center bg-transparent text-primary px-2" *ngIf="user.username != null" [routerLink]="['favourites']">
+            <button type="button" class="btn btn-outline-primary rounded-5 d-flex align-items-center bg-transparent text-primary px-2 d-none d-md-inline-flex" *ngIf="user.username != null" [routerLink]="['favourites']">
                <i class="fa-sharp fa-solid fa-star-sharp fs-6"></i>
             </button>
             <button type="button" class="btn btn-outline-primary rounded-5 d-flex align-items-center bg-transparent text-primary px-2 mx-2" *ngIf="darkMode == true" (click) = "switchTheme()">
@@ -39,9 +120,7 @@
       </div>
    </div>
 </div>
-<div class="buttons w-100" *ngIf="route ===''">
-   <p>Qui ci vanno i bottoni</p>
-</div>
+
 
 
 

@@ -37,10 +37,10 @@ export class ResultsComponent implements OnInit{
          zoom: 13
       });
       if (window.location.pathname == '/results') {
-         this.listServ.getAll().pipe(delay(0)).subscribe((res) => {
-            if (res!= null)
+         this.listServ.results$.pipe(delay(0)).subscribe((res) => {
+            this.listings = res;
             res.forEach((listing) => {
-               this.listings.push(listing)
+               // this.listings.push(listing)
                lat += listing.latitude;
                long += listing.longitude;
                this.setMarker(listing);
