@@ -90,7 +90,7 @@
                   <div class="col-12 col-sm-6 col-xl-4" *ngIf="services.includes(103) && !services.includes(102)">
                      <p class="my-1"><i class="fa-sharp fa-regular fa-sun-plant-wilt"></i> Vista su cortile</p>
                   </div>
-                  <div class="col-12 col-sm-6 col-xl-4" *ngIf="services.includes(104) && !services.includes(102) && !services.includes(103)">
+                  <div class="col-12 col-sm-6 col-xl-4" *ngIf="services.includes(104)">
                      <p class="my-1"><i class="fa-regular fa-water fs-5"></i> Vista sul mare</p>
                   </div>
                   <div class="col-12 col-sm-6 col-xl-4" *ngIf="services.includes(105) && !services.includes(102) && !services.includes(103)">
@@ -112,13 +112,13 @@
                      <p class="my-1"><i class="fa-solid fa-tv-retro fs-5"></i> TV</p>
                   </div>
                   <div class="col-12 col-sm-6 col-xl-4" *ngIf="services.includes(50)">
-                     <p class="my-1"><i class="fa-solid fa-washing-machine"></i> Lavatrice</p>
+                     <p class="my-1"><i class="fa-solid fa-washing-machine fs-4"></i> Lavatrice</p>
                   </div>
                   <div class="col-12 col-sm-6 col-xl-4" *ngIf="services.includes(90)">
                      <p class="my-1"><i class="fa-solid fa-keynote fs-5"></i> Spazio di lavoro dedicato</p>
                   </div>
                   <div class="col-12 col-sm-6 col-xl-4" *ngIf="services.includes(95)">
-                     <p class="my-1"><i class="fa-solid fa-vault"></i> Cassaforte</p>
+                     <p class="my-1"><i class="fa-solid fa-vault fs-5"></i> Cassaforte</p>
                   </div>
                   <div class="col-12 col-sm-6 col-xl-4" *ngIf="services.includes(88)">
                      <p class="my-1"><i class="fa-sharp fa-solid fa-sensor-fire"></i> Allarme antincendio</p>
@@ -138,7 +138,7 @@
             <hr class="d-lg-none">
          </div>
          <div class="col-12 col-lg-4">
-            <div class="border border-1 rounded-4 border-primary p-4 sticky-top">
+            <div class="border border-1 rounded-4 border-primary p-4 sticky-top" id="stickyPanel">
                <div class="d-flex justify-content-between align-items-baseline mb-3">
                   <p class="h5 mb-0">{{this.listing.price}} € <span class="fw-normal fs-6">notte</span></p>
                   <a routerLink="." [fragment]="'reviews'" skipLocationChange>{{listing.reviews.length}} recensioni</a>
@@ -187,7 +187,8 @@
          </div>
       </div>
       <hr>
-      <p class="h5" id="reviews">{{score.toFixed(2)}} <i class="fa-sharp fa-solid fa-star-sharp text-warning me-1"></i> - {{listing.reviews.length}} recensioni</p>
+      <p class="h5" *ngIf="listing.reviews.length > 0" id="reviews">{{score.toFixed(2)}} <i class="fa-sharp fa-solid fa-star-sharp text-warning me-1"></i> - {{listing.reviews.length}} recensioni</p>
+      <p class="h5" *ngIf="listing.reviews.length == 0" id="reviews">Nessuna recensione da mostrare</p>
       <div>
          <div class="row">
             <div class="col-12 col-lg-6 text-start" *ngFor="let review of listing.reviews| slice: (reviewsPage-1) * 4 : reviewsPage * 4">
@@ -214,12 +215,9 @@
             </div>
          </div>
       </div>
-
-
-
    </div>
-
 </div>
+<hr>
 
 <ng-template #service let-modal>
    <div class="list p-5">

@@ -53,4 +53,7 @@ public interface ListingRepository extends JpaRepository<Listing, Long> {
 	@Query(nativeQuery = true, value = "SELECT * FROM listings l WHERE l.id NOT IN ( SELECT b.location_id FROM bookings b WHERE b.arrival <= :a AND b.departure >= :a)")
 	List<Listing> findListingsByArrival(@Param("a") LocalDate a);	
 	
+	@Query(nativeQuery = true, value = "SELECT * FROM listings l WHERE l.id >= :a AND l.id <= :b")
+	List<Listing> findListingsRange(@Param("a") int a, @Param("b") int b);	
+	
 }

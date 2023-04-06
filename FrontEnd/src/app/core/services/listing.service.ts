@@ -53,6 +53,30 @@ export class ListingService {
       );
    }
 
+   getIslands() {
+      return this.http.get<Listing[]>(`${environment.api}/listing/islands`).pipe(
+         catchError(this.errors)
+      );
+   }
+
+   getTrending() {
+      return this.http.get<Listing[]>(`${environment.api}/listing/trending`).pipe(
+         catchError(this.errors)
+      );
+   }
+
+   getTreehouses() {
+      return this.http.get<Listing[]>(`${environment.api}/listing/treehouses`).pipe(
+         catchError(this.errors)
+      );
+   }
+
+   getTopOfTheWorld() {
+      return this.http.get<Listing[]>(`${environment.api}/listing/topOfTheWorld`).pipe(
+         catchError(this.errors)
+      );
+   }
+
    private errors(err: any) {
       console.log(err)
       switch (err.error.message) {

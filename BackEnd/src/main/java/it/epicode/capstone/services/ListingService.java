@@ -51,6 +51,10 @@ public class ListingService {
 		return lR.findAll(p);
 	}
 	
+	public List<Listing> getListingsRange(int a, int b) {
+		return lR.findListingsRange(a,b);
+	}
+	
 	public Set<Place> getLocationsFromInput(String loc) {
 		List<Listing> list = lR.findListingsByLocation(loc);
 		Set<Place> set = new HashSet<Place>();

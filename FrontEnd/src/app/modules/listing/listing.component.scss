@@ -8,10 +8,6 @@
    width: 30px;
 }
 
-.disabled {
-   background-color: var(--bs-gray-200);
-}
-
 small {
    font-size: 11px;;
 }
@@ -24,6 +20,6 @@ small {
    overflow: visible;
 }
 
-.sticky-top {
-   top:20px;
+#stickyPanel {
+   top:75px;
 }

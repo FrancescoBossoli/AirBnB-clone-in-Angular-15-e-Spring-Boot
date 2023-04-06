@@ -1,0 +1,22 @@
+label {
+   cursor: pointer;
+   g {
+      fill: var(--bs-body-color);
+   }
+}
+
+#buttons div {
+   width: 100px;
+}
+
+#islands:checked ~ label[for="islands"] g, #trending:checked ~ label[for="trending"] g, #topOfTheWorld:checked ~ label[for="topOfTheWorld"] g,
+#amazingViews:checked ~ label[for="amazingViews"] g, #castles:checked ~ label[for="castles"] g, #popularCities:checked ~ label[for="popularCities"] g,
+#ryokan:checked ~ label[for="ryokan"] g, #beach:checked ~ label[for="beach"] g, #amazingPools:checked ~ label[for="amazingPools"] g,
+#treeHouses:checked ~ label[for="treeHouses"] g
+
+
+{
+   fill: var(--bs-primary);
+}
+
+

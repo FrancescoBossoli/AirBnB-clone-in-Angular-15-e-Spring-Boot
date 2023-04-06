@@ -2,6 +2,7 @@ import { HomeRoutingModule } from './home-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home.component';
+import { ShowcaseComponent } from 'src/app/shared/components/showcase/showcase.component';
 
 
 
@@ -11,7 +12,8 @@ import { HomeComponent } from './home.component';
    ],
    imports: [
       CommonModule,
-      HomeRoutingModule
+      HomeRoutingModule,
+      ShowcaseComponent
    ]
 })
 export class HomeModule { }

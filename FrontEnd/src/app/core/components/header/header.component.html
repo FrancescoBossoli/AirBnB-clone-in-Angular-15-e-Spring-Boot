@@ -4,10 +4,13 @@
          <div class="d-none d-md-flex align-items-end">
             <a [routerLink]= "['/']"><img src="../../../assets/img/logo.png" class="w-75 text-start" alt="Travel"></a>
          </div>
+         <div class="d-flex d-md-none justify-content-center">
+            <a [routerLink]= "['/']"><img src="../../../assets/img/letter.png" class="w-75 text-start" alt="Travel"></a>
+         </div>
          <!-- mettere icona small -->
       </div>
       <div class="col-5 col-sm-5 col-md-6 col-lg-5 col-xxl-4 p-0 p-md-2 mx-lg-5 search">
-         <div class="position-relative d-flex align-items-center border border-1 border-primary p-2 rounded-5" data-bs-toggle="search" data-bs-display="static">
+         <div class="position-relative d-flex align-items-center border border-1 border-primary p-2 rounded-5 bg-body" data-bs-toggle="search" data-bs-display="static">
             <div class="d-flex justify-content-between w-100 align-items-baseline" #searchbar>
                <div class="d-flex justify-content-center w-100">
                   <div class="d-md-none"><button type="button" class="border-0 bg-body text-body" (click)="openPanel()">Avvia la ricerca</button></div>
@@ -94,17 +97,17 @@
       </div>
       <div class="col-3 col-md-2 col-xxl-3 text-end me-2 p-0">
          <div class="btn-group nav-buttons" role="group" aria-label="Button group with nested dropdown">
-            <button type="button" class="btn btn-outline-primary rounded-5 d-flex align-items-center bg-transparent text-primary px-2 d-none d-md-inline-flex" *ngIf="user.username != null" [routerLink]="['favourites']">
+            <button type="button" class="btn btn-outline-primary rounded-5 d-flex align-items-center bg-body text-primary px-2 d-none d-md-inline-flex" *ngIf="user.username != null" [routerLink]="['favourites']">
                <i class="fa-sharp fa-solid fa-star-sharp fs-6"></i>
             </button>
-            <button type="button" class="btn btn-outline-primary rounded-5 d-flex align-items-center bg-transparent text-primary px-2 mx-2" *ngIf="darkMode == true" (click) = "switchTheme()">
+            <button type="button" class="btn btn-outline-primary rounded-5 d-flex align-items-center bg-body text-primary px-2 mx-2" *ngIf="darkMode == true" (click) = "switchTheme()">
                <i class="fas fa-sun-bright fs-5"></i>
             </button>
-            <button type="button" class="btn btn-outline-primary rounded-5 d-flex align-items-center bg-transparent text-primary mx-2" *ngIf="darkMode == false" (click) = "switchTheme()">
+            <button type="button" class="btn btn-outline-primary rounded-5 d-flex align-items-center bg-body text-primary mx-2" *ngIf="darkMode == false" (click) = "switchTheme()">
                <i class="fas fa-moon"></i>
             </button>
             <div ngbDropdown display="dynamic" class="nav-item dropdown" placement="bottom-end">
-               <button type="button" class="btn btn-outline-primary rounded-5 dropdown-toggle d-flex align-items-center bg-transparent text-primary py-1" id="userMenu" ngbDropdownToggle>
+               <button type="button" class="btn btn-outline-primary rounded-5 dropdown-toggle d-flex align-items-center bg-body text-primary py-1" id="userMenu" ngbDropdownToggle>
                   <i class="fas fa-bars me-2 fs-6"></i>
                   <i class="fa-duotone fa-circle-user" *ngIf="user.id == null"></i>
                   <img *ngIf="user.id != null" class="thumbnail rounded-5" [src]="avatar" alt="profile pic">

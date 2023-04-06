@@ -101,4 +101,38 @@ public class ListingController {
 			list = listSrv.getListingsByPeople(people);		
 		return ResponseEntity.ok(list);
 	}
+	
+	@GetMapping("islands")
+	public ResponseEntity<?> getIslands() {
+		List<PublicListing> list = getListingsRange(84,95);	
+		return new ResponseEntity<List<PublicListing>>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("trending")
+	public ResponseEntity<?> getTrending() {
+		List<PublicListing> list = getListingsRange(96,107);	
+		return new ResponseEntity<List<PublicListing>>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("treehouses")
+	public ResponseEntity<?> getTreehouses() {
+		List<PublicListing> list = getListingsRange(108,119);	
+		return new ResponseEntity<List<PublicListing>>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("topOfTheWorld")
+	public ResponseEntity<?> getTopOfTheWorld() {
+		List<PublicListing> list = getListingsRange(120,131);	
+		return new ResponseEntity<List<PublicListing>>(list, HttpStatus.OK);
+	}
+	
+	public List<PublicListing> getListingsRange(int a, int b) {
+		List<Listing> list = listSrv.getListingsRange(a, b);
+		List<PublicListing> pList = new ArrayList<PublicListing>();
+		for (Listing listing : list) {
+			PublicListing pListing = PublicListing.build(listing);
+			pList.add(pListing);
+		}
+		return pList;
+	}
 }

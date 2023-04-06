@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
    places:Place[] = [];
    screen:number = window.innerWidth;
 
-   destination:string = "";
+   // destination:string = "";
 
    @ViewChild('mainPanel') mainPanel!:ElementRef;
    @ViewChild('radio1') radio1!:ElementRef;
@@ -89,7 +89,7 @@ export class HeaderComponent implements OnInit {
       this.suggestedSearch.nativeElement.classList.add('d-none');
       this.fromDate = null;
       this.toDate = null;
-      this.destination = '';
+      // this.destination = '';
       this.searchInput = '';
       this.adults = '0';
       this.children = '0';
@@ -142,7 +142,7 @@ export class HeaderComponent implements OnInit {
    }
 
    setDestination(loc:string) {
-      this.destination = loc;
+      // this.destination = loc;
       this.searchInput = loc;
       this.suggestedSearch.nativeElement.classList.add('d-none');
       this.focus(2);
@@ -237,7 +237,7 @@ export class HeaderComponent implements OnInit {
          this.toDate.day.toString().length == 1 ? dDay = '0' + this.toDate.day.toString() : dDay = '' + this.toDate.day.toString();
          departure = this.toDate.year + '-' + dMonth + '-' + dDay;
       }
-      let form:ListingSearch = {location:this.destination, arrival:arrival, departure:departure, people:this.countPeople()}
+      let form:ListingSearch = {location:this.searchInput, arrival:arrival, departure:departure, people:this.countPeople()}
       let research:Listing[] = [];
       this.listSrv.listingSearch(form).subscribe((res) => research = res);
       this.cancelSearch();

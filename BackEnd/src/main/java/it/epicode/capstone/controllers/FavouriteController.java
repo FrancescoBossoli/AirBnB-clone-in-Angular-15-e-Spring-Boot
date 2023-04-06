@@ -56,10 +56,8 @@ public class FavouriteController {
 		Optional<Listing> lOpt = listSrv.getListingById(id);
 		if (lOpt.isEmpty()) return ResponseEntity.badRequest().body(new MessageResponse("Error: Preferred Listing not Found"));
 		Set<Listing> favourites = u.getFavourites();
-		System.out.println(favourites);
 		favourites.add(lOpt.get());
 		u.setFavourites(favourites);
-		u.getFavourites().forEach(f -> System.out.println(f.getName()));
 		userSrv.edit(u);
 		return ResponseEntity.ok(new MessageResponse("The favourite listing has been added!"));
 	}

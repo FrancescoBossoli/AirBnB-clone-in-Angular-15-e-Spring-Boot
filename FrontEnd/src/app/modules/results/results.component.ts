@@ -1,3 +1,4 @@
+import { listingResolver } from './../../core/resolvers/listing.resolver';
 import { switchMap, of, delay, startWith } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/core/interfaces/user.interface';
@@ -20,7 +21,11 @@ export class ResultsComponent implements OnInit{
    user:User = Object.assign({});
    isLogged:boolean = false;
    lat = 0;
+   minLat = 0;
+   maxLat = 0;
    long = 0;
+   minLong = 0;
+   maxLong = 0;
 
    map!: mapboxgl.Map;
    style = 'mapbox://styles/mapbox/streets-v11';
@@ -43,6 +48,7 @@ export class ResultsComponent implements OnInit{
                this.setMarker(listing);
             })
             this.map.setCenter([this.long/this.listings.length, this.lat/this.listings.length]);
+            this.setZoom();
          });
       } else {
          this.listings = this.user.favourites;
@@ -52,7 +58,9 @@ export class ResultsComponent implements OnInit{
             this.setMarker(listing);
          })
          this.map.setCenter([this.long/this.listings.length, this.lat/this.listings.length]);
+         this.setZoom();
       }
+
       this.map.on('click', (e) => this.map.setCenter(e.lngLat))
    }
 
@@ -82,9 +90,29 @@ export class ResultsComponent implements OnInit{
       marker.getElement().firstChild?.replaceWith(el);
    }
 
+   setZoom() {
+      this.minLat = this.markerCollection[0].getLngLat().lat;
+      this.maxLat = this.markerCollection[0].getLngLat().lat;
+      this.minLong = this.markerCollection[0].getLngLat().lng;
+      this.maxLong = this.markerCollection[0].getLngLat().lng;
+      for (let x = 1; x < this.markerCollection.length; x++) {
+         if (this.markerCollection[x].getLngLat().lat > this.maxLat) this.maxLat = this.markerCollection[x].getLngLat().lat;
+         if (this.markerCollection[x].getLngLat().lat < this.minLat) this.minLat = this.markerCollection[x].getLngLat().lat;
+         if (this.markerCollection[x].getLngLat().lng > this.maxLong) this.maxLong = this.markerCollection[x].getLngLat().lng;
+         if (this.markerCollection[x].getLngLat().lng < this.minLong) this.minLong = this.markerCollection[x].getLngLat().lng;
+      }
+      this.map.fitBounds([new mapboxgl.LngLat(this.minLong, this.minLat),new mapboxgl.LngLat(this.maxLong, this.maxLat)], {padding:80});
+      this.map.on('click', (e) => this.map.setCenter(e.lngLat))
+   }
+
    resetMap() {
       this.lat = 0;
       this.long = 0;
+      this.minLat = 0;
+      this.maxLat = 0;
+      this.minLong = 0;
+      this.maxLong = 0;
+
       this.map = new mapboxgl.Map({
          accessToken: environment.mapToken,
          container: 'map',
