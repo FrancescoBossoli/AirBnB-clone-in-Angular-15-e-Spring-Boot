@@ -220,7 +220,7 @@ export class HeaderComponent implements OnInit {
    }
 
    searchForListings() {
-
+      let params:string = '?';
       let arrival:string = '';
       let departure:string = '';
       if (this.fromDate != null) {
@@ -237,12 +237,12 @@ export class HeaderComponent implements OnInit {
          this.toDate.day.toString().length == 1 ? dDay = '0' + this.toDate.day.toString() : dDay = '' + this.toDate.day.toString();
          departure = this.toDate.year + '-' + dMonth + '-' + dDay;
       }
-      let form:ListingSearch = {location:this.searchInput, arrival:arrival, departure:departure, people:this.countPeople()}
-      let research:Listing[] = [];
-      this.listSrv.listingSearch(form).subscribe((res) => research = res);
+      if (this.searchInput != '') params += `location=${this.searchInput.replace(', ', '-')}&`;
+      if (arrival != '') params += `arrival=${arrival}&`;
+      if (departure != '') params += `departure=${departure}&`;
+      if (this.countPeople() != 0) params += `guests=${this.countPeople()}&`;
       this.cancelSearch();
-      this.router.navigate( ['results'] );
-
+      this.router.navigateByUrl(`results/${params.substring(0,params.length -1)}`);
 
 
 

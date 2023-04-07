@@ -8,6 +8,7 @@ const routes: Routes = [
    { path: 'error', loadChildren: () => import('./modules/error/error.module').then(m => m.ErrorModule) },
    { path: 'profile', loadChildren: () => import('./modules/profile/profile.module').then(m => m.ProfileModule) },
    { path: 'results', loadChildren: () => import('./modules/results/results.module').then(m => m.ResultsModule) },
+   { path: 'results/:params', loadChildren: () => import('./modules/results/results.module').then(m => m.ResultsModule) },
    { path: 'favourites', loadChildren: () => import('./modules/results/results.module').then(m => m.ResultsModule) },
    { path: 'listing/:id', loadChildren: () => import('./modules/listing/listing.module').then(m => m.ListingModule) }
 ];

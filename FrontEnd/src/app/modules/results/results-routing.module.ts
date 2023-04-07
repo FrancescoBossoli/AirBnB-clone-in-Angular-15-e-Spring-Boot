@@ -1,9 +1,9 @@
-import { userResolver } from './../../core/resolvers/user.resolver';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResultsComponent } from './results.component';
+import { resultsResolver } from 'src/app/core/resolvers/results.resolver';
 
-const routes: Routes = [{ path: '', component: ResultsComponent }];
+const routes: Routes = [{ path: '', component: ResultsComponent, resolve: {listings: resultsResolver} }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

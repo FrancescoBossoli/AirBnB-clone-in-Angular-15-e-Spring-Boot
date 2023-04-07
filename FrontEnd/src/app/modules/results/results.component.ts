@@ -1,6 +1,6 @@
 import { listingResolver } from './../../core/resolvers/listing.resolver';
 import { switchMap, of, delay, startWith } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/core/interfaces/user.interface';
 import { AuthService } from './../../core/services/auth.service';
 import { Listing } from './../../core/interfaces/listing.interface';
@@ -31,26 +31,31 @@ export class ResultsComponent implements OnInit{
    style = 'mapbox://styles/mapbox/streets-v11';
    markerCollection:mapboxgl.Marker[] = [];
 
-   constructor(private route: ActivatedRoute, private listServ: ListingService, private authSrv: AuthService) { }
+   constructor(private route: ActivatedRoute, private listServ: ListingService, private authSrv: AuthService, private router:Router) { }
 
    ngOnInit(): void {
       this.authSrv.user$.subscribe((res) => this.user = {...this.emptyUser, ...res} );
       this.authSrv.isLoggedIn$.subscribe((res) => this.isLogged = res);
       this.resetMap();
-      if (window.location.pathname == '/results') {
-         this.listServ.results$.pipe(delay(0)).subscribe((res) => {
-            this.listings = res;
-            this.resetMap();
-            res.forEach((listing) => {
-               // this.listings.push(listing)
-               this.lat += listing.latitude;
-               this.long += listing.longitude;
-               this.setMarker(listing);
-            })
-            this.map.setCenter([this.long/this.listings.length, this.lat/this.listings.length]);
-            this.setZoom();
-         });
+      if (window.location.pathname.startsWith('/results')) {
+         this.route.data.pipe(switchMap(data => of(data['listings']))).subscribe({
+            next: ((res:Listing[]) => {
+                  this.listings = res;
+                  this.resetMap();
+                  this.listings.forEach((listing) => {
+                     this.lat += listing.latitude;
+                     this.long += listing.longitude;
+                     this.setMarker(listing);
+                  })
+                  this.map.setCenter([this.long/this.listings.length, this.lat/this.listings.length]);
+                  this.setZoom();
+            }),
+            error: (error) => {
+               console.log(this.route)
+            }
+         })
       } else {
+         if (!this.isLogged) this.router.navigate(['/']);
          this.listings = this.user.favourites;
          this.listings.forEach((listing) => {
             this.lat += listing.latitude;
