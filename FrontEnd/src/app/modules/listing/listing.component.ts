@@ -120,9 +120,6 @@ export class ListingComponent implements OnInit {
       for (let i = 0; i < this.listing.amenities.length; i++) {
          this.services.push(this.listing.amenities[i].id);
       }
-
-      this.fromDate = this.calendar.getNext(this.calendar.getToday(), 'd', 1);
-		this.toDate = this.calendar.getNext(this.calendar.getToday(), 'd', 8);
       const today = new Date();
       this.listing.bookings.forEach((e) => {
          if (Date.parse(e.departure.toString()) >= today.getTime()) {
@@ -228,8 +225,7 @@ export class ListingComponent implements OnInit {
                                      userId: this.user.id
                                     };
       console.log(request)
-      this.bookSrv.registerBooking(request).subscribe(() => this.router.navigate(['profile']));
-      //va cambiato il reindirizzamento
+      this.bookSrv.registerBooking(request).subscribe(() => this.router.navigate(['travels']));
    }
 
 

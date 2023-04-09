@@ -1,0 +1,27 @@
+<div class="container-xxl px-2 px-md-4 mb-5">
+   <div class="p-0 position-relative overflow-hidden d-flex align-items-center rounded-5 mt-2 illustration">
+      <span class="mask position-absolute w-100 h-100"></span>
+   </div>
+   <div class="card card-body mx-3 mx-md-5 travels rounded-4 p-5">
+      <div class="row g-4 mb-2">
+         <div class="col-12 col-lg-6 col-xl-5">
+            <div class="bg-primary shadow-primary rounded-3 py-3 mx-4 badger-title position-relative">
+               <p class="text-white font-weight-bolder text-center m-0 h3">I tuoi prossimi viaggi:</p>
+            </div>
+         </div>
+         <div class="badger col-12 col-xl-12 rounded-4 mx-0 p-4 py-5 border border-primary border-1 d-flex flex-column justify-content-center">
+            <app-slider [bookings]="currentBookings"></app-slider>
+         </div>
+      </div>
+      <div class="row g-4 mb-2 mt-0">
+         <div class="col-12 col-lg-6 col-xxl-5">
+            <div class="bg-info shadow-primary rounded-3 py-3 mx-4 badger-title position-relative">
+               <p class="text-white font-weight-bolder text-center m-0 h3">I posti che hai già visitato:</p>
+            </div>
+         </div>
+         <div class="badger col-12 col-xl-12 rounded-4 mx-0 p-4 py-5 border border-primary border-1 d-flex flex-column justify-content-center">
+            <app-slider [bookings]="pastBookings.reverse()"></app-slider>
+         </div>
+      </div>
+   </div>
+</div>

@@ -10,7 +10,8 @@ const routes: Routes = [
    { path: 'results', loadChildren: () => import('./modules/results/results.module').then(m => m.ResultsModule) },
    { path: 'results/:params', loadChildren: () => import('./modules/results/results.module').then(m => m.ResultsModule) },
    { path: 'favourites', loadChildren: () => import('./modules/results/results.module').then(m => m.ResultsModule) },
-   { path: 'listing/:id', loadChildren: () => import('./modules/listing/listing.module').then(m => m.ListingModule) }
+   { path: 'listing/:id', loadChildren: () => import('./modules/listing/listing.module').then(m => m.ListingModule) },
+   { path: 'travels', loadChildren: () => import('./modules/travels/travels.module').then(m => m.TravelsModule) }
 ];
 
 @NgModule({

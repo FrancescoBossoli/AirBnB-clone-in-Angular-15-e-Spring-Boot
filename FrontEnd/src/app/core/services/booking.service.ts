@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
+import { Booking } from '../interfaces/booking.interface';
 
 @Injectable({
    providedIn: 'root'
@@ -13,6 +14,12 @@ export class BookingService {
 
    registerBooking(request:BookingRequest) {
       return this.http.post(`${environment.api}/booking`, request).pipe(
+         catchError(this.errors)
+      );
+   }
+
+   getBookings(id:number) {
+      return this.http.get<Booking[]>(`${environment.api}/booking/${id}`).pipe(
          catchError(this.errors)
       );
    }

@@ -10,7 +10,6 @@ export const userResolver: ResolveFn<User> = () => {
    let emptyUser = Object.assign({});
    let user:User = Object.assign({});
    authServ.user$.subscribe({ next: (data) => { user = {...emptyUser, ...data} }})
-   if (user.surname != null) return user;
    let jwt:JwtResponse = {...emptyUser, ...user};
    return authServ.loggedUserData(jwt);
 };

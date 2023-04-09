@@ -33,6 +33,15 @@
    // }
 }
 
+.mask {
+   background-image: linear-gradient(195deg, #EC407A 0%, #D81B60 100%);
+   opacity: 0.45;
+}
+
+.profile, .travels {
+   margin-top: -250px;
+}
+
 .modal {
    --bs-modal-bg: var(--bs-body-bg);
 }

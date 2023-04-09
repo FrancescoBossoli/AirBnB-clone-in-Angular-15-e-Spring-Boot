@@ -148,6 +148,7 @@
                      <div class="d-flex flex-column w-50 border-end border-1 border-primary pt-3">
                         <small class="fw-bolder text-center pb-1">CHECK-IN</small>
                         <button class="text-center border-0 text-body bg-body mb-2" *ngIf="fromDate" routerLink="." [fragment]="'calendar'">{{fromDate.day}}-{{fromDate.month}}-{{fromDate.year}}</button>
+                        <button class="text-center text-secondary border-0 bg-body" *ngIf="!fromDate" routerLink="." [fragment]="'calendar'">Aggiungi...</button>
                      </div>
                      <div class="d-flex flex-column w-50 pt-3">
                         <small class="fw-bolder text-center pb-1">CHECK-OUT</small>

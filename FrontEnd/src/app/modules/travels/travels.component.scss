@@ -1,5 +1,5 @@
 .illustration {
-   background: url('../../../assets/img/illustration.png') 50% 100%;
+   background: url('../../../assets/img/travels.jpg') 50% 6%;
    background-size: cover;
    min-height: 350px;
 }
@@ -10,10 +10,10 @@
 
 .badger {
    background-color: var(--bs-body-bg);
-}
-
-.user-pic {
-   width: 140px;
+   margin-top: -33px;
+   &-title {
+      z-index:2;
+   }
 }
 
 

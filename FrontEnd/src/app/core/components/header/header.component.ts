@@ -69,9 +69,8 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['profile'])
    }
 
-   //cambiare
-   openSettings() {
-      this.router.navigate(['results'])
+   openTravels() {
+      this.router.navigate(['travels'])
    }
 
    openPanel() {

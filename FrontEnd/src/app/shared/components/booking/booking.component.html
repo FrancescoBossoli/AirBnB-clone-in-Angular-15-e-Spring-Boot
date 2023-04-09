@@ -1,0 +1,31 @@
+
+
+<div class="row justify-content-between align-items-baseline">
+   <div class="col-lg-6">
+      <p class="h6 text-truncate">{{booking.location.name}}</p>
+      <div>
+         <div class="ratio ratio-16x9">
+            <a [routerLink] ="['/listing/' + booking.location.id]" class="ratio ratio-16x9">
+               <img [src]="booking.location.pictures[0]" [alt]="booking.location.name + '\'s preview'" class="rounded-4">
+            </a>
+         </div>
+      </div>
+
+   </div>
+   <div class="col-lg-6 row justify-content-end flex-column flex-lg-row p-lg-0">
+      <div class="col-lg-6 p-lg-0">
+         <p class="fw-semibold mb-0">Arrivo: <span class="fw-normal">{{booking.arrival}}</span></p>
+      </div>
+      <div class="ps-xl-5 col-lg-6 p-lg-0">
+         <p class="fw-semibold mb-0 text-lg-end me-lg-4">Ritorno: <span class="fw-normal">{{booking.departure}}</span></p>
+      </div>
+      <div class="p-0 d-flex align-items-center flex-column">
+         <div class="ratio ratio-1x1 my-2 w-50 h-auto">
+            <div class="rounded-circle d-none d-lg-flex" #smallMap></div>
+         </div>
+         <div>
+            <p class="fw-semibold mb-0 text-center">Località: <span class="fw-normal">{{booking.location.location}}</span></p>
+         </div>
+      </div>
+   </div>
+</div>
