@@ -7,8 +7,12 @@
          <div class="col-12 col-lg-4">
             <div class="row g-4 mb-2">
                <div class="badger col-12 col-md col-xl-12 rounded-4 me-md-2 me-lg-0 p-4 border border-primary border-1">
-                  <div class="d-flex justify-content-center w-100" aria-busy="false" aria-label="User Profile">
-                     <img class="user-pic rounded-circle align-bottom my-4 my-lg-2" aria-hidden="true" alt="User Profile" [src] = profilePic>
+                  <div class="d-flex justify-content-center w-100 position-relative" aria-busy="false" aria-label="User Profile">
+                     <i class="fa-duotone fa-circle-user fakeAvatar" *ngIf="user.pictureUrl == null || user.pictureUrl == ''"></i>
+                     <img class="user-pic rounded-circle align-bottom my-4 my-lg-2" aria-hidden="true" alt="User Profile" [src] = profilePic *ngIf="user.pictureUrl != null && user.pictureUrl != ''">
+                     <input type="file" class="d-none" id="setImage" (change)="getImage($event)" accept="image/png, image/jpeg">
+                     <label for="setImage" class="btn bg-primary text-body position-absolute rounded-circle fw-bold editImage" #imgLabel>+</label>
+                     <button class="position-absolute rounded-circle fw-bold editImage bg-success d-none" #imgCheck (click)="uploadImage()"><i class="fa-sharp fa-solid fa-check"></i></button>
                   </div>
                   <p class="text-center fw-bolder h5">{{user.name}} {{user.surname}}</p>
                   <div class="d-flex justify-content-center">
@@ -23,15 +27,23 @@
                   </div>
                </div>
                <div class="badger col-12 col-md col-xl-12 rounded-4 ms-md-2 ms-lg-0 p-4 border border-primary border-1 d-flex flex-column justify-content-center">
-                  <p class="text-center fw-bolder h6">Residenza:</p>
-                  <p class="text-center">{{user.location}}</p>
-                  <p class="text-center fw-bolder h6 mt-2">Contatti verificati:</p>
-                  <div class="d-flex justify-content-center ">
-                     <div class="d-flex flex-column">
-                        <div *ngFor="let contact of user.verifications" class="text-start">
-                           <p *ngIf="contact.name == 'phone'"><i class="fa-solid fa-circle-phone"></i> Cellulare</p>
-                           <p *ngIf="contact.name == 'email'"><i class="fa-sharp fa-solid fa-circle-envelope"></i> e-mail</p>
-                           <p *ngIf="contact.name == 'work_email'"><i class="fa-sharp fa-solid fa-circle-envelope"></i> e-mail lavorativa</p>
+                  <div class="d-flex justify-content-center">
+                     <p class="text-center fw-bolder h6 ms-3 ps-3">Residenza:</p>
+                     <button class="btn bg-primary text-body rounded-circle fw-bold d-flex justify-content-center edit ms-2" #editLocationBtn (click)="editLocation()">
+                        <i class="fa-sharp fa-solid fa-pen-to-square edit-about"></i>
+                     </button>
+                  </div>
+                  <input type="textarea" class="w-100 h-auto border-1 bg-body text-body" #locationBox *ngIf="locationEditing == true" value="{{user.location}}">
+                  <p *ngIf="locationEditing == false" class="text-center">{{user.location}}</p>
+                  <div *ngIf="user.verifications && user.verifications.length != 0">
+                     <p class="text-center fw-bolder h6 mt-2">Contatti verificati:</p>
+                     <div class="d-flex justify-content-center ">
+                        <div class="d-flex flex-column">
+                           <div *ngFor="let contact of user.verifications" class="text-start">
+                              <p *ngIf="contact.name == 'phone'"><i class="fa-solid fa-circle-phone"></i> Cellulare</p>
+                              <p *ngIf="contact.name == 'email'"><i class="fa-sharp fa-solid fa-circle-envelope"></i> e-mail</p>
+                              <p *ngIf="contact.name == 'work_email'"><i class="fa-sharp fa-solid fa-circle-envelope"></i> e-mail lavorativa</p>
+                           </div>
                         </div>
                      </div>
                   </div>
@@ -40,8 +52,14 @@
          </div>
          <div class="col-12 col-lg-8 p-0 ps-lg-4">
             <div class="badger rounded-4 w-100 p-4 border border-primary border-1 mb-4">
-               <p class="text-start h5">Cosa far sapere agli altri?</p>
-               <p>{{user.about}}</p>
+               <div class="d-flex">
+                  <p class="text-start h5">Cosa far sapere agli altri?</p>
+                  <button class="btn bg-primary text-body rounded-circle fw-bold d-flex justify-content-center edit ms-2" #editAboutBtn (click)="editAbout()">
+                     <i class="fa-sharp fa-solid fa-pen-to-square edit-about"></i>
+                  </button>
+               </div>
+               <input type="textarea" class="w-100 h-auto border-1 bg-body text-body" #aboutBox *ngIf="aboutEditing == true" value="{{user.about}}">
+               <p *ngIf="aboutEditing == false">{{user.about}}</p>
             </div>
             <div class="badger rounded-4 w-100 p-4 border border-primary border-1 mb-4">
                <p class="text-start h5">Le tue recensioni:</p>
@@ -73,7 +91,7 @@
                <div *ngFor="let review of receivedReviews| slice: (receivedReviewsPage-1) * 5 : receivedReviewsPage * 5" class="text-start">
                   <div class="w-100 px-3 py-2 my-4">
                      <div class="d-flex">
-                        <img class="rounded-circle me-2" [src] = "review.reviewer.pictureUrl + '?aki_policy=profile_small'" alt="reviewer avatar">
+                        <img class="rounded-circle me-2" [src] = "review.reviewer.pictureUrl.startsWith('http') ? review.reviewer.pictureUrl + '?aki_policy=profile_small' : backEnd + review.reviewer.pictureUrl" alt="reviewer avatar">
                         <div>
                            <p class="fw-semibold mb-0">{{review.reviewer.name}}</p>
                            <p class="pe-2 mb-0">{{review.date}}</p>

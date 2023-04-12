@@ -16,4 +16,26 @@
    width: 140px;
 }
 
+.fakeAvatar {
+   font-size: 130px;
+}
+
+.editImage {
+   padding: 0;
+   width: 27px;
+   height: 27px;
+   right: 30%;
+   top: 10%
+
+}
+
+.edit {
+   width: 27px;
+   height: 27px;
+   &-about {
+      font-size: 14px;
+   }
+}
+
+
 

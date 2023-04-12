@@ -1,4 +1,3 @@
-import { ListingSearch } from './../../interfaces/listing-search.interface';
 import { ListingService } from 'src/app/core/services/listing.service';
 import { Router } from '@angular/router';
 import { AuthService } from './../../services/auth.service';
@@ -7,7 +6,6 @@ import { User } from '../../interfaces/user.interface';
 import { environment } from 'src/environments/environment.development';
 import { NgbCalendar, NgbDate, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Place } from '../../interfaces/place.interface';
-import { Listing } from '../../interfaces/listing.interface';
 
 @Component({
   selector: 'app-header',
@@ -22,8 +20,6 @@ export class HeaderComponent implements OnInit {
    route = this.router.url;
    places:Place[] = [];
    screen:number = window.innerWidth;
-
-   // destination:string = "";
 
    @ViewChild('mainPanel') mainPanel!:ElementRef;
    @ViewChild('radio1') radio1!:ElementRef;
@@ -46,7 +42,9 @@ export class HeaderComponent implements OnInit {
 	toDate: NgbDate|null = null;
    minDate: NgbDate = this.calendar.getNext(this.calendar.getToday(), 'd', 1);
 
-   get avatar() { return this.user?.pictureUrl + environment.thumbnail; }
+   get avatar() {
+      return this.user?.pictureUrl.startsWith('BackEnd') ? environment.backEnd + this.user?.pictureUrl : this.user?.pictureUrl + environment.thumbnail;
+   }
 
    constructor(private authServ: AuthService, private router: Router, private modalServ: NgbModal, private listSrv: ListingService, private renderer: Renderer2, private calendar: NgbCalendar) { }
 
@@ -243,20 +241,5 @@ export class HeaderComponent implements OnInit {
       this.cancelSearch();
       this.router.navigateByUrl(`results/${params.substring(0,params.length -1)}`);
 
-
-
-
-
    }
-
-
-
-
-
-
-
-
-
-
-
 }

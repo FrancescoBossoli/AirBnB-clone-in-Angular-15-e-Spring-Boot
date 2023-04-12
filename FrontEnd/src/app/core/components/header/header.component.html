@@ -109,8 +109,8 @@
             <div ngbDropdown display="dynamic" class="nav-item dropdown" placement="bottom-end">
                <button type="button" class="btn btn-outline-primary rounded-5 dropdown-toggle d-flex align-items-center bg-body text-primary py-1" id="userMenu" ngbDropdownToggle>
                   <i class="fas fa-bars me-2 fs-6"></i>
-                  <i class="fa-duotone fa-circle-user" *ngIf="user.id == null"></i>
-                  <img *ngIf="user.id != null" class="thumbnail rounded-5" [src]="avatar" alt="profile pic">
+                  <i class="fa-duotone fa-circle-user" *ngIf="user.id == null || user.pictureUrl == null"></i>
+                  <img *ngIf="user.id != null && user.pictureUrl != null" class="thumbnail rounded-5" [src]="avatar" alt="profile pic">
                </button>
                <div ngbDropdownMenu class="dropdown-menu border-0 mt-1" aria-labelledby="userMenu">
                   <app-auth *ngIf="user.id == null"></app-auth>
