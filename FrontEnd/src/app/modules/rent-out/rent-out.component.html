@@ -1,0 +1,157 @@
+<div class="container-xxl px-2 px-md-4 mb-5">
+   <div class="p-0 position-relative overflow-hidden d-flex align-items-center rounded-5 mt-2 illustration">
+      <span class="mask position-absolute w-100 h-100"></span>
+   </div>
+   <div class="card card-body mx-3 mx-md-5 travels rounded-4 p-5">
+      <div class="row g-4 mb-2">
+         <div class="col-12 col-lg-6 col-xl-5">
+            <div class="bg-primary shadow-primary rounded-3 py-3 mx-4 badger-title position-relative">
+               <p class="text-white font-weight-bolder text-center m-0 h3">Crea la tua inserzione:</p>
+            </div>
+         </div>
+         <div class="badger col-12 col-xl-12 rounded-4 mx-0 p-4 py-5 border border-primary border-1 d-flex flex-column justify-content-center">
+            <div class="mx-5">
+               <div class="d-flex flex-column flex-lg-row align-items-baseline">
+                  <p class="mb-0">Scegli in nome della location da affittare:</p>
+                  <textarea rows="1" #locationName class="ms-lg-2 w-100"></textarea>
+               </div>
+               <div class="d-flex flex-column flex-lg-row align-items-baseline my-3">
+                  <p class="mb-0">Aggiungi una descrizione per la location in affitto:</p>
+                  <textarea rows="3" #locationDescription class="ms-lg-2 w-100"></textarea>
+               </div>
+               <div class="d-flex flex-column flex-lg-row align-items-baseline my-3">
+                  <p class="mb-0">Aggiungi dettagli su cosa c'è nei dintorni della tua location:</p>
+                  <textarea rows="3" #locationNeighborhood class="ms-lg-2 w-100"></textarea>
+               </div>
+               <div class="d-flex flex-column flex-lg-row align-items-baseline my-3">
+                  <p class="mb-0 w-100">Aggiungi le coordinate relative alla tua location:</p>
+                  <div class="d-flex align-items-baseline ms-3">
+                     <p class="mb-0 text-end w-100">Longitudine:</p>
+                     <input type="number" #locationLongitude class="ms-lg-2">
+                  </div>
+                  <div class="d-flex align-items-baseline ms-3">
+                     <p class="mb-0 text-end w-100">Latitudine:</p>
+                     <input type="number" #locationLatitude class="ms-lg-2">
+                  </div>
+               </div>
+               <div class="d-flex flex-column flex-lg-row align-items-baseline my-3">
+                  <p class="mb-0 w-100">Ubicazione della location da affittare (Città, Nazione):</p>
+                  <textarea rows="1" #locationUbication class="ms-lg-2 w-100"></textarea>
+               </div>
+               <div class="d-flex justify-content-between">
+                  <div class="d-flex flex-column flex-lg-row align-items-baseline my-2">
+                     <p class="mb-0 w-100 me-2">Tipologia di location:</p>
+                     <select name="room" id="room" #roomSelect>
+                        <option value="PRIVATE_ROOM">Stanza privata</option>
+                        <option value="HOTEL_ROOM">Camera di Hotel</option>
+                        <option value="SHARED_ROOM">Stanza condivisa</option>
+                        <option value="ENTIRE_HOME">Abitazione intera</option>
+                     </select>
+                  </div>
+                  <div class="d-flex flex-column flex-lg-row align-items-baseline my-2">
+                     <p class="mb-0 w-100 me-2">Specifiche:</p>
+                     <select name="property" id="property" #propertySelect>
+                        <option value="RENTAL_UNIT">Abitazione intera attualmente in affitto</option>
+                        <option value="ROOM_IN_RENTAL_UNIT">Stanza all'interno di immobile in affitto</option>
+                        <option value="CONDO">Appartamento intero</option>
+                        <option value="ROOM_IN_CONDO">Stanza di appartamento</option>
+                        <option value="LOFT">Loft intero</option>
+                        <option value="ROOM_IN_LOFT">Stanza all'interno di un loft</option>
+                        <option value="GUEST_SUITE">Guest suite</option>
+                        <option value="HOME">Abitazione intera</option>
+                        <option value="ROOM_IN_HOTEL">Stanza di hotel</option>
+                        <option value="ROOM_IN_HOSTEL">Camera di ostello</option>
+                        <option value="ROOM_IN_BNB">Stanza di bed & breakfast</option>
+                        <option value="VILLA">Villa intera</option>
+                     </select>
+                  </div>
+               </div>
+               <div class="d-flex flex-column flex-xl-row justify-content-between">
+                  <div class="d-flex align-items-baseline my-2">
+                     <p class="mb-0 me-2">Posti letto:</p>
+                     <select name="capacity" id="capacity" #locationCapacity>
+                        <option value= 1>1</option>
+                        <option value= 2>2</option>
+                        <option value= 3>3</option>
+                        <option value= 4>4</option>
+                        <option value= 5>5</option>
+                        <option value= 6>6</option>
+                        <option value= 7>7</option>
+                        <option value= 8>8</option>
+                        <option value= 9>9</option>
+                        <option value= 10>10</option>
+                        <option value= 11>11</option>
+                        <option value= 12>12</option>
+                     </select>
+                  </div>
+                  <div class="d-flex align-items-baseline my-2">
+                     <p class="mb-0 me-2">Camere da letto:</p>
+                     <select name="bedrooms" id="bedrooms" #locationBedrooms>
+                        <option value= 1>1</option>
+                        <option value= 2>2</option>
+                        <option value= 3>3</option>
+                        <option value= 4>4</option>
+                        <option value= 5>5</option>
+                        <option value= 6>6</option>
+                        <option value= 7>7</option>
+                        <option value= 8>8</option>
+                        <option value= 9>9</option>
+                        <option value= 10>10</option>
+                        <option value= 11>11</option>
+                        <option value= 12>12</option>
+                     </select>
+                  </div>
+                  <div class="d-flex align-items-baseline my-2">
+                     <p class="mb-0 me-2">Numero di letti:</p>
+                     <select name="beds" id="beds" #locationBeds>
+                        <option value= 1>1</option>
+                        <option value= 2>2</option>
+                        <option value= 3>3</option>
+                        <option value= 4>4</option>
+                        <option value= 5>5</option>
+                        <option value= 6>6</option>
+                        <option value= 7>7</option>
+                        <option value= 8>8</option>
+                        <option value= 9>9</option>
+                        <option value= 10>10</option>
+                        <option value= 11>11</option>
+                        <option value= 12>12</option>
+                     </select>
+                  </div>
+                  <div class="d-flex align-items-baseline my-2">
+                     <p class="mb-0 me-2">Numero di bagni:</p>
+                     <select name="bathroom" id="bathroom" #locationBathroom>
+                        <option value= BATH_1>1</option>
+                        <option value= BATHS_2>2</option>
+                        <option value= BATHS_3>3</option>
+                        <option value= BATHS_4>4</option>
+                     </select>
+                  </div>
+                  <div class="d-flex flex-column flex-lg-row justify-content-end align-items-baseline my-2">
+                     <p class="mb-0 me-2">Prezzo in € per notte:</p>
+                     <input type="number" name="price" id="price" #price >
+                  </div>
+               </div>
+               <div class="d-flex justify-content-end align-items-baseline my-2">
+                  <p class="mb-0 me-2">Inserisci 5 foto della location</p>
+                  <input type="file" class="d-none" id="setImage1" (change)="getImage($event)" accept="image/png, image/jpeg">
+                  <label for="setImage1" class="btn bg-primary fw-bolder rounded-circle fs-5 py-1 text-body mx-2">+</label>
+                  <input type="file" class="d-none" id="setImage2" (change)="getImage($event)" accept="image/png, image/jpeg">
+                  <label for="setImage2" class="btn bg-primary fw-bolder rounded-circle fs-5 py-1 text-body mx-2">+</label>
+                  <input type="file" class="d-none" id="setImage3" (change)="getImage($event)" accept="image/png, image/jpeg">
+                  <label for="setImage3" class="btn bg-primary fw-bolder rounded-circle fs-5 py-1 text-body mx-2">+</label>
+                  <input type="file" class="d-none" id="setImage4" (change)="getImage($event)" accept="image/png, image/jpeg">
+                  <label for="setImage4" class="btn bg-primary fw-bolder rounded-circle fs-5 py-1 text-body mx-2">+</label>
+                  <input type="file" class="d-none" id="setImage5" (change)="getImage($event)" accept="image/png, image/jpeg">
+                  <label for="setImage5" class="btn bg-primary fw-bolder rounded-circle fs-5 py-1 text-body mx-2">+</label>
+               </div>
+
+
+            </div>
+            <div class="d-flex justify-content-center mt-3">
+               <button class="btn bg-primary text-body fw-bolder w-25" (click)="uploadListing()">Upload</button>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

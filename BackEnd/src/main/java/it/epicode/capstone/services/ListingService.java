@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,6 +40,10 @@ public class ListingService {
 	
 	public Optional<Listing> getListingByNameAndOwner(String n, String u) {
 		return lR.findListingByNameAndOwner(n, u);
+	}
+	
+	public Optional<Listing> getListingByLongitudeAndLatitude(Double lon, Double lat) {
+		return lR.findListingByLongitudeAndLatitude(lon, lat);
 	}
 
 	public List<Listing> getAllListings() {
@@ -112,6 +115,10 @@ public class ListingService {
 
 	public void deleteListingById(Long id) {
 		lR.deleteById(id);
+	}
+	
+	public void edit(Listing l) {
+		lR.save(l);
 	}
 
 	public void printList(List<Listing> list) {

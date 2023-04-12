@@ -17,9 +17,15 @@ public class ImageController {
 
 	
 	@GetMapping("/user/{imageName}")
-	public ResponseEntity<Resource> getImage(@PathVariable String imageName) {
+	public ResponseEntity<Resource> getUserImage(@PathVariable String imageName) {
 	    Resource image = new FileSystemResource("src/main/resources/img/user/" + imageName);
 	    return ResponseEntity.ok()
 	        .contentType(MediaType.IMAGE_JPEG).body(image);
+	}
+	
+	@GetMapping("/listing/{imageName}")
+	public ResponseEntity<Resource> getListingImage(@PathVariable String imageName) {
+	    Resource image = new FileSystemResource("src/main/resources/img/listing/" + imageName);
+	    return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
 	}
 }

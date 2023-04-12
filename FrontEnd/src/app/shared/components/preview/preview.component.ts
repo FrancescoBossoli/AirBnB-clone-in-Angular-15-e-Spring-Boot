@@ -3,6 +3,7 @@ import { Listing } from './../../../core/interfaces/listing.interface';
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { environment } from 'src/environments/environment.development';
 
 @Component({
   selector: 'app-preview',
@@ -30,6 +31,7 @@ constructor(private listServ: ListingService) {}
    isLogged:boolean = false;
    outputFormat:String = '?im_w=480';
    isFavourite:boolean = false;
+   backEnd:String = environment.backEnd;
 
    get averageVote():number {
       let avg = 0;

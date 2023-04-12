@@ -71,6 +71,10 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['travels'])
    }
 
+   openRentOut() {
+      this.router.navigate(['rentOut'])
+   }
+
    openPanel() {
       this.mainPanel.nativeElement.classList.toggle('d-none');
       this.searchbar.nativeElement.classList.toggle('d-none');

@@ -19,6 +19,9 @@ public interface ListingRepository extends JpaRepository<Listing, Long> {
 	
 	@Query(nativeQuery = true, value = "SELECT * FROM listings WHERE owner_id = :id")
 	Optional<Listing> findListingByOwnerId(@Param("id") Long id);
+	
+	@Query(nativeQuery = true, value = "SELECT * FROM listings WHERE longitude = :lon AND latitude = :lat")
+	Optional<Listing> findListingByLongitudeAndLatitude(@Param("lon") Double lon, @Param("lat") Double lat);
 		
 	@Query(nativeQuery = true, value = "SELECT * FROM listings l WHERE LOWER(l.location) LIKE LOWER(CONCAT('%', :loc, '%')) AND l.capacity >= :p AND l.id NOT IN ( SELECT b.location_id FROM bookings b WHERE (b.arrival <= :d AND b.departure >= :a))")
 	List<Listing> findListingsByLocationAndDatesAndCapacity(@Param("loc") String loc, @Param("a") LocalDate a, @Param("d") LocalDate d, @Param("p") int p);

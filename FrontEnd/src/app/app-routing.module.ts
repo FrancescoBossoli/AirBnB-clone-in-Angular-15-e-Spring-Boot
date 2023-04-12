@@ -12,7 +12,8 @@ const routes: Routes = [
    { path: 'favourites', loadChildren: () => import('./modules/results/results.module').then(m => m.ResultsModule) },
    { path: 'listing/:id', loadChildren: () => import('./modules/listing/listing.module').then(m => m.ListingModule) },
    { path: 'travels', loadChildren: () => import('./modules/travels/travels.module').then(m => m.TravelsModule) },
-   { path: 'postings', loadChildren: () => import('./modules/postings/postings.module').then(m => m.PostingsModule) }
+   { path: 'postings', loadChildren: () => import('./modules/postings/postings.module').then(m => m.PostingsModule) },
+   { path: 'rentOut', loadChildren: () => import('./modules/rent-out/rent-out.module').then(m => m.RentOutModule) }
 ];
 
 @NgModule({

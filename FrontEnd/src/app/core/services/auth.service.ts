@@ -40,7 +40,7 @@ export class AuthService {
    generateToken(userData:JwtResponse) {
       let {type, ...user} = userData;
       this.authSubject.next(user);
-      localStorage.setItem("user", JSON.stringify({"token":user.token, "id":user.id, "username":user.username, "email":user.email, "roles":user.roles, "name":user.name, "pictureUrl":user.pictureUrl, "favourites":user.favourites}));
+      localStorage.setItem("user", JSON.stringify({"token":user.token, "id":user.id, "username":user.username, "email":user.email, "roles":user.roles, "name":user.name, "pictureUrl":user.pictureUrl, "favourites":user.favourites, "listings":user.listings, "bookings":user.bookings}));
       this.autoLogout(userData)
    }
 
@@ -58,11 +58,11 @@ export class AuthService {
 
    restoreSession() {
       const userData = localStorage.getItem('user');
-      if (!userData) return;
-      const jwt: JwtResponse = JSON.parse(userData);
-      if (this.jwtHelper.isTokenExpired(jwt.token)) return;
-      this.authSubject.next({ id: jwt.id, username: jwt.username, email: jwt.email, roles: jwt.roles, name: jwt.name, pictureUrl:jwt.pictureUrl, token:jwt.token, favourites:jwt.favourites });
-      this.autoLogout(jwt);
+      if (userData && !this.jwtHelper.isTokenExpired(JSON.parse(userData).token)) {
+         const jwt: JwtResponse = JSON.parse(userData);
+         this.authSubject.next({ id: jwt.id, username: jwt.username, email: jwt.email, roles: jwt.roles, name: jwt.name, pictureUrl: jwt.pictureUrl, token: jwt.token, favourites: jwt.favourites, listings: jwt.listings, bookings: jwt.bookings });
+         this.autoLogout(jwt);
+      }
    }
 
    loggedUserData(jwt:JwtResponse):Observable<User> {

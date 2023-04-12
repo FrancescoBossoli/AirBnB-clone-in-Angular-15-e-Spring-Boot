@@ -2,27 +2,27 @@
    <ngb-carousel *ngIf="screen < 768">
       <ng-template ngbSlide>
          <div class="picsum-img-wrapper">
-            <img [src]="listing.pictures[0]" alt="Main listing picture" class="w-100 rounded-4"/>
+            <img [src]="listing.pictures[0].startsWith('BackEnd') ? backEnd + listing.pictures[0] : listing.pictures[0]" alt="Main listing picture" class="w-100 rounded-4"/>
          </div>
       </ng-template>
       <ng-template ngbSlide>
          <div class="picsum-img-wrapper">
-            <img [src]="listing.pictures[1]" alt="Second listing picture" class="w-100 rounded-4"/>
+            <img [src]="listing.pictures[1].startsWith('BackEnd') ? backEnd + listing.pictures[1] : listing.pictures[1]" alt="Second listing picture" class="w-100 rounded-4"/>
          </div>
       </ng-template>
       <ng-template ngbSlide>
          <div class="picsum-img-wrapper">
-            <img [src]="listing.pictures[2]" alt="Third listing picture" class="w-100 rounded-4"/>
+            <img [src]="listing.pictures[2].startsWith('BackEnd') ? backEnd + listing.pictures[2] : listing.pictures[2]" alt="Third listing picture" class="w-100 rounded-4"/>
          </div>
       </ng-template>
       <ng-template ngbSlide>
          <div class="picsum-img-wrapper">
-            <img [src]="listing.pictures[3]" alt="Fourth listing picture" class="w-100 rounded-4"/>
+            <img [src]="listing.pictures[3].startsWith('BackEnd') ? backEnd + listing.pictures[3] : listing.pictures[3]" alt="Fourth listing picture" class="w-100 rounded-4"/>
          </div>
       </ng-template>
       <ng-template ngbSlide>
          <div class="picsum-img-wrapper">
-            <img [src]="listing.pictures[4]" alt="Fifth listing picture" class="w-100 rounded-4"/>
+            <img [src]="listing.pictures[4].startsWith('BackEnd') ? backEnd + listing.pictures[4] : listing.pictures[4]" alt="Fifth listing picture" class="w-100 rounded-4"/>
          </div>
       </ng-template>
    </ngb-carousel>
@@ -37,23 +37,23 @@
       </div>
       <div *ngIf="screen >= 768" class="d-flex mb-3">
          <div class="ratio ratio-4x3 w-50 my-1">
-            <img [src]="listing.pictures[0]" alt="Main listing picture" class="rounded-4" (click)="enlarge(pic0,'f')">
+            <img [src]="listing.pictures[0].startsWith('BackEnd') ? backEnd + listing.pictures[0] : listing.pictures[0]" alt="Main listing picture" width="641px" height="480px" class="rounded-4" (click)="enlarge(pic0,'f')">
          </div>
          <div class="w-50 d-flex flex-column justify-content-between">
             <div class="d-flex mt-1">
                <div class="ratio ratio-4x3 w-50 mx-2">
-                  <img [src]="listing.pictures[1]" alt="Main listing picture" class="rounded-4" (click)="enlarge(pic1,'f')">
+                  <img [src]="listing.pictures[1].startsWith('BackEnd') ? backEnd + listing.pictures[1] : listing.pictures[1]" alt="Main listing picture" width="312.5px" height="280.5px" class="rounded-4" (click)="enlarge(pic1,'f')">
                </div>
                <div class="ratio ratio-4x3 w-50">
-                  <img [src]="listing.pictures[2]" alt="Main listing picture" class="rounded-4" (click)="enlarge(pic2,'f')">
+                  <img [src]="listing.pictures[2].startsWith('BackEnd') ? backEnd + listing.pictures[2] : listing.pictures[2]" alt="Main listing picture" width="312.5px" height="280.5px" class="rounded-4" (click)="enlarge(pic2,'f')">
                </div>
             </div>
             <div class="d-flex mb-1">
                <div class="ratio ratio-4x3 w-50 mx-2">
-                  <img [src]="listing.pictures[3]" alt="Main listing picture" class="rounded-4" (click)="enlarge(pic3,'f')">
+                  <img [src]="listing.pictures[3].startsWith('BackEnd') ? backEnd + listing.pictures[3] : listing.pictures[3]" alt="Main listing picture" width="312.5px" height="280.5px" class="rounded-4" (click)="enlarge(pic3,'f')">
                </div>
                <div class="ratio ratio-4x3 w-50">
-                  <img [src]="listing.pictures[4]" alt="Main listing picture" class="rounded-4" (click)="enlarge(pic4,'f')">
+                  <img [src]="listing.pictures[4].startsWith('BackEnd') ? backEnd + listing.pictures[4] : listing.pictures[4]" alt="Main listing picture" width="312.5px" height="280.5px" class="rounded-4" (click)="enlarge(pic4,'f')">
                </div>
             </div>
          </div>
@@ -68,7 +68,7 @@
                   </div>
                   <p>{{capacity}} - {{bedrooms}} - {{beds}} - {{bathrooms}}</p>
                </div>
-               <img [src]="listing.owner.pictureUrl + '?aki_policy=profile_medium'" alt="{{listing.owner.name}}'s profile picture" class="rounded-circle">
+               <img [src]="listing.owner.pictureUrl.startsWith('BackEnd') ? backEnd + listing.owner.pictureUrl : listing.owner.pictureUrl + '?aki_policy=profile_medium'" alt="{{listing.owner.name}}'s profile picture" class="rounded-circle profilePic">
             </div>
             <hr>
             <div>
@@ -81,7 +81,7 @@
                <p class="text-justify">{{listing.neighborhoodOverview}}</p>
             </div>
             <hr>
-            <div class="services">
+            <div class="services" *ngIf="listing.amenities && listing.amenities.length > 0">
                <h5>Cosa troverai</h5>
                <div class="row">
                   <div class="col-12 col-sm-6 col-xl-4" *ngIf="services.includes(102)">
@@ -195,7 +195,7 @@
             <div class="col-12 col-lg-6 text-start" *ngFor="let review of listing.reviews| slice: (reviewsPage-1) * 4 : reviewsPage * 4">
                <div class="w-100 px-3 py-2">
                   <div class="d-flex">
-                     <img class="rounded-circle me-2" [src] = "review.reviewer.pictureUrl + '?aki_policy=profile_small'" alt="reviewer avatar">
+                     <img class="rounded-circle me-2" [src] = "review.reviewer.pictureUrl.startsWith('BackEnd') ? backEnd + review.reviewer.pictureUrl : review.reviewer.pictureUrl + '?aki_policy=profile_small'" alt="reviewer avatar">
                      <div>
                         <p class="fw-semibold mb-0">{{review.reviewer.name}}</p>
                         <p class="pe-2 mb-0">{{review.date}}</p>

@@ -1,0 +1,21 @@
+.illustration {
+   background: url('../../../assets/img/travels.jpg') 50% 6%;
+   background-size: cover;
+   min-height: 350px;
+}
+
+.card {
+   background-color: var(--bs-body-bgi);
+}
+
+.badger {
+   background-color: var(--bs-body-bg);
+   margin-top: -33px;
+   &-title {
+      z-index:2;
+   }
+}
+
+#price {
+   width: 80px;
+}

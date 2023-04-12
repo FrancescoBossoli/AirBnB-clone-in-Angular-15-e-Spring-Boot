@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment.development';
 import { BookingRequest } from './../../core/interfaces/booking-request.interface';
 import { BookingService } from './../../core/services/booking.service';
 import { ModalService } from './../../core/services/modal.service';
@@ -34,6 +35,8 @@ export class ListingComponent implements OnInit {
    bookedDays: NgbDate[] = [];
    guests:number|null = null;
    guestsText:string = 'Numero di ospiti'
+
+   get backEnd(): string { return environment.backEnd }
 
    get roomType():string {
       switch(this.listing.roomType) {

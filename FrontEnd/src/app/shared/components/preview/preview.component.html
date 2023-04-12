@@ -1,7 +1,7 @@
 <div>
    <div class="ratio ratio-4x3">
       <a [routerLink] ="['/listing/' + listing.id]" class="ratio ratio-4x3">
-         <img [src]="listing.pictures[0] + outputFormat" [alt]="listing.name + '\'s preview'" class="rounded-4">
+         <img [src]="listing.pictures[0].startsWith('BackEnd') ? backEnd + listing.pictures[0] : listing.pictures[0] + outputFormat" [alt]="listing.name + '\'s preview'" width="255.5px" height="191.6px" class="rounded-4">
       </a>
 
       <div class="d-flex justify-content-end p-2 h-auto">

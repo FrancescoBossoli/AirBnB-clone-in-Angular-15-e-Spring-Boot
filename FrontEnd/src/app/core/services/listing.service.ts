@@ -22,6 +22,12 @@ export class ListingService {
       );
    }
 
+   addUserListing(form:FormData) {
+      return this.http.post(`${environment.api}/listing/new`, form).pipe(
+         catchError(this.errors)
+      );
+   }
+
    getListing(id:number) {
       return this.http.get<Listing>(`${environment.api}/listing/${id}`).pipe(
          catchError(this.errors)
