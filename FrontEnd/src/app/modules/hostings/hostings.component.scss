@@ -1,0 +1,36 @@
+.modal-content {
+   display:flex;
+   justify-content: center;
+   overflow: visible;
+}
+
+.services i, .list i {
+   width: 30px;
+}
+
+small {
+   font-size: 11px;;
+}
+
+.card-header {
+   margin-top: -80px;
+}
+
+#stickyPanel {
+   top:75px;
+}
+
+.profilePic {
+   width: 68px;
+   height: 68px;
+}
+
+#previousBtn {
+   position:absolute;
+   left: -60px;
+}
+
+#nextBtn {
+   position:absolute;
+   right: -60px;
+}

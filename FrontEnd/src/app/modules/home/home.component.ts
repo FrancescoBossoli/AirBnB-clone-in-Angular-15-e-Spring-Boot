@@ -38,6 +38,12 @@ export class HomeComponent implements OnInit {
       this.listSrv.getTrending().subscribe((res) => this.trending = res);
       this.listSrv.getTreehouses().subscribe((res) => this.treeHouses = res);
       this.listSrv.getTopOfTheWorld().subscribe((res) => this.topOfTheWorld = res);
+      this.listSrv.getAmazingViews().subscribe((res) => this.amazingViews = res);
+      this.listSrv.getCastles().subscribe((res) => this.castles = res);
+      this.listSrv.getIconicCities().subscribe((res) => this.popularCities = res);
+      this.listSrv.getRyokans().subscribe((res) => this.ryokan = res);
+      this.listSrv.getBeachs().subscribe((res) => this.beach = res);
+      this.listSrv.getAmazingPools().subscribe((res) => this.amazingPools = res);
    }
 
    preference(choice:string) {

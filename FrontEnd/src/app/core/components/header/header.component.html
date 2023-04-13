@@ -116,6 +116,7 @@
                   <app-auth *ngIf="user.id == null"></app-auth>
                   <button ngbDropdownItem class="dropdown-item" *ngIf="user.id != null" (click)="openProfile()">Profilo Personale</button>
                   <button ngbDropdownItem class="dropdown-item" *ngIf="user.id != null && user.bookings && user.bookings.length != 0" (click)="openTravels()">I miei Viaggi</button>
+                  <button ngbDropdownItem class="dropdown-item" *ngIf="user.id != null && user.listings && user.listings.length != 0" (click)="openHostings()">Le mie Inserzioni</button>
                   <button ngbDropdownItem class="dropdown-item" *ngIf="user.id != null" (click)="openRentOut()">Affitta con noi</button>
                   <button ngbDropdownItem class="dropdown-item" *ngIf="user.id != null" (click)="logout()">Logout</button>
                </div>

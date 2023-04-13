@@ -1,0 +1,668 @@
+<div class="container-xxl mt-2 px-4">
+   <ngb-carousel *ngIf="screen < 768">
+      <ng-template ngbSlide>
+         <div class="picsum-img-wrapper">
+            <img [src]="listing.pictures[0].startsWith('BackEnd') ? backEnd + listing.pictures[0] : listing.pictures[0]" alt="Main listing picture" class="w-100 rounded-4"/>
+         </div>
+      </ng-template>
+      <ng-template ngbSlide>
+         <div class="picsum-img-wrapper">
+            <img [src]="listing.pictures[1].startsWith('BackEnd') ? backEnd + listing.pictures[1] : listing.pictures[1]" alt="Second listing picture" class="w-100 rounded-4"/>
+         </div>
+      </ng-template>
+      <ng-template ngbSlide>
+         <div class="picsum-img-wrapper">
+            <img [src]="listing.pictures[2].startsWith('BackEnd') ? backEnd + listing.pictures[2] : listing.pictures[2]" alt="Third listing picture" class="w-100 rounded-4"/>
+         </div>
+      </ng-template>
+      <ng-template ngbSlide>
+         <div class="picsum-img-wrapper">
+            <img [src]="listing.pictures[3].startsWith('BackEnd') ? backEnd + listing.pictures[3] : listing.pictures[3]" alt="Fourth listing picture" class="w-100 rounded-4"/>
+         </div>
+      </ng-template>
+      <ng-template ngbSlide>
+         <div class="picsum-img-wrapper">
+            <img [src]="listing.pictures[4].startsWith('BackEnd') ? backEnd + listing.pictures[4] : listing.pictures[4]" alt="Fifth listing picture" class="w-100 rounded-4"/>
+         </div>
+      </ng-template>
+   </ngb-carousel>
+
+   <div class="mt-2">
+      <h1 class="h2">{{listing.name}}</h1>
+      <div class="position-relative w-100 d-flex justify-content-between align-items-baseline">
+         <button class="bg-body border-0" id="previousBtn"><i class="fa-solid fa-circle-arrow-left fs-1 w-auto text-primary" (click)="previousListing()"></i></button>
+         <button class="bg-body border-0" id="nextBtn"><i class="fa-solid fa-circle-arrow-right fs-1 w-auto text-primary" (click)="nextListing()"></i></button>
+      </div>
+      <div class="d-flex justify-content-between">
+         <p class="fw-semibold"><i class="fa-solid fa-location-dot"></i> {{listing.location}}</p>
+      </div>
+      <div *ngIf="screen >= 768" class="d-flex mb-3">
+         <div class="ratio ratio-4x3 w-50 my-1">
+            <img [src]="listing.pictures[0].startsWith('BackEnd') ? backEnd + listing.pictures[0] : listing.pictures[0]" alt="Main listing picture" width="641px" height="480px" class="rounded-4" (click)="enlarge(pic0,'f')">
+         </div>
+         <div class="w-50 d-flex flex-column justify-content-between">
+            <div class="d-flex mt-1">
+               <div class="ratio ratio-4x3 w-50 mx-2">
+                  <img [src]="listing.pictures[1].startsWith('BackEnd') ? backEnd + listing.pictures[1] : listing.pictures[1]" alt="Main listing picture" width="312.5px" height="280.5px" class="rounded-4" (click)="enlarge(pic1,'f')">
+               </div>
+               <div class="ratio ratio-4x3 w-50">
+                  <img [src]="listing.pictures[2].startsWith('BackEnd') ? backEnd + listing.pictures[2] : listing.pictures[2]" alt="Main listing picture" width="312.5px" height="280.5px" class="rounded-4" (click)="enlarge(pic2,'f')">
+               </div>
+            </div>
+            <div class="d-flex mb-1">
+               <div class="ratio ratio-4x3 w-50 mx-2">
+                  <img [src]="listing.pictures[3].startsWith('BackEnd') ? backEnd + listing.pictures[3] : listing.pictures[3]" alt="Main listing picture" width="312.5px" height="280.5px" class="rounded-4" (click)="enlarge(pic3,'f')">
+               </div>
+               <div class="ratio ratio-4x3 w-50">
+                  <img [src]="listing.pictures[4].startsWith('BackEnd') ? backEnd + listing.pictures[4] : listing.pictures[4]" alt="Main listing picture" width="312.5px" height="280.5px" class="rounded-4" (click)="enlarge(pic4,'f')">
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-12 pe-md-4">
+            <div class="d-flex align-items-start justify-content-between">
+               <div class="me-2">
+                  <p class="fw-semibold h5">{{capacity}} - {{bedrooms}} - {{beds}} - {{bathrooms}}</p>
+               </div>
+            </div>
+            <hr>
+            <div>
+               <h5>Descrizione dell'alloggio</h5>
+               <p class="text-justify">{{listing.description}}</p>
+            </div>
+            <hr>
+            <div *ngIf="listing.neighborhoodOverview != ''">
+               <h5>Descrizione del quartiere</h5>
+               <p class="text-justify">{{listing.neighborhoodOverview}}</p>
+            </div>
+            <hr>
+            <div class="services" *ngIf="listing.amenities && listing.amenities.length > 0">
+               <h5>Cosa troverai</h5>
+               <div class="row">
+                  <div class="col-12 col-sm-6 col-xl-4" *ngIf="services.includes(102)">
+                     <p class="my-1"><i class="fa-solid fa-flower-daffodil fs-5"></i> Vista su giardino</p>
+                  </div>
+                  <div class="col-12 col-sm-6 col-xl-4" *ngIf="services.includes(103) && !services.includes(102)">
+                     <p class="my-1"><i class="fa-sharp fa-regular fa-sun-plant-wilt"></i> Vista su cortile</p>
+                  </div>
+                  <div class="col-12 col-sm-6 col-xl-4" *ngIf="services.includes(104)">
+                     <p class="my-1"><i class="fa-regular fa-water fs-5"></i> Vista sul mare</p>
+                  </div>
+                  <div class="col-12 col-sm-6 col-xl-4" *ngIf="services.includes(105) && !services.includes(102) && !services.includes(103)">
+                     <p class="my-1"><i class="fa-sharp fa-solid fa-city"></i> Vista su panorama urbano</p>
+                  </div>
+                  <div class="col-12 col-sm-6 col-xl-4" *ngIf="services.includes(13)">
+                     <p class="my-1"><i class="fa-sharp fa-solid fa-kitchen-set fs-5"></i> Cucina</p>
+                  </div>
+                  <div class="col-12 col-sm-6 col-xl-4" *ngIf="services.includes(7)">
+                     <p class="my-1"><i class="fa-sharp fa-solid fa-wifi"></i> Wi-fi</p>
+                  </div>
+                  <div class="col-12 col-sm-6 col-xl-4" *ngIf="services.includes(8) && !services.includes(7)">
+                     <p class="my-1"><i class="fa-solid fa-network-wired"></i> Connessione Ethernet</p>
+                  </div>
+                  <div class="col-12 col-sm-6 col-xl-4" *ngIf="services.includes(37)">
+                     <p class="my-1"><i class="fa-regular fa-tv"></i> HDTV</p>
+                  </div>
+                  <div class="col-12 col-sm-6 col-xl-4" *ngIf="services.includes(36) && !services.includes(37)">
+                     <p class="my-1"><i class="fa-solid fa-tv-retro fs-5"></i> TV</p>
+                  </div>
+                  <div class="col-12 col-sm-6 col-xl-4" *ngIf="services.includes(50)">
+                     <p class="my-1"><i class="fa-solid fa-washing-machine fs-4"></i> Lavatrice</p>
+                  </div>
+                  <div class="col-12 col-sm-6 col-xl-4" *ngIf="services.includes(90)">
+                     <p class="my-1"><i class="fa-solid fa-keynote fs-5"></i> Spazio di lavoro dedicato</p>
+                  </div>
+                  <div class="col-12 col-sm-6 col-xl-4" *ngIf="services.includes(95)">
+                     <p class="my-1"><i class="fa-solid fa-vault fs-5"></i> Cassaforte</p>
+                  </div>
+                  <div class="col-12 col-sm-6 col-xl-4" *ngIf="services.includes(88)">
+                     <p class="my-1"><i class="fa-sharp fa-solid fa-sensor-fire"></i> Allarme antincendio</p>
+                  </div>
+               </div>
+               <button class="btn text-white bg-info my-2" (click)="enlarge(service,'f')">Mostra tutti e {{services.length}} i servizi</button>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-center" id="calendar">
+               <ngb-datepicker #dp [displayMonths]="screen >= 576 ? 2 : 1" [dayTemplate]="t" outsideDays="hidden" [minDate]="minDate" [markDisabled]="isDisabled"></ngb-datepicker>
+               <ng-template #t let-date let-focused="focused">
+                  <span class="custom-day" [class.focused]="focused"  >
+                     {{ date.day }}
+                  </span>
+               </ng-template>
+            </div>
+            <hr class="d-lg-none">
+         </div>
+      </div>
+      <hr>
+      <p class="h5" *ngIf="listing.reviews.length > 0" id="reviews">{{score.toFixed(2)}} <i class="fa-sharp fa-solid fa-star-sharp text-warning me-1"></i> - {{listing.reviews.length}} recensioni</p>
+      <p class="h5" *ngIf="listing.reviews.length == 0" id="reviews">Nessuna recensione da mostrare</p>
+      <div>
+         <div class="row">
+            <div class="col-12 col-lg-6 text-start" *ngFor="let review of listing.reviews| slice: (reviewsPage-1) * 4 : reviewsPage * 4">
+               <div class="w-100 px-3 py-2">
+                  <div class="d-flex">
+                     <img class="rounded-circle me-2" [src] = "review.reviewer.pictureUrl.startsWith('BackEnd') ? backEnd + review.reviewer.pictureUrl : review.reviewer.pictureUrl + '?aki_policy=profile_small'" alt="reviewer avatar">
+                     <div>
+                        <p class="fw-semibold mb-0">{{review.reviewer.name}}</p>
+                        <p class="pe-2 mb-0">{{review.date}}</p>
+                     </div>
+                  </div>
+                  <ngb-rating [(rate)]="review.score" [starTemplate]="stars" [readonly]="true" [max]="5"></ngb-rating>
+                  <ng-template #stars let-fill="fill">
+                     <i class="fa-sharp fa-solid fa-star-sharp position-relative d-inline-block fs-6 text-secondary">
+                     <i *ngIf="fill > 0" class="fa-sharp fa-solid fa-star-sharp position-absolute d-inline-block fs-6 text-warning overflow-hidden filled" [style.width.%]="fill"></i>
+                     </i>
+                  </ng-template>
+                  <p class="mb-0 text-justify">{{review.comment}}</p>
+               </div>
+
+            </div>
+            <div class="d-flex justify-content-center">
+               <ngb-pagination [collectionSize]="listing.reviews.length" [pageSize]=5 [(page)]="reviewsPage" aria-label="Default pagination"></ngb-pagination>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<hr>
+
+<ng-template #service let-modal>
+   <div class="list p-5">
+      <h4 class="mb-4">Cosa troverai</h4>
+      <div  *ngIf="services.includes(102) || services.includes(103) || services.includes(104) || services.includes(105)">
+         <p class="h5 mb-3">Viste panoramiche</p>
+         <div *ngIf="services.includes(102)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-flower-daffodil fs-5"></i> Vista su giardino</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(103)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-regular fa-sun-plant-wilt"></i> Vista su cortile</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(104)">
+            <p class="mb-0 ms-2"><i class="fa-regular fa-water fs-5"></i> Vista sul mare</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(105)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-city"></i> Vista su panorama urbano</p>
+            <hr>
+         </div>
+      </div>
+      <div>
+         <p class="h5 mb-3">Bagno</p>
+         <div *ngIf="services.includes(44)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-wind"></i> Asciugacapelli</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(35)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-bin-bottles"></i> Prodotti per la pulizia</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(41)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-soap"></i> Sapone per il corpo</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(2)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-droplet-degree fs-5"></i> Acqua calda</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(42)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-pump-soap fs-5"></i> Bagnoschiuma</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(43)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-spray-can-sparkles fs-5"></i> Shampoo</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(45)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-sprinkler"></i> Bidet</p>
+            <hr>
+         </div>
+      </div>
+      <div>
+         <p class="h5 mb-3">Camera da letto e lavanderia</p>
+         <div *ngIf="services.includes(1)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-scroll"></i> Essenziali (Asciugamani, lenzuola, sapone e carta igienica)</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(54)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-clothes-hanger"></i> Grucce</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(4)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-blanket fs-5"></i> Biancheria da letto</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(5)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-mattress-pillow"></i> Cuscini e coperte extra</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(6)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-booth-curtain"></i> Tende oscuranti</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(50)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-washing-machine fs-4"></i> Lavatrice</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(51)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-washing-machine fs-4"></i> Lavatrice gratuita in condivisione</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(52)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-washing-machine fs-4"></i> Lavatrice a pagamento in condivisione</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(53)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-washing-machine fs-4"></i> Lavatrice a gettoni nei paraggi</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(55)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-train-track fs-5"></i> Stendino</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(9)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-jug-bottle"></i> Detersivo e ammorbidente</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(56)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-curling-stone"></i> Ferro da stiro</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(94)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-mosquito-net"></i> Zanzariera</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(80)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-cabinet-filing fs-5"></i> Spazio per conservare l'abbigliamento</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(81)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-cabinet-filing fs-5"></i> Spazio per conservare l'abbigliamento: armadio</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(82) || services.includes(84)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-cabinet-filing fs-5"></i> Spazio per conservare l'abbigliamento: armadio e cassetti</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(83)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-cabinet-filing fs-5"></i> Spazio per conservare l'abbigliamento: cassettiera</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(85)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-cabinet-filing fs-5"></i> Spazio per conservare l'abbigliamento: cabina armadio</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(86)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-cabinet-filing fs-5"></i> Spazio per conservare l'abbigliamento: armadio con cabina</p>
+            <hr>
+         </div>
+      </div>
+      <div *ngIf="services.includes(36) || services.includes(37) ||services.includes(38) ||services.includes(39) ||services.includes(40) ||services.includes(91) ||services.includes(92)">
+         <p class="h5 mb-3">Intrattenimento</p>
+         <div *ngIf="services.includes(36)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-tv-retro fs-5"></i> TV</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(37)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-desktop fs-5"></i> HDTV</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(38)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-desktop fs-5"></i> HDTV con Netflix e Amazon Prime</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(39)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-desktop fs-5"></i> HDTV con FireTV e Netflix</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(40)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-display fs-5"></i> TV via cavo</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(91)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-books fs-5"></i> Libri e materiale di lettura</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(92)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-dice"></i> Giochi da tavolo</p>
+            <hr>
+         </div>
+      </div>
+      <div>
+         <p class="h5 mb-3" *ngIf="services.includes(74) || services.includes(75) || services.includes(76)">Famiglia</p>
+         <div *ngIf="services.includes(75)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-baby-carriage fs-5"></i> Box bebè portatile/culla di viaggio</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(74)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-baby-carriage fs-5"></i> Culla</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(76)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-chair fs-5"></i> Seggiolone</p>
+            <hr>
+         </div>
+      </div>
+      <div>
+         <p class="h5 mb-3" *ngIf="services.includes(10) || services.includes(11) || services.includes(12) || services.includes(46) || services.includes(47) || services.includes(48) || services.includes(49)">Riscaldamento e climatizzazione</p>
+         <div *ngIf="services.includes(10)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-air-conditioner"></i> Condizionatore</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(11)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-air-conditioner"></i> Condizionatore e deumidificatore</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(12)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-air-conditioner"></i> Aria condizionata centralizzata</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(46)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-temperature-sun"></i> Riscaldamento</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(47)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-temperature-sun"></i> Riscaldamento centralizzato</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(48)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-temperature-sun"></i> Termosifoni</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(49)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-temperature-sun"></i> Caldaia autonoma</p>
+            <hr>
+         </div>
+      </div>
+      <div *ngIf="services.includes(87) || services.includes(88) || services.includes(89) || services.includes(3) || services.includes(59) || services.includes(60) || services.includes(61) || services.includes(95) || services.includes(96)">
+         <p class="h5 mb-3">Sicurezza domestica</p>
+         <div *ngIf="services.includes(88)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-sensor-fire"></i> Allarme antincendio</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(89)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-sensor-triangle-exclamation"></i> Rilevatore di monossido di carbonio</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(87)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-fire-extinguisher fs-5"></i> Estintore</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(3)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-kit-medical"></i> Kit di pronto soccorso</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(59)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-keyboard-left"></i> Accesso abitativo tramite keypad</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(60)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-shield-keyhole fs-5"></i> Smart lock</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(61)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-key fs-5"></i> Serrature alle porte</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(95)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-vault"></i> Cassaforte</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(96)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-vault"></i> Cassetta di sicurezza</p>
+            <hr>
+         </div>
+      </div>
+      <div *ngIf="services.includes(7) || services.includes(8) || services.includes(90)">
+         <p class="h5 mb-3">Internet e ufficio</p>
+         <div *ngIf="services.includes(7)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-wifi"></i> Wi-fi</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(8)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-network-wired"></i> Connessione Ethernet</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(90)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-keynote fs-5"></i> Spazio di lavoro dedicato</p>
+            <hr>
+         </div>
+      </div>
+      <div *ngIf="services.includes(13) || services.includes(23) || services.includes(24) || services.includes(25) || services.includes(28) || services.includes(29) || services.includes(30) || services.includes(31) || services.includes(32) || services.includes(33) || services.includes(34)">
+         <p class="h5 mb-3">Cucina e zona pranzo</p>
+         <div *ngIf="services.includes(13)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-kitchen-set fs-5"></i> Cucina</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(24)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-refrigerator fs-4"></i> Frigorifero</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(25)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-snowflake fs-4"></i> Freezer</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(23)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-pan-frying fs-5"></i> Servizi di base per cucinare (Pentole, padelle, olio, sale e pepe)</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(34)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-plate-utensils"></i> Piatti e posate</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(16) || services.includes(17)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-fire-burner"></i> Piano cottura</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(14) || services.includes(15)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-oven fs-4"></i> Forno</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(22)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-sheet-plastic fs-4"></i> Carta da forno</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(18)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-microwave fs-5"></i> Forno a Microonde</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(19)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-bread-slice fs-5"></i> Macchina del pane</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(21)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-bread-slice-butter fs-5"></i> Tostapane</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(28)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-coffee-beans fs-5"></i> Caffé</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(30)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-mug-hot fs-5"></i> Macchina del caffé - Moka</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(29) || services.includes(31)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-coffee-pot fs-5"></i> Macchina del caffé</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(20)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-coffee-pot fs-5"></i> Bollitore</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(33)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-champagne-glasses fs-5"></i> Calici per vino</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(32)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-tablet-rugged fs-4"></i> Tavolo da pranzo</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(26)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-dryer-heat fs-4"></i> Lavastoviglie</p>
+            <hr>
+         </div>
+      </div>
+      <div *ngIf="services.includes(77) || services.includes(78) || services.includes(79)">
+         <p class="h5 mb-3">Caratteristiche dell'alloggio</p>
+         <div *ngIf="services.includes(77)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-door-closed fs-5"></i> Ingresso privato (Ingresso separato su strada o edificio)</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(78)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-house fs-5"></i> Casa su un unico piano</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(79)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-elevator fs-5"></i> Palazzo munito di ascensore</p>
+            <hr>
+         </div>
+      </div>
+      <div *ngIf="services.includes(62) || services.includes(63) || services.includes(64) || services.includes(65) || services.includes(66)">
+         <p class="h5 mb-3">All'aperto</p>
+         <div *ngIf="services.includes(64)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-sun-plant-wilt"></i> Patio o balcone privato</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(63)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-sun-plant-wilt"></i> Patio o balcone condiviso</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(65)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-house-tree fs-5"></i> Cortile privato</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(66)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-fence fs-5"></i> Cortile privato con staccionata</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(62)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-table-picnic fs-5"></i> Zona pranzo all'aperto</p>
+            <hr>
+         </div>
+      </div>
+      <div *ngIf="services.includes(67) || services.includes(68) || services.includes(69) || services.includes(70) || services.includes(71) || services.includes(72) || services.includes(73)">
+         <p class="h5 mb-3">Parcheggi e strutture</p>
+         <div *ngIf="services.includes(67)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-car fs-5"></i> Parcheggio gratuito nella proprietà</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(68)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-car fs-5"></i> Parcheggio gratuito fuori dalla proprietà</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(69)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-car fs-5"></i> Parcheggio a pagamento nella proprietà</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(70)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-car fs-5"></i> Parcheggio a pagamento fuori dalla proprietà</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(71)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-garage-car"></i> Parcheggio gratuito in garage</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(72)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-garage-car"></i> Parcheggio a pagamento in garage</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(73)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-car fs-5"></i> Parcheggio gratuito su strada</p>
+            <hr>
+         </div>
+      </div>
+      <div>
+         <p class="h5 mb-3">Check-in</p>
+         <div *ngIf="services.includes(57)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-handshake-simple"></i> L'host ti darà il benvenuto</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(58)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-watch-calculator fs-4"></i> Check-in autonomo</p>
+            <hr>
+         </div>
+      </div>
+      <div *ngIf="services.includes(27) || services.includes(93) || services.includes(97) || services.includes(98) || services.includes(99) || services.includes(100) || services.includes(101)">
+         <p class="h5 mb-3">Servizi</p>
+         <div *ngIf="services.includes(27)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-croissant fs-5"></i> Colazione inclusa</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(93)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-fan-table fs-5"></i> Ventilatori</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(97)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-user-police-tie fs-5"></i> Staff nell'edificio</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(101)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-calendar-days fs-5"></i> Sono permessi soggiorni lunghi oltre 28 giorni</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(98)">
+            <p class="mb-0 ms-2"><i class="fa-sharp fa-solid fa-dog"></i> Sono permessi gli animali in casa</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(99)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-smoking"></i> È permesso fumare nell'alloggio</p>
+            <hr>
+         </div>
+         <div *ngIf="services.includes(100)">
+            <p class="mb-0 ms-2"><i class="fa-solid fa-suitcase-rolling fs-4"></i> È permesso lasciare i bagagli prima del check-in</p>
+            <hr>
+         </div>
+      </div>
+   </div>
+</ng-template>
+
+<ng-template #pic0 let-modal>
+   <img [src]="listing.pictures[0]" alt="Main listing picture">
+   <div class="d-flex justify-content-between p-2 h-auto position-absolute w-100">
+      <i class="fa-solid fa-circle-arrow-left fs-1 w-auto text-success" (click)="modal.dismiss('pic0'); enlarge(pic4,'r')"></i>
+      <i class="fa-solid fa-circle-arrow-right fs-1 w-auto text-success" (click)="modal.dismiss('pic0'); enlarge(pic1,'r')"></i>
+   </div>
+</ng-template>
+
+<ng-template #pic1 let-modal>
+   <img [src]="listing.pictures[1]" alt="Second listing picture">
+   <div class="d-flex justify-content-between p-2 h-auto position-absolute w-100">
+      <i class="fa-solid fa-circle-arrow-left fs-1 w-auto text-success" (click)="modal.dismiss('pic1'); enlarge(pic0,'r')"></i>
+      <i class="fa-solid fa-circle-arrow-right fs-1 w-auto text-success" (click)="modal.dismiss('pic1'); enlarge(pic2,'r')"></i>
+   </div>
+</ng-template>
+
+<ng-template #pic2 let-modal>
+   <img [src]="listing.pictures[2]" alt="Third listing picture">
+   <div class="d-flex justify-content-between p-2 h-auto position-absolute w-100">
+      <i class="fa-solid fa-circle-arrow-left fs-1 w-auto text-success" (click)="modal.dismiss('pic2'); enlarge(pic1,'r')"></i>
+      <i class="fa-solid fa-circle-arrow-right fs-1 w-auto text-success" (click)="modal.dismiss('pic2'); enlarge(pic3,'r')"></i>
+   </div>
+</ng-template>
+
+<ng-template #pic3 let-modal>
+   <img [src]="listing.pictures[3]" alt="Fourth listing picture">
+   <div class="d-flex justify-content-between p-2 h-auto position-absolute w-100">
+      <i class="fa-solid fa-circle-arrow-left fs-1 w-auto text-success" (click)="modal.dismiss('pic3'); enlarge(pic2,'r')"></i>
+      <i class="fa-solid fa-circle-arrow-right fs-1 w-auto text-success" (click)="modal.dismiss('pic3'); enlarge(pic4,'r')"></i>
+   </div>
+</ng-template>
+
+<ng-template #pic4 let-modal>
+   <img [src]="listing.pictures[4]" alt="Fifth listing picture">
+   <div class="d-flex justify-content-between p-2 h-auto position-absolute w-100">
+      <i class="fa-solid fa-circle-arrow-left fs-1 w-auto text-success" (click)="modal.dismiss('pic4'); enlarge(pic3,'r')"></i>
+      <i class="fa-solid fa-circle-arrow-right fs-1 w-auto text-success" (click)="modal.dismiss('pic4'); enlarge(pic0,'r')"></i>
+   </div>
+</ng-template>
+
+
+
+
+
+
+
+

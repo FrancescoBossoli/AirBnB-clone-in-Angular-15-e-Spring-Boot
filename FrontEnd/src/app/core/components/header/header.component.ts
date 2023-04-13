@@ -75,6 +75,10 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['rentOut'])
    }
 
+   openHostings() {
+      this.router.navigate(['hostings'])
+   }
+
    openPanel() {
       this.mainPanel.nativeElement.classList.toggle('d-none');
       this.searchbar.nativeElement.classList.toggle('d-none');

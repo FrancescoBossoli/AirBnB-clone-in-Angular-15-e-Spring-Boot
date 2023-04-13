@@ -17,7 +17,7 @@ public enum Property {
 	ROOM_IN_HOTEL("Room in hotel"),
 	ROOM_IN_HOSTEL("Room in hostel"),
 	ROOM_IN_BNB("Private room in bed and breakfast"),
-	VILLA("Entire villa"); 
+	VILLA("Entire villa");
 	
 	private String name;
 	

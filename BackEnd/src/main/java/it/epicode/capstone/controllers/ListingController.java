@@ -188,6 +188,49 @@ public class ListingController {
 		return new ResponseEntity<List<PublicListing>>(list, HttpStatus.OK);
 	}
 	
+	@GetMapping("amazingViews")
+	public ResponseEntity<?> getAmazingViews() {
+		List<PublicListing> list = getListingsRange(132,143);	
+		return new ResponseEntity<List<PublicListing>>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("castles")
+	public ResponseEntity<?> getCastles() {
+		List<PublicListing> list = getListingsRange(144,155);	
+		return new ResponseEntity<List<PublicListing>>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("iconicCities")
+	public ResponseEntity<?> getIconicCities() {
+		List<PublicListing> list = getListingsRange(156,167);	
+		return new ResponseEntity<List<PublicListing>>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("ryokans")
+	public ResponseEntity<?> getRyokans() {
+		List<PublicListing> list = getListingsRange(168,179);	
+		return new ResponseEntity<List<PublicListing>>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("beach")
+	public ResponseEntity<?> getBeachs() {
+		List<PublicListing> list = getListingsRange(140,142);
+		list.add(PublicListing.build(listSrv.getListingById(Long.parseLong("132")).get()));
+		list.add(PublicListing.build(listSrv.getListingById(Long.parseLong("88")).get()));
+		list.add(PublicListing.build(listSrv.getListingById(Long.parseLong("92")).get()));
+		list.add(PublicListing.build(listSrv.getListingById(Long.parseLong("137")).get()));
+		list.add(PublicListing.build(listSrv.getListingById(Long.parseLong("135")).get()));
+		List<PublicListing> list2 = getListingsRange(180,183);
+		list2.forEach(listing -> list.add(listing));
+		return new ResponseEntity<List<PublicListing>>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("amazingPools")
+	public ResponseEntity<?> getAmazingPools() {
+		List<PublicListing> list = getListingsRange(184,195);
+		return new ResponseEntity<List<PublicListing>>(list, HttpStatus.OK);
+	}
+	
 	public List<PublicListing> getListingsRange(int a, int b) {
 		List<Listing> list = listSrv.getListingsRange(a, b);
 		List<PublicListing> pList = new ArrayList<PublicListing>();

@@ -83,6 +83,44 @@ export class ListingService {
       );
    }
 
+   getAmazingViews() {
+      return this.http.get<Listing[]>(`${environment.api}/listing/amazingViews`).pipe(
+         catchError(this.errors)
+      );
+   }
+
+   getCastles() {
+      return this.http.get<Listing[]>(`${environment.api}/listing/castles`).pipe(
+         catchError(this.errors)
+      );
+   }
+
+   getIconicCities() {
+      return this.http.get<Listing[]>(`${environment.api}/listing/iconicCities`).pipe(
+         catchError(this.errors)
+      );
+   }
+
+   getRyokans() {
+      return this.http.get<Listing[]>(`${environment.api}/listing/ryokans`).pipe(
+         catchError(this.errors)
+      );
+   }
+
+   getBeachs() {
+      return this.http.get<Listing[]>(`${environment.api}/listing/beach`).pipe(
+         catchError(this.errors)
+      );
+   }
+
+   getAmazingPools() {
+      return this.http.get<Listing[]>(`${environment.api}/listing/amazingPools`).pipe(
+         catchError(this.errors)
+      );
+   }
+
+
+
    private errors(err: any) {
       console.log(err)
       switch (err.error.message) {
