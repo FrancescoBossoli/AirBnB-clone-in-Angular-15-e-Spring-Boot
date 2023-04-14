@@ -1,5 +1,4 @@
-import { listingResolver } from './../../core/resolvers/listing.resolver';
-import { switchMap, of, delay, startWith } from 'rxjs';
+import { switchMap, of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/core/interfaces/user.interface';
 import { AuthService } from './../../core/services/auth.service';

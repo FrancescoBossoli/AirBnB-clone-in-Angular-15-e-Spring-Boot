@@ -94,13 +94,11 @@ export class HeaderComponent implements OnInit {
       this.suggestedSearch.nativeElement.classList.add('d-none');
       this.fromDate = null;
       this.toDate = null;
-      // this.destination = '';
       this.searchInput = '';
       this.adults = '0';
       this.children = '0';
       this.dates.nativeElement.innerText = 'Scegli date';
       this.guests.nativeElement.innerText = 'Aggiungi ospiti';
-
    }
 
    focus(num:number) {
@@ -147,7 +145,6 @@ export class HeaderComponent implements OnInit {
    }
 
    setDestination(loc:string) {
-      // this.destination = loc;
       this.searchInput = loc;
       this.suggestedSearch.nativeElement.classList.add('d-none');
       this.focus(2);
